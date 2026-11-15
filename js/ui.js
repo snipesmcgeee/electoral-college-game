@@ -37,3 +37,23 @@ export function notConfigured(root) {
     h('h2', {}, 'Firebase not set up yet'),
     h('p', {}, 'Paste your Firebase web config into js/firebase-config.js. Steps are in the README.')));
 }
+
+// Show any database/network error on screen instead of leaving the page stuck on "Loading…".
+export function showError(err) {
+  const msg = String(err?.message || err || 'Unknown error');
+  const code = err?.code || '';
+  const hint = /permission|insufficient/i.test(msg + code)
+    ? 'The database rules are blocking this device. In Firebase → Firestore Database → Rules, publish the rules from firestore.rules.'
+    : /auth|admin-restricted|operation-not-allowed/i.test(msg + code)
+      ? 'Anonymous sign-in looks turned off. In Firebase → Authentication → Sign-in method, enable Anonymous.'
+      : /offline|network|unavailable/i.test(msg + code) ? 'Can\'t reach the database. Check the internet connection.' : '';
+  let box = document.getElementById('err-box');
+  if (!box) {
+    box = h('div', { id: 'err-box', class: 'card warn', style: 'position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:100;color:#1d1f24' });
+    document.body.append(box);
+  }
+  box.replaceChildren(h('b', {}, 'Something went wrong'), h('div', {}, hint || msg), hint ? h('div', { class: 'muted', style: 'font-size:.8rem' }, msg) : null,
+    h('button', { class: 'small secondary', style: 'margin-top:.5rem', onclick: () => box.remove() }, 'Dismiss'));
+}
+window.addEventListener('unhandledrejection', e => showError(e.reason));
+window.addEventListener('error', e => showError(e.error || e.message));

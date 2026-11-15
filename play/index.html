@@ -8,7 +8,7 @@
 <body class="phone">
 <div class="wrap" id="app"><p>Loading…</p></div>
 <script type="module">
-import { $, h, fill, qs, fmt, pct, toast, notConfigured } from '../js/ui.js';
+import { $, h, fill, qs, fmt, pct, toast, notConfigured, showError } from '../js/ui.js';
 import { configured, signInGuest, gameRef, sub, fs } from '../js/firebase.js';
 import { loadStates, view, teamName } from '../js/game.js';
 import { margin, leader, validateDraft } from '../js/engine.js';
@@ -56,13 +56,13 @@ function pickTeam(g) {
 
 function listen() {
   unsubs.forEach(u => u()); unsubs = [];
-  unsubs.push(fs.onSnapshot(sub(code, 'players', user.uid), s => { me = s.data(); render(); }));
+  unsubs.push(fs.onSnapshot(sub(code, 'players', user.uid), s => { me = s.data(); render(); }, showError));
   unsubs.push(fs.onSnapshot(gameRef(code), s => {
     const prevQ = game?.current?.id;
     game = s.data();
     if (game?.current?.id !== prevQ) { myAnswer = null; watchAnswer(); }
     render();
-  }));
+  }, showError));
 }
 
 let draftUnsub = null, answerUnsub = null;

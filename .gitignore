@@ -1,5 +1,3 @@
-# Keep answers and full names off the public repo
-questions.json
-profiles.json
 *.xlsx
 node_modules/
+__pycache__/

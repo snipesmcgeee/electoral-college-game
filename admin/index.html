@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electoral College Game — Admin</title>
+<link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="wrap" id="app"><p>Loading…</p></div>
+<script type="module">
+import { $, h, fill, fmt, toast, notConfigured } from '../js/ui.js';
+import { configured, signInHost, isAdmin, db, fs } from '../js/firebase.js';
+import { autoScore } from '../js/scoring.js';
+
+const app = $('#app');
+let user, Q = {}, P = {}, tab = 'questions', filter = { text: '', review: false, game: '' }, editing = null;
+
+if (!configured) notConfigured(app);
+else fill(app, h('div', { class: 'card' }, h('h1', {}, 'Admin'), h('button', { onclick: login }, 'Sign in with Google')));
+
+async function login() {
+  try { user = await signInHost(); } catch (e) { return toast(e.message, 'err'); }
+  if (!(await isAdmin(user.uid))) return fill(app, h('div', { class: 'card warn' }, h('h2', {}, 'Not an admin yet'),
+    h('p', {}, 'Create Firestore collection ', h('b', {}, 'admins'), ' with a document whose ID is:'), h('pre', {}, user.uid)));
+  await load(); render();
+}
+async function load() {
+  Q = {}; P = {};
+  (await fs.getDocs(fs.collection(db, 'questions'))).docs.forEach(d => Q[d.id] = d.data());
+  (await fs.getDocs(fs.collection(db, 'profiles'))).docs.forEach(d => P[d.id] = d.data());
+}
+
+function render() {
+  const tabs = ['questions', 'import', 'profiles', 'games'];
+  fill(app, 
+    h('div', { class: 'row' }, h('h1', { class: 'grow' }, 'Admin'), h('a', { href: '../host/' }, '← Host')),
+    h('div', { class: 'row', style: 'margin-bottom:1rem' }, ...tabs.map(t => h('button', { class: t === tab ? '' : 'secondary', onclick: () => { tab = t; editing = null; render(); } }, t[0].toUpperCase() + t.slice(1)))),
+    tab === 'questions' ? (editing ? editView() : questionsView()) : tab === 'import' ? importView() : tab === 'profiles' ? profilesView() : gamesView());
+}
+
+// ---------------------------------------------------------------- questions
+function questionsView() {
+  const all = Object.values(Q);
+  const games = [...new Set(all.flatMap(q => q.games || []))].sort();
+  const list = all.filter(q => (!filter.review || q.needsReview) && (!filter.game || (q.games || []).includes(filter.game)) &&
+    (!filter.text || (q.text + ' ' + q.answer + ' ' + q.category).toLowerCase().includes(filter.text.toLowerCase())))
+    .sort((a, b) => a.id.localeCompare(b.id));
+  return h('div', { class: 'card' },
+    h('div', { class: 'row' },
+      h('input', { class: 'grow', placeholder: 'Search', value: filter.text, onchange: e => { filter.text = e.target.value; render(); } }),
+      h('select', { onchange: e => { filter.game = e.target.value; render(); } }, h('option', { value: '' }, 'All games'), ...games.map(g => h('option', { selected: filter.game === g }, g))),
+      h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: filter.review, onchange: e => { filter.review = e.target.checked; render(); } }), 'Needs review only'),
+      h('button', { onclick: () => { editing = { id: `custom-${Date.now()}`, text: '', answer: '', type: 'qa', value: 10, category: '', games: [], accepted: [] }; render(); } }, 'New question')),
+    h('p', { class: 'muted' }, `${list.length} of ${all.length} questions · ${all.filter(q => q.needsReview).length} flagged for review`),
+    h('table', {}, h('tr', {}, h('th', {}, 'Question'), h('th', {}, 'Answer'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Game'), h('th', {}, '')),
+      ...list.map(q => h('tr', {},
+        h('td', {}, q.text, q.needsReview ? h('div', { class: 'muted' }, '⚠ ', (q.reviewNotes || []).join(' · ')) : null),
+        h('td', {}, q.answer), h('td', {}, q.type, q.judge === 'host' ? ' (host)' : ''), h('td', {}, q.value),
+        h('td', {}, (q.games || []).join(', ')),
+        h('td', {}, h('button', { class: 'small secondary', onclick: () => { editing = structuredClone(q); render(); } }, 'Edit'))))));
+}
+
+function editView() {
+  const q = editing;
+  const f = (label, key, attrs = {}) => h('div', {}, h('label', {}, label),
+    h('input', { value: q[key] ?? '', ...attrs, onchange: e => { q[key] = attrs.type === 'number' ? (e.target.value === '' ? null : Number(e.target.value)) : e.target.value; } }));
+  const csv = (label, key) => h('div', {}, h('label', {}, label + ' (comma-separated)'),
+    h('input', { value: (q[key] || []).join(', '), onchange: e => { q[key] = e.target.value.split(',').map(s => s.trim()).filter(Boolean); } }));
+  const test = h('input', { placeholder: 'Try an answer to test scoring' });
+  const out = h('span', { class: 'pill' }, '');
+  test.oninput = () => { const r = autoScore(q, test.value); out.textContent = `${r.points} pts ${r.note || ''}`; };
+  return h('div', { class: 'card' },
+    h('h2', {}, Q[q.id] ? 'Edit question' : 'New question'),
+    h('div', {}, h('label', {}, 'Question'), h('textarea', { rows: 3, onchange: e => { q.text = e.target.value; } }, q.text)),
+    h('div', { class: 'grid2' },
+      h('div', {}, f('Answer (shown to host)', 'answer'),
+        h('label', {}, 'Type'), h('select', { onchange: e => { q.type = e.target.value; render(); } },
+          ...[['qa', 'QA — exact answer'], ['range', 'Range — closest number, steps'], ['list', 'List — points per item'], ['closer', 'Closer — closest takes all'], ['tf', 'True / False']]
+            .map(([v, t]) => h('option', { value: v, selected: q.type === v }, t))),
+        f('Points (max)', 'value', { type: 'number' }), f('Category', 'category'), csv('Games', 'games')),
+      h('div', {},
+        q.type === 'qa' || q.type === 'tf' ? csv('Accepted answers', 'accepted') : null,
+        q.type === 'list' ? h('div', {}, csv('Items', 'items'), f('Points per item', 'perItem', { type: 'number', step: 'any' })) : null,
+        q.type === 'range' || q.type === 'closer' ? h('div', {}, f('Exact answer (low)', 'answerLo', { type: 'number', step: 'any' }), f('Exact answer (high, if a range)', 'answerHi', { type: 'number', step: 'any' })) : null,
+        q.type === 'range' ? h('div', {}, f('Step width', 'step', { type: 'number', step: 'any' }), f('Points lost per step (2 on the 12-pt scale, 1 on the 6-pt scale)', 'stepPoints', { type: 'number' }),
+          q.bands ? h('p', {}, 'Using your typed steps: ', q.bands.map(b => `${b.points}: ${b.ranges.map(([a, z]) => a === z ? a : `${a}–${z ?? '+'}`).join(', ')}`).join(' | '), ' ',
+            h('button', { class: 'small secondary', onclick: () => { delete q.bands; render(); } }, 'Use step width instead')) : null) : null,
+        h('label', { class: 'row' }, h('input', { type: 'checkbox', style: 'width:auto', checked: q.judge === 'host', onchange: e => { q.judge = e.target.checked ? 'host' : undefined; } }), 'Host judges this one'),
+        h('label', { class: 'row' }, h('input', { type: 'checkbox', style: 'width:auto', checked: !!q.needsReview, onchange: e => { q.needsReview = e.target.checked; } }), 'Needs review'),
+        q.reviewNotes ? h('p', { class: 'muted' }, q.reviewNotes.join(' · ')) : null)),
+    h('div', { class: 'row', style: 'margin-top:.6rem' }, test, out),
+    h('div', { class: 'row', style: 'margin-top:1rem' },
+      h('button', { onclick: async () => {
+        const clean = JSON.parse(JSON.stringify(q));
+        if (!clean.needsReview) delete clean.reviewNotes;
+        await fs.setDoc(fs.doc(db, 'questions', q.id), clean); Q[q.id] = clean; editing = null; toast('Saved'); render();
+      } }, 'Save'),
+      h('button', { class: 'secondary', onclick: () => { editing = null; render(); } }, 'Cancel'),
+      Q[q.id] ? h('button', { class: 'red', onclick: async () => { if (!confirm('Delete this question?')) return; await fs.deleteDoc(fs.doc(db, 'questions', q.id)); delete Q[q.id]; editing = null; render(); } }, 'Delete') : null));
+}
+
+// ---------------------------------------------------------------- import
+function importView() {
+  const run = async (kind, file) => {
+    const rows = JSON.parse(await file.text());
+    let n = 0;
+    for (let i = 0; i < rows.length; i += 400) {
+      const b = fs.writeBatch(db);
+      for (const r of rows.slice(i, i + 400)) {
+        if (kind === 'profiles') {
+          const prev = P[r.id];
+          const merged = prev ? { ...prev, ...r, games: [...new Set([...(prev.games || []), ...(r.games || [])])], seen: [...new Set([...(prev.seen || []), ...(r.seen || [])])] } : r;
+          b.set(fs.doc(db, 'profiles', r.id), merged); P[r.id] = merged;
+        } else {
+          b.set(fs.doc(db, 'questions', r.id), r); Q[r.id] = r;
+        }
+        n++;
+      }
+      await b.commit();
+    }
+    toast(`Imported ${n} ${kind}`); render();
+  };
+  return h('div', { class: 'card' }, h('h2', {}, 'Import'),
+    h('p', {}, 'Pick the files made by ', h('code', {}, 'tools/import/import_questions.py'), '. They stay off GitHub so answers and full names aren’t public.'),
+    h('label', {}, 'questions.json (replaces questions with the same ID)'), h('input', { type: 'file', accept: '.json', onchange: e => e.target.files[0] && run('questions', e.target.files[0]) }),
+    h('label', {}, 'profiles.json (merges games and seen lists)'), h('input', { type: 'file', accept: '.json', onchange: e => e.target.files[0] && run('profiles', e.target.files[0]) }),
+    h('h3', { style: 'margin-top:1.5rem' }, 'Export'),
+    h('button', { class: 'secondary', onclick: () => download('questions.json', Object.values(Q)) }, 'Download questions'), ' ',
+    h('button', { class: 'secondary', onclick: () => download('profiles.json', Object.values(P)) }, 'Download profiles'));
+}
+function download(name, data) {
+  const a = h('a', { href: URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' })), download: name });
+  a.click();
+}
+
+// ---------------------------------------------------------------- profiles
+function profilesView() {
+  const list = Object.values(P).sort((a, b) => a.name.localeCompare(b.name));
+  return h('div', { class: 'card' }, h('h2', {}, `Profiles · ${list.length}`),
+    h('form', { class: 'row', onsubmit: async e => {
+      e.preventDefault(); const name = e.target.n.value.trim(); if (!name) return;
+      const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const p = { id, name, games: [], seen: [] }; await fs.setDoc(fs.doc(db, 'profiles', id), p); P[id] = p; render();
+    } }, h('input', { name: 'n', placeholder: 'Full name', class: 'grow' }), h('button', {}, 'Add')),
+    h('table', {}, h('tr', {}, h('th', {}, 'Name'), h('th', {}, 'Games'), h('th', {}, 'Seen'), h('th', {}, '')),
+      ...list.map(p => h('tr', {}, h('td', {}, p.name), h('td', {}, (p.games || []).join(', ')), h('td', {}, fmt((p.seen || []).length)),
+        h('td', {}, h('button', { class: 'small secondary', onclick: async () => {
+          const name = prompt('Name', p.name); if (!name) return; await fs.updateDoc(fs.doc(db, 'profiles', p.id), { name }); p.name = name; render(); } }, 'Rename'), ' ',
+          h('button', { class: 'small secondary', onclick: async () => {
+            if (!confirm(`Clear everything ${p.name} has seen?`)) return; await fs.updateDoc(fs.doc(db, 'profiles', p.id), { seen: [] }); p.seen = []; render(); } }, 'Clear seen'), ' ',
+          h('button', { class: 'small red', onclick: async () => { if (!confirm(`Delete ${p.name}?`)) return; await fs.deleteDoc(fs.doc(db, 'profiles', p.id)); delete P[p.id]; render(); } }, 'Delete'))))));
+}
+
+// ---------------------------------------------------------------- games
+function gamesView() {
+  const box = h('div', { class: 'card' }, h('p', {}, 'Loading…'));
+  fs.getDocs(fs.collection(db, 'games')).then(s => {
+    const games = s.docs.map(d => d.data()).sort((a, b) => b.createdAt - a.createdAt);
+    fill(box, h('h2', {}, 'Game history'), h('table', {},
+      h('tr', {}, h('th', {}, 'Date'), h('th', {}, 'Code'), h('th', {}, 'Name'), h('th', {}, 'Questions'), h('th', {}, 'Result')),
+      ...games.map(g => h('tr', {}, h('td', {}, new Date(g.createdAt).toLocaleDateString()), h('td', {}, g.code), h('td', {}, g.name),
+        h('td', {}, `${g.qIndex}/${g.total}`),
+        h('td', {}, g.result ? `${g.settings.teams.find(t => t.id === g.result.ecWinner)?.name || 'Tie'} · EC ${Object.values(g.result.ec).join('–')} · PV ${Object.values(g.result.popular).join('–')}` : g.status)))));
+  });
+  return box;
+}
+</script>
+</body>
+</html>

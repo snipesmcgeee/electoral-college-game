@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electoral College Game — Host</title>
+<link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="wrap" id="app"><p>Loading…</p></div>
+<script type="module">
+import { $, h, fill, qs, fmt, pct, toast, makeCode, notConfigured } from '../js/ui.js';
+import { configured, signInHost, isAdmin, gameRef, sub, subCol, db, fs } from '../js/firebase.js';
+import { loadStates, view, teamName, STATUS_TEXT } from '../js/game.js';
+import * as E from '../js/engine.js';
+import { autoScore, closerPoints, publicQuestion, parseNumber } from '../js/scoring.js';
+
+const app = $('#app');
+let user, allStates, Q = {}, code, game, players = [], answers = [], unsubs = [];
+const picked = { ids: [], filter: { games: new Set(), cat: '', type: '', text: '', hideSeen: true, hideReview: false } };
+
+if (!configured) notConfigured(app); else init();
+
+async function init() {
+  fill(app, h('div', { class: 'card' }, h('h1', {}, 'Host'), h('button', { onclick: login }, 'Sign in with Google')));
+  allStates = await loadStates();
+}
+
+async function login() {
+  try { user = await signInHost(); } catch (e) { return toast('Sign-in failed: ' + e.message, 'err'); }
+  if (!(await isAdmin(user.uid))) {
+    return fill(app, h('div', { class: 'card warn' }, h('h2', {}, 'Not an admin yet'),
+      h('p', {}, 'In the Firebase console → Firestore, create a collection ', h('b', {}, 'admins'),
+        ' with a document whose ID is:'), h('pre', {}, user.uid), h('p', {}, 'Then reload this page.')));
+  }
+  const snap = await fs.getDocs(fs.collection(db, 'questions'));
+  snap.docs.forEach(d => { Q[d.id] = d.data(); });
+  if (qs.get('code')) openGame(qs.get('code').toUpperCase()); else home();
+}
+
+// ---------------------------------------------------------------- home
+async function home() {
+  unsubs.forEach(u => u()); unsubs = [];
+  const games = (await fs.getDocs(fs.query(fs.collection(db, 'games'), fs.where('hostUid', '==', user.uid)))).docs
+    .map(d => d.data()).sort((a, b) => b.createdAt - a.createdAt);
+  const f = h('form', { onsubmit: createGame },
+    h('div', { class: 'grid2' },
+      h('div', {}, h('label', {}, 'Game name'), h('input', { name: 'name', value: 'Game night' }),
+        h('label', {}, 'Mode'), h('select', { name: 'mode' }, h('option', { value: 'party' }, 'Party mode — one answer per party'),
+          h('option', { value: 'candidate' }, 'Candidate mode — everyone answers, points pool to the party')),
+        h('label', {}, 'Who can lock spending'), h('select', { name: 'lockBy' }, h('option', { value: 'anyone' }, 'Anyone in the party'), h('option', { value: 'leader' }, 'Party leader only'))),
+      h('div', {}, h('label', {}, 'Electoral votes'), h('select', { name: 'year' }, h('option', { value: '2024' }, '2024 map (current)'), h('option', { value: '2020' }, '2020 map')),
+        h('label', {}, 'Blue party name'), h('input', { name: 'blue', value: 'Blue' }),
+        h('label', {}, 'Red party name'), h('input', { name: 'red', value: 'Red' }))),
+    h('p', {}, h('button', {}, 'Create game')));
+  fill(app, 
+    h('div', { class: 'row' }, h('h1', { class: 'grow' }, 'Host'), h('a', { href: '../admin/' }, 'Question warehouse & profiles →')),
+    Object.keys(Q).length ? null : h('div', { class: 'card warn' }, 'No questions in the warehouse yet. Import them on the admin page first.'),
+    h('div', { class: 'card' }, h('h2', {}, 'New game'), f),
+    h('div', { class: 'card' }, h('h2', {}, 'Your games'),
+      games.length ? h('table', {}, h('tr', {}, h('th', {}, 'Code'), h('th', {}, 'Name'), h('th', {}, 'Status'), h('th', {}, '')),
+        ...games.map(g => h('tr', {}, h('td', {}, g.code), h('td', {}, g.name), h('td', {}, STATUS_TEXT[g.status]),
+          h('td', {}, h('button', { class: 'small', onclick: () => openGame(g.code) }, 'Open')))))
+        : h('p', { class: 'muted' }, 'None yet.')));
+}
+
+async function createGame(e) {
+  e.preventDefault();
+  const f = e.target;
+  let c; for (let i = 0; i < 5; i++) { c = makeCode(); if (!(await fs.getDoc(gameRef(c))).exists()) break; }
+  const g = {
+    code: c, name: f.name.value.trim() || 'Game night', hostUid: user.uid, createdAt: Date.now(), status: 'lobby',
+    settings: { mode: f.mode.value, lockBy: f.lockBy.value, mapYear: Number(f.year.value),
+      teams: [{ id: 'blue', name: f.blue.value || 'Blue' }, { id: 'red', name: f.red.value || 'Red' }] },
+    questionIds: [], checkpoints: [], total: 0, qIndex: 0, current: null, answersOpen: false,
+    scored: {}, spend: {}, closed: {}, round: 0, locked: { blue: false, red: false }, leaders: {},
+    playerTotals: {}, lastReveal: null, reveal: null, result: null,
+  };
+  await fs.setDoc(gameRef(c), g);
+  openGame(c);
+}
+
+// ---------------------------------------------------------------- game
+function openGame(c) {
+  code = c; history.replaceState(null, '', `?code=${c}`);
+  unsubs.forEach(u => u()); unsubs = [];
+  unsubs.push(fs.onSnapshot(gameRef(c), s => { game = s.data(); if (game) { if (!picked.loaded && game.questionIds?.length) { picked.ids = [...game.questionIds]; } picked.loaded = true; render(); } }));
+  unsubs.push(fs.onSnapshot(subCol(c, 'players'), s => { players = s.docs.map(d => d.data()); autoLeaders(); render(); }));
+  unsubs.push(fs.onSnapshot(subCol(c, 'answers'), s => { answers = s.docs.map(d => ({ id: d.id, ...d.data() })); render(); }));
+}
+
+async function autoLeaders() {
+  if (!game) return;
+  const upd = {};
+  for (const t of game.settings.teams.map(t => t.id)) {
+    const lead = game.leaders?.[t];
+    if (!lead || !players.some(p => p.uid === lead && p.team === t)) {
+      const first = players.filter(p => p.team === t).sort((a, b) => a.joinedAt - b.joinedAt)[0];
+      if (first && first.uid !== lead) upd[`leaders.${t}`] = first.uid;
+    }
+  }
+  if (Object.keys(upd).length) await fs.updateDoc(gameRef(code), upd);
+}
+
+let rendering = false;
+function render() {
+  if (!game || rendering) return;
+  const focus = document.activeElement?.dataset?.keep; // keep typing focus across live updates
+  const v = view(game, allStates);
+  const top = h('div', { class: 'row' },
+    h('h1', { class: 'grow' }, `${game.name} · `, h('span', { class: 'pill' }, game.code)),
+    h('a', { href: `../board/?code=${code}`, target: '_blank' }, 'Open board'),
+    h('button', { class: 'secondary small', onclick: undo }, 'Undo last action'),
+    h('button', { class: 'secondary small', onclick: home }, 'All games'));
+  const scoreline = h('div', { class: 'card row' },
+    ...v.teams.map(t => h('div', { class: 'grow' }, h('span', { class: `pill ${t}` }, teamName(game, t)),
+      ` EV ${v.ec.final[t]} (+${v.ec.lean[t]} lean) · earned ${fmt(v.earned[t])} · balance ${fmt(v.balance[t])}`)),
+    h('div', { class: 'muted' }, `Q ${game.qIndex}/${game.total} done · ${v.closedCount}/51 closed · next spending after Q${v.nextCheckpoint}`));
+  const main = game.status === 'lobby' ? lobbyView(v) : game.status === 'spending' ? spendingView(v) : game.status === 'over' ? overView(v) : questionView(v);
+  fill(app, ...[top, game.status === 'lobby' ? null : scoreline, main].filter(Boolean));
+  if (focus) app.querySelector(`[data-keep="${focus}"]`)?.focus();
+}
+
+// ---------------------------------------------------------------- lobby: players + question picker + checkpoints
+function lobbyView(v) {
+  const join = `${location.origin}${location.pathname.replace(/host\/.*$/, '')}play/?code=${code}`;
+  const plist = h('table', {}, h('tr', {}, h('th', {}, 'Player'), h('th', {}, 'Party'), h('th', {}, 'Leader'), h('th', {}, '')),
+    ...players.sort((a, b) => a.name.localeCompare(b.name)).map(p => h('tr', {},
+      h('td', {}, p.name),
+      h('td', {}, h('select', { onchange: e => fs.updateDoc(sub(code, 'players', p.uid), { team: e.target.value }) },
+        ...game.settings.teams.map(t => h('option', { value: t.id, selected: p.team === t.id }, t.name)))),
+      h('td', {}, game.leaders?.[p.team] === p.uid ? '★' : h('button', { class: 'small secondary', onclick: () => fs.updateDoc(gameRef(code), { [`leaders.${p.team}`]: p.uid }) }, 'Make leader')),
+      h('td', {}, h('button', { class: 'small secondary', onclick: () => fs.deleteDoc(sub(code, 'players', p.uid)) }, 'Remove')))));
+  return h('div', {},
+    h('div', { class: 'card' }, h('h2', {}, 'Players join here'), h('p', {}, h('a', { href: join, target: '_blank' }, join)),
+      h('p', { class: 'muted' }, `Or open play/ and enter ${code}. ${players.length} joined.`), plist),
+    pickerView(), checkpointView(),
+    h('div', { class: 'card' }, h('button', { disabled: !picked.ids.length, onclick: startGame }, `Start game with ${picked.ids.length} questions`)));
+}
+
+let seenCache = { key: '', counts: {} };
+async function refreshSeen() {
+  const ids = [...new Set(players.map(p => p.profileId))].sort();
+  const key = ids.join(',');
+  if (key === seenCache.key) return;
+  const counts = {};
+  for (const id of ids) {
+    const p = await fs.getDoc(fs.doc(db, 'profiles', id));
+    for (const q of p.data()?.seen || []) counts[q] = (counts[q] || []).concat(p.data().name);
+  }
+  seenCache = { key, counts };
+  render();
+}
+
+function pickerView() {
+  refreshSeen();
+  const F = picked.filter;
+  const all = Object.values(Q);
+  const games = [...new Set(all.flatMap(q => q.games || []))].sort();
+  const cats = [...new Set(all.map(q => q.category))].sort();
+  const shown = all.filter(q =>
+    (!F.games.size || (q.games || []).some(g => F.games.has(g))) &&
+    (!F.cat || q.category === F.cat) && (!F.type || q.type === F.type) &&
+    (!F.text || (q.text + ' ' + q.answer).toLowerCase().includes(F.text.toLowerCase())) &&
+    (!F.hideSeen || !seenCache.counts[q.id]) && (!F.hideReview || !q.needsReview));
+  const sel = new Set(picked.ids);
+  const re = () => render();
+  return h('div', { class: 'card' },
+    h('h2', {}, `Questions · ${picked.ids.length} picked`),
+    h('div', { class: 'row' }, ...games.map(g => h('label', { class: 'row', style: 'margin:0;gap:.25rem' },
+      h('input', { type: 'checkbox', style: 'width:auto', checked: F.games.has(g), onchange: e => { e.target.checked ? F.games.add(g) : F.games.delete(g); re(); } }), g))),
+    h('div', { class: 'row' },
+      h('select', { onchange: e => { F.cat = e.target.value; re(); } }, h('option', { value: '' }, 'All categories'), ...cats.map(c => h('option', { selected: F.cat === c }, c))),
+      h('select', { onchange: e => { F.type = e.target.value; re(); } }, h('option', { value: '' }, 'All types'), ...['qa', 'range', 'list', 'closer', 'tf'].map(t => h('option', { selected: F.type === t }, t))),
+      h('input', { placeholder: 'Search', value: F.text, 'data-keep': 'qsearch', oninput: e => { F.text = e.target.value; re(); }, class: 'grow' })),
+    h('div', { class: 'row' },
+      h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.hideSeen, onchange: e => { F.hideSeen = e.target.checked; re(); } }), 'Hide questions anyone here has seen'),
+      h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.hideReview, onchange: e => { F.hideReview = e.target.checked; re(); } }), 'Hide ones flagged for review')),
+    h('div', { class: 'row', style: 'margin:.6rem 0' },
+      h('button', { class: 'small', onclick: () => { shown.forEach(q => { if (!sel.has(q.id)) picked.ids.push(q.id); }); saveIds(); } }, `Add all ${shown.length} shown`),
+      h('button', { class: 'small secondary', onclick: () => { const s = new Set(shown.map(q => q.id)); picked.ids = picked.ids.filter(i => !s.has(i)); saveIds(); } }, 'Remove shown'),
+      h('button', { class: 'small secondary', onclick: () => { picked.ids.sort(() => Math.random() - .5); saveIds(); } }, 'Shuffle picked'),
+      h('button', { class: 'small secondary', onclick: () => { picked.ids = []; saveIds(); } }, 'Clear')),
+    h('div', { style: 'max-height:360px;overflow:auto' }, h('table', {},
+      h('tr', {}, h('th', {}, ''), h('th', {}, 'Question'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Game'), h('th', {}, 'Seen by')),
+      ...shown.map(q => h('tr', {},
+        h('td', {}, h('input', { type: 'checkbox', style: 'width:auto', checked: sel.has(q.id), onchange: e => {
+          if (e.target.checked) picked.ids.push(q.id); else picked.ids = picked.ids.filter(i => i !== q.id); saveIds(); } })),
+        h('td', {}, q.text, q.needsReview ? h('span', { class: 'pill warn', title: (q.reviewNotes || []).join('\n') }, ' review') : null),
+        h('td', {}, q.type), h('td', {}, q.value), h('td', {}, (q.games || []).join(', ')),
+        h('td', { class: 'muted' }, (seenCache.counts[q.id] || []).join(', ')))))));
+}
+
+async function saveIds() {
+  const total = picked.ids.length;
+  const cps = (game.checkpoints || []).filter(c => c < total);
+  await fs.updateDoc(gameRef(code), { questionIds: picked.ids, total, checkpoints: [...new Set([...cps, total])].filter(Boolean).sort((a, b) => a - b) });
+}
+
+function checkpointView() {
+  const total = picked.ids.length;
+  const cps = game.checkpoints || [];
+  return h('div', { class: 'card' }, h('h2', {}, 'Spending checkpoints'),
+    h('p', { class: 'muted' }, 'Spending happens after these question numbers. The last question is always one. States only close at checkpoints.'),
+    h('div', { class: 'row' },
+      h('span', {}, 'Every'), h('input', { type: 'number', min: 1, style: 'width:5rem', id: 'every', value: 8 }), h('span', {}, 'questions'),
+      h('button', { class: 'small', onclick: () => fs.updateDoc(gameRef(code), { checkpoints: E.checkpointsEvery(Number($('#every').value) || 8, total) }) }, 'Set')),
+    h('div', { class: 'row', style: 'margin-top:.5rem' },
+      h('input', { class: 'grow', id: 'cps', value: cps.join(', '), placeholder: 'e.g. 8, 16, 24, 32' }),
+      h('button', { class: 'small secondary', onclick: () => {
+        const list = $('#cps').value.split(/[^0-9]+/).map(Number).filter(n => n > 0 && n <= total);
+        fs.updateDoc(gameRef(code), { checkpoints: [...new Set([...list, total])].sort((a, b) => a - b) });
+      } }, 'Use these')),
+    h('p', {}, cps.length ? cps.map(c => `Q${c} → ${E.closeTarget(E.progress(c, total))} closed`).join(' · ') : 'None set.'));
+}
+
+async function startGame() {
+  if (!players.length && !confirm('No players have joined. Start anyway?')) return;
+  await snapshot();
+  await fs.updateDoc(gameRef(code), { status: 'question', current: null, answersOpen: false, total: picked.ids.length, questionIds: picked.ids });
+}
+
+// ---------------------------------------------------------------- questions
+function currentFull() { return game.current ? Q[game.current.id] : null; }
+
+function questionView(v) {
+  const nextId = game.questionIds[game.qIndex];
+  const q = currentFull();
+  const awarded = q && game.scored?.[q.id];
+  if (!q || awarded) {
+    const nq = Q[nextId];
+    return h('div', { class: 'card' },
+      awarded ? h('p', {}, `Awarded: ${v.teams.map(t => `${teamName(game, t)} +${awarded[t]}`).join(' · ')}`) : null,
+      nq ? h('div', {}, h('p', { class: 'muted' }, `Next: Q${game.qIndex + 1} of ${game.total} · ${nq.category} · ${nq.type} · ${nq.value} pts`),
+        h('h2', {}, nq.text), h('p', { class: 'muted' }, `Answer: ${nq.answer}`),
+        h('div', { class: 'row' }, h('button', { onclick: () => showQuestion(nq) }, 'Show question'),
+          h('button', { class: 'secondary', onclick: () => skipQuestion(nq) }, 'Skip (swap for another)')))
+        : h('p', {}, 'No more questions.'));
+  }
+  // live answers for the current question
+  const mine = answers.filter(a => a.qid === q.id);
+  const party = game.settings.mode === 'party';
+  const rows = party ? v.teams.map(t => mine.find(a => a.team === t) || { team: t, text: '', name: '—', id: `${q.id}__${t}` }) : mine;
+  const closer = q.type === 'closer' ? closerPoints(q, Object.fromEntries(v.teams.map(t => {
+    const best = rows.filter(r => r.team === t && r.text).map(r => r.text).sort((a, b) => Math.abs(parseNumber(a) - q.answerLo) - Math.abs(parseNumber(b) - q.answerLo))[0];
+    return [t, best ?? '']; }))) : null;
+  pending.q = q.id;
+  const table = h('table', {}, h('tr', {}, h('th', {}, party ? 'Party' : 'Player'), h('th', {}, 'Answer'), h('th', {}, 'Auto'), h('th', {}, 'Points')),
+    ...rows.map(r => {
+      const auto = q.type === 'closer' ? { points: closer?.[r.team] ?? 0, confidence: 'auto', note: 'closest takes all' } : autoScore(q, r.text);
+      const key = r.id;
+      pending.auto[key] = auto.points; // live auto score until the host types over it
+      const shownPts = pending.edited.has(key) ? pending.pts[key] : auto.points;
+      return h('tr', {},
+        h('td', {}, h('span', { class: `pill ${r.team}` }, party ? teamName(game, r.team) : r.name), party ? h('div', { class: 'muted' }, r.name) : null),
+        h('td', {}, r.text || h('span', { class: 'muted' }, 'no answer')),
+        h('td', {}, h('span', { class: `pill ${auto.confidence === 'auto' ? 'ok' : 'warn'}` }, `${auto.points}`), ' ', h('span', { class: 'muted' }, auto.note || '')),
+        h('td', {}, h('input', { type: 'number', min: 0, style: 'width:5rem', value: shownPts, 'data-keep': `pts-${key}`, oninput: e => { pending.pts[key] = Number(e.target.value) || 0; pending.edited.add(key); } })));
+    }));
+  return h('div', { class: 'card' },
+    h('p', { class: 'muted' }, `Q${game.qIndex + 1} of ${game.total} · ${q.category} · ${q.type} · up to ${q.value} pts`),
+    h('h2', {}, q.text),
+    h('p', {}, 'Answer: ', h('b', {}, q.answer), q.reviewNotes ? h('div', { class: 'muted' }, q.reviewNotes.join(' · ')) : null),
+    h('p', { class: 'muted' }, `${mine.length} answer${mine.length === 1 ? '' : 's'} in · answers ${game.answersOpen ? 'open' : 'closed'}`),
+    table,
+    h('div', { class: 'row', style: 'margin-top:.8rem' },
+      game.answersOpen ? h('button', { class: 'secondary', onclick: () => fs.updateDoc(gameRef(code), { answersOpen: false, status: 'scoring' }) }, 'Close answers')
+        : h('button', { class: 'secondary', onclick: () => fs.updateDoc(gameRef(code), { answersOpen: true, status: 'question' }) }, 'Reopen answers'),
+      h('button', { onclick: () => award(q, rows, party) }, 'Award points')));
+}
+const pending = { q: null, pts: {}, auto: {}, edited: new Set() };
+const ptsFor = key => pending.edited.has(key) ? Number(pending.pts[key] ?? 0) : Number(pending.auto[key] ?? 0);
+function resetPending() { pending.pts = {}; pending.auto = {}; pending.edited = new Set(); }
+
+async function showQuestion(q) {
+  await snapshot();
+  resetPending();
+  await fs.updateDoc(gameRef(code), { current: publicQuestion(q), answersOpen: true, status: 'question', reveal: null });
+  // seen-it: log to every profile in this game
+  const b = fs.writeBatch(db);
+  for (const pid of new Set(players.map(p => p.profileId))) b.update(fs.doc(db, 'profiles', pid), { seen: fs.arrayUnion(q.id) });
+  await b.commit().catch(() => {});
+}
+
+async function skipQuestion(q) {
+  const pool = Object.values(Q).filter(x => !game.questionIds.includes(x.id) && !seenCache.counts[x.id] && x.category === q.category);
+  const alt = pool[Math.floor(Math.random() * pool.length)];
+  const ids = [...game.questionIds];
+  if (alt) ids[game.qIndex] = alt.id; else ids.splice(game.qIndex, 1);
+  await fs.updateDoc(gameRef(code), { questionIds: ids, total: ids.length, checkpoints: (game.checkpoints || []).map(c => Math.min(c, ids.length)) });
+  toast(alt ? `Swapped in: ${alt.text.slice(0, 50)}…` : 'Removed (no unseen swap in that category)');
+}
+
+async function award(q, rows, party) {
+  await snapshot();
+  const teams = game.settings.teams.map(t => t.id);
+  const pts = Object.fromEntries(teams.map(t => [t, 0]));
+  const upd = {};
+  for (const r of rows) {
+    const p = ptsFor(r.id);
+    pts[r.team] += p;
+    if (!party && r.uid) upd[`playerTotals.${r.uid}`] = fs.increment(p);
+  }
+  if (party) for (const r of rows) if (r.uid) upd[`playerTotals.${r.uid}`] = fs.increment(ptsFor(r.id));
+  const qIndex = game.qIndex + 1;
+  Object.assign(upd, { [`scored.${q.id}`]: pts, qIndex, answersOpen: false, reveal: { qid: q.id, answer: q.answer, points: pts } });
+  if (E.isCheckpoint(qIndex, game.checkpoints, game.total)) {
+    Object.assign(upd, { status: 'spending', round: (game.round || 0) + 1, locked: Object.fromEntries(teams.map(t => [t, false])) });
+    for (const t of teams) await fs.setDoc(sub(code, 'drafts', t), { alloc: {} });
+  } else upd.status = 'question';
+  await fs.updateDoc(gameRef(code), upd);
+  resetPending();
+}
+
+// ---------------------------------------------------------------- spending
+function spendingView(v) {
+  const teams = v.teams;
+  const allLocked = teams.every(t => game.locked?.[t]);
+  const final = game.qIndex >= game.total;
+  const popTie = !E.topTeam(v.earned, teams);
+  return h('div', { class: 'card' },
+    h('h2', {}, `Spending round ${game.round}${final ? ' · final' : ''}`),
+    h('p', {}, `After the reveal, ${E.closeTarget(E.progress(game.qIndex, game.total))} of 51 states should be closed (${v.closedCount} now).`),
+    ...teams.map(t => h('div', { class: 'row' }, h('span', { class: `pill ${t}` }, teamName(game, t)),
+      h('span', { class: 'grow' }, game.locked?.[t] ? 'Locked' : 'Planning…', ` · balance ${fmt(v.balance[t])}`),
+      game.locked?.[t] ? h('button', { class: 'small secondary', onclick: () => fs.updateDoc(gameRef(code), { [`locked.${t}`]: false }) }, 'Unlock')
+        : h('button', { class: 'small secondary', onclick: () => fs.updateDoc(gameRef(code), { [`locked.${t}`]: true }) }, 'Force lock'))),
+    final && popTie ? h('div', { class: 'card warn' }, h('p', {}, 'Popular vote is tied. Tied states (and an EC tie) need a bonus question. Who won it?'),
+      ...teams.map(t => h('button', { class: `small ${t}`, onclick: () => fs.updateDoc(gameRef(code), { bonusWinner: t }) }, teamName(game, t))),
+      game.bonusWinner ? h('p', {}, `Bonus winner: ${teamName(game, game.bonusWinner)}`) : null) : null,
+    h('p', {}, h('button', { disabled: !allLocked || (final && popTie && !game.bonusWinner), onclick: () => reveal(v) }, 'Reveal spending & close states')));
+}
+
+async function reveal(v) {
+  const teams = v.teams;
+  const drafts = {};
+  for (const t of teams) drafts[t] = (await fs.getDoc(sub(code, 'drafts', t))).data()?.alloc || {};
+  for (const t of teams) {
+    const c = E.validateDraft(drafts[t], v.balance[t], v.closed);
+    if (!c.ok) { await fs.updateDoc(gameRef(code), { [`locked.${t}`]: false }); return toast(`${teamName(game, t)}: ${c.errors[0]} — unlocked them to fix`, 'err'); }
+  }
+  await snapshot(drafts);
+  const spend = E.applyDrafts(game.spend, drafts, game.closed);
+  const final = game.qIndex >= game.total;
+  const popLeader = E.topTeam(v.earned, teams) || game.bonusWinner || null;
+  const closedNow = E.runClosing({ states: v.states, spend, closed: game.closed || {}, p: E.progress(game.qIndex, game.total), teams, tieWinner: popLeader });
+  const closed = { ...(game.closed || {}) };
+  for (const c of closedNow) closed[c.code] = c.team;
+  const upd = { spend, closed, lastReveal: { round: game.round, added: drafts, closedNow: closedNow.map(c => c.code), at: Date.now() },
+    current: null, reveal: null, locked: Object.fromEntries(teams.map(t => [t, false])) };
+  for (const t of teams) await fs.setDoc(sub(code, 'drafts', t), { alloc: {} });
+  if (final) {
+    const r = E.finalResult({ states: v.states, closed, scored: game.scored, teams });
+    if (r.needsBonus && game.bonusWinner) Object.assign(r, { ecWinner: game.bonusWinner, how: 'bonus-decided', needsBonus: false });
+    Object.assign(upd, { status: 'over', result: r, endedAt: Date.now() });
+  } else upd.status = 'question';
+  await fs.updateDoc(gameRef(code), upd);
+  toast(`${closedNow.length} state${closedNow.length === 1 ? '' : 's'} closed: ${closedNow.map(c => c.code).join(', ') || 'none'}`);
+}
+
+function overView(v) {
+  const r = game.result;
+  const [L, R] = v.teams;
+  return h('div', { class: 'card' }, h('h2', {}, r?.ecWinner ? `${teamName(game, r.ecWinner)} wins` : 'Tie'),
+    r ? h('p', {}, `EC ${r.ec[L]}–${r.ec[R]} · Popular vote ${fmt(r.popular[L])}–${fmt(r.popular[R])} · decided by ${r.how}`) : null,
+    r?.needsBonus ? h('div', {}, h('p', {}, 'Run a bonus question. Who won it?'),
+      ...v.teams.map(t => h('button', { class: `small ${t}`, onclick: () => fs.updateDoc(gameRef(code), { 'result.ecWinner': t, 'result.how': 'bonus-decided', 'result.needsBonus': false }) }, teamName(game, t)))) : null,
+    h('h3', {}, 'Player points'),
+    h('table', {}, ...players.map(p => h('tr', {}, h('td', {}, p.name), h('td', {}, teamName(game, p.team)), h('td', {}, fmt(game.playerTotals?.[p.uid] || 0))))));
+}
+
+// ---------------------------------------------------------------- undo
+async function snapshot(drafts = null) {
+  const s = (await fs.getDoc(gameRef(code))).data();
+  if (!drafts) { drafts = {}; for (const t of s.settings.teams) drafts[t.id] = (await fs.getDoc(sub(code, 'drafts', t.id))).data()?.alloc || {}; }
+  await fs.setDoc(fs.doc(db, 'games', code, 'log', String(Date.now())), { game: s, drafts });
+}
+async function undo() {
+  const logs = await fs.getDocs(fs.query(subCol(code, 'log'), fs.orderBy(fs.documentId(), 'desc'), fs.limit(1)));
+  if (logs.empty) return toast('Nothing to undo');
+  const d = logs.docs[0];
+  if (!confirm('Undo the last action?')) return;
+  const { game: g, drafts } = d.data();
+  await fs.setDoc(gameRef(code), g);
+  for (const [t, alloc] of Object.entries(drafts || {})) await fs.setDoc(sub(code, 'drafts', t), { alloc });
+  await fs.deleteDoc(d.ref);
+  resetPending();
+  toast('Undone');
+}
+</script>
+</body>
+</html>

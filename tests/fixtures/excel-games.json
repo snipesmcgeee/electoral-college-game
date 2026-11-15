@@ -1,0 +1,2104 @@
+{
+"UTNYE": {
+"raw": {
+"AK": {
+"blue": 3,
+"red": 2
+},
+"LA": {
+"blue": 5,
+"red": 15
+},
+"DC": {
+"blue": 3,
+"red": 2
+},
+"KY": {
+"blue": 5,
+"red": 16
+},
+"WY": {
+"blue": 3,
+"red": 2
+},
+"SC": {
+"blue": 5,
+"red": 1
+},
+"ND": {
+"blue": 3,
+"red": 2
+},
+"AL": {
+"blue": 5,
+"red": 1
+},
+"SD": {
+"blue": 3,
+"red": 2
+},
+"CO": {
+"blue": 5,
+"red": 1
+},
+"VT": {
+"blue": 3,
+"red": 2
+},
+"WI": {
+"blue": 5,
+"red": 1
+},
+"DE": {
+"blue": 3,
+"red": 2
+},
+"MN": {
+"blue": 11,
+"red": 2
+},
+"MT": {
+"blue": 3,
+"red": 2
+},
+"MO": {
+"blue": 11,
+"red": 2
+},
+"ID": {
+"blue": 3,
+"red": 2
+},
+"MD": {
+"blue": 10,
+"red": 2
+},
+"HI": {
+"blue": 7,
+"red": 2
+},
+"AZ": {
+"blue": 11,
+"red": 1
+},
+"ME": {
+"blue": 5,
+"red": 1
+},
+"IN": {
+"blue": 11,
+"red": 1
+},
+"NH": {
+"blue": 5,
+"red": 1
+},
+"TN": {
+"blue": 11,
+"red": 1
+},
+"RI": {
+"blue": 5,
+"red": 1
+},
+"MA": {
+"blue": 4,
+"red": 1
+},
+"WV": {
+"blue": 5,
+"red": 1
+},
+"WA": {
+"blue": 4,
+"red": 1
+},
+"NE": {
+"blue": 9,
+"red": 6
+},
+"VA": {
+"blue": 4,
+"red": 1
+},
+"NM": {
+"blue": 9,
+"red": 10
+},
+"NC": {
+"blue": 1,
+"red": 12
+},
+"MS": {
+"blue": 9,
+"red": 12
+},
+"NJ": {
+"blue": 1,
+"red": 13
+},
+"NV": {
+"blue": 9,
+"red": 13
+},
+"MI": {
+"blue": 1,
+"red": 14
+},
+"UT": {
+"blue": 9,
+"red": 10
+},
+"GA": {
+"blue": 29,
+"red": 15
+},
+"KS": {
+"blue": 9,
+"red": 11
+},
+"OH": {
+"blue": 1,
+"red": 16
+},
+"IA": {
+"blue": 9,
+"red": 12
+},
+"IL": {
+"blue": 1,
+"red": 17
+},
+"AR": {
+"blue": 5,
+"red": 13
+},
+"PA": {
+"blue": 1,
+"red": 18
+},
+"CT": {
+"blue": 11,
+"red": 2
+},
+"NY": {
+"blue": 39,
+"red": 19
+},
+"OK": {
+"blue": 5,
+"red": 14
+},
+"FL": {
+"blue": 44,
+"red": 38
+},
+"OR": {
+"blue": 11,
+"red": 2
+},
+"TX": {
+"blue": 31,
+"red": 56
+},
+"CA": {
+"blue": 47,
+"red": 54
+}
+},
+"grid": {
+"blue": 401,
+"red": 397
+},
+"cached": {
+"G15": 81,
+"G17": 80,
+"G18": 1.0125,
+"G19": 52,
+"G21": "#NUM!",
+"G6": 401,
+"G7": 397,
+"G25": 401,
+"G26": 397
+},
+"cases": [
+{
+"p": 0.1,
+"target": 0,
+"line": 0.9473684210526315,
+"closed": []
+},
+{
+"p": 0.25,
+"target": 3,
+"line": 0.9333333333333333,
+"closed": [
+"IL",
+"OH",
+"PA"
+]
+},
+{
+"p": 0.4,
+"target": 8,
+"line": 0.9166666666666666,
+"closed": [
+"IL",
+"MI",
+"NC",
+"NJ",
+"OH",
+"PA"
+]
+},
+{
+"p": 0.5,
+"target": 12,
+"line": 0.8461538461538461,
+"closed": [
+"AZ",
+"IL",
+"IN",
+"MI",
+"NC",
+"NJ",
+"OH",
+"PA",
+"TN"
+]
+},
+{
+"p": 0.6,
+"target": 18,
+"line": 0.8333333333333334,
+"closed": [
+"AZ",
+"CT",
+"IL",
+"IN",
+"MI",
+"MN",
+"MO",
+"NC",
+"NJ",
+"OH",
+"OR",
+"PA",
+"TN"
+]
+},
+{
+"p": 0.75,
+"target": 28,
+"line": 0.7368421052631579,
+"closed": [
+"AL",
+"AZ",
+"CO",
+"CT",
+"HI",
+"IL",
+"IN",
+"KY",
+"LA",
+"MA",
+"MD",
+"ME",
+"MI",
+"MN",
+"MO",
+"NC",
+"NH",
+"NJ",
+"OH",
+"OR",
+"PA",
+"RI",
+"SC",
+"TN",
+"VA",
+"WA",
+"WI",
+"WV"
+]
+},
+{
+"p": 0.9,
+"target": 41,
+"line": 0.6,
+"closed": [
+"AL",
+"AR",
+"AZ",
+"CO",
+"CT",
+"GA",
+"HI",
+"IL",
+"IN",
+"KY",
+"LA",
+"MA",
+"MD",
+"ME",
+"MI",
+"MN",
+"MO",
+"NC",
+"NH",
+"NJ",
+"NY",
+"OH",
+"OK",
+"OR",
+"PA",
+"RI",
+"SC",
+"TN",
+"TX",
+"VA",
+"WA",
+"WI",
+"WV"
+]
+},
+{
+"p": 0.95,
+"target": 46,
+"line": 0.55,
+"closed": [
+"AK",
+"AL",
+"AR",
+"AZ",
+"CO",
+"CT",
+"DC",
+"DE",
+"GA",
+"HI",
+"IA",
+"ID",
+"IL",
+"IN",
+"KY",
+"LA",
+"MA",
+"MD",
+"ME",
+"MI",
+"MN",
+"MO",
+"MS",
+"MT",
+"NC",
+"ND",
+"NE",
+"NH",
+"NJ",
+"NV",
+"NY",
+"OH",
+"OK",
+"OR",
+"PA",
+"RI",
+"SC",
+"SD",
+"TN",
+"TX",
+"VA",
+"VT",
+"WA",
+"WI",
+"WV",
+"WY"
+]
+}
+]
+},
+"Cousins": {
+"raw": {
+"AK": {
+"blue": 1,
+"red": 1
+},
+"LA": {
+"blue": 1,
+"red": 7
+},
+"DC": {
+"blue": 1,
+"red": 1
+},
+"KY": {
+"blue": 1,
+"red": 7
+},
+"WY": {
+"blue": 1,
+"red": 1
+},
+"SC": {
+"blue": 1,
+"red": 15
+},
+"ND": {
+"blue": 1,
+"red": 1
+},
+"AL": {
+"blue": 1,
+"red": 16
+},
+"SD": {
+"blue": 1,
+"red": 1
+},
+"CO": {
+"blue": 33,
+"red": 7
+},
+"VT": {
+"blue": 1,
+"red": 1
+},
+"WI": {
+"blue": 1,
+"red": 17
+},
+"DE": {
+"blue": 1,
+"red": 1
+},
+"MN": {
+"blue": 1,
+"red": 8
+},
+"MT": {
+"blue": 1,
+"red": 1
+},
+"MO": {
+"blue": 11,
+"red": 8
+},
+"ID": {
+"blue": 1,
+"red": 1
+},
+"MD": {
+"blue": 16,
+"red": 8
+},
+"HI": {
+"blue": 5,
+"red": 6
+},
+"AZ": {
+"blue": 16,
+"red": 8
+},
+"ME": {
+"blue": 5,
+"red": 6
+},
+"IN": {
+"blue": 1,
+"red": 17
+},
+"NH": {
+"blue": 5,
+"red": 6
+},
+"TN": {
+"blue": 1,
+"red": 11
+},
+"RI": {
+"blue": 5,
+"red": 6
+},
+"MA": {
+"blue": 1,
+"red": 6
+},
+"WV": {
+"blue": 5,
+"red": 6
+},
+"WA": {
+"blue": 1,
+"red": 11
+},
+"NE": {
+"blue": 5,
+"red": 6
+},
+"VA": {
+"blue": 1,
+"red": 11
+},
+"NM": {
+"blue": 5,
+"red": 6
+},
+"NC": {
+"blue": 1,
+"red": 11
+},
+"MS": {
+"blue": 5,
+"red": 6
+},
+"NJ": {
+"blue": 1,
+"red": 11
+},
+"NV": {
+"blue": 5,
+"red": 6
+},
+"MI": {
+"blue": 21,
+"red": 1
+},
+"UT": {
+"blue": 19,
+"red": 1
+},
+"GA": {
+"blue": 20,
+"red": 1
+},
+"KS": {
+"blue": 19,
+"red": 1
+},
+"OH": {
+"blue": 9,
+"red": 16
+},
+"IA": {
+"blue": 15,
+"red": 1
+},
+"IL": {
+"blue": 1,
+"red": 14
+},
+"AR": {
+"blue": 15,
+"red": 1
+},
+"PA": {
+"blue": 1,
+"red": 14
+},
+"CT": {
+"blue": 1,
+"red": 16
+},
+"NY": {
+"blue": 13,
+"red": 15
+},
+"OK": {
+"blue": 1,
+"red": 16
+},
+"FL": {
+"blue": 21,
+"red": 63
+},
+"OR": {
+"blue": 1,
+"red": 7
+},
+"TX": {
+"blue": 21,
+"red": 63
+},
+"CA": {
+"blue": 144,
+"red": 31
+}
+},
+"grid": {
+"blue": 568,
+"red": 586
+},
+"cached": {
+"G15": 92,
+"G17": 91,
+"G18": 1.010989010989011,
+"G19": 52,
+"G21": "#NUM!",
+"G6": 414,
+"G7": 452,
+"G25": 568,
+"G26": 586
+},
+"cases": [
+{
+"p": 0.1,
+"target": 0,
+"line": 0.9545454545454546,
+"closed": []
+},
+{
+"p": 0.25,
+"target": 3,
+"line": 0.95,
+"closed": [
+"GA",
+"MI"
+]
+},
+{
+"p": 0.4,
+"target": 8,
+"line": 0.9411764705882353,
+"closed": [
+"GA",
+"IN",
+"KS",
+"MI",
+"UT",
+"WI"
+]
+},
+{
+"p": 0.5,
+"target": 12,
+"line": 0.9333333333333333,
+"closed": [
+"AL",
+"AR",
+"CT",
+"GA",
+"IA",
+"IN",
+"KS",
+"MI",
+"OK",
+"SC",
+"UT",
+"WI"
+]
+},
+{
+"p": 0.6,
+"target": 18,
+"line": 0.9166666666666666,
+"closed": [
+"AL",
+"AR",
+"CT",
+"GA",
+"IA",
+"IL",
+"IN",
+"KS",
+"MI",
+"OK",
+"PA",
+"SC",
+"UT",
+"WI"
+]
+},
+{
+"p": 0.75,
+"target": 28,
+"line": 0.6666666666666666,
+"closed": [
+"AL",
+"AR",
+"CA",
+"CO",
+"CT",
+"FL",
+"GA",
+"IA",
+"IL",
+"IN",
+"KS",
+"KY",
+"LA",
+"MA",
+"MI",
+"MN",
+"NC",
+"NJ",
+"OK",
+"OR",
+"PA",
+"SC",
+"TN",
+"TX",
+"UT",
+"VA",
+"WA",
+"WI"
+]
+},
+{
+"p": 0.9,
+"target": 41,
+"line": 0.5357142857142857,
+"closed": [
+"AL",
+"AR",
+"AZ",
+"CA",
+"CO",
+"CT",
+"FL",
+"GA",
+"HI",
+"IA",
+"IL",
+"IN",
+"KS",
+"KY",
+"LA",
+"MA",
+"MD",
+"ME",
+"MI",
+"MN",
+"MO",
+"MS",
+"NC",
+"NE",
+"NH",
+"NJ",
+"NM",
+"NV",
+"OH",
+"OK",
+"OR",
+"PA",
+"RI",
+"SC",
+"TN",
+"TX",
+"UT",
+"VA",
+"WA",
+"WI",
+"WV"
+]
+},
+{
+"p": 0.95,
+"target": 46,
+"line": 0.5,
+"closed": [
+"AL",
+"AR",
+"AZ",
+"CA",
+"CO",
+"CT",
+"FL",
+"GA",
+"HI",
+"IA",
+"IL",
+"IN",
+"KS",
+"KY",
+"LA",
+"MA",
+"MD",
+"ME",
+"MI",
+"MN",
+"MO",
+"MS",
+"NC",
+"NE",
+"NH",
+"NJ",
+"NM",
+"NV",
+"NY",
+"OH",
+"OK",
+"OR",
+"PA",
+"RI",
+"SC",
+"TN",
+"TX",
+"UT",
+"VA",
+"WA",
+"WI",
+"WV"
+]
+}
+]
+},
+"DECA": {
+"raw": {
+"AK": {
+"blue": 7,
+"red": 1
+},
+"LA": {
+"blue": 22,
+"red": 13
+},
+"MT": {
+"blue": 2,
+"red": 1
+},
+"KY": {
+"blue": 22,
+"red": 13
+},
+"WY": {
+"blue": 2,
+"red": 1
+},
+"CO": {
+"blue": 22,
+"red": 13
+},
+"ND": {
+"blue": 2,
+"red": 1
+},
+"AL": {
+"blue": 22,
+"red": 13
+},
+"SD": {
+"blue": 2,
+"red": 1
+},
+"SC": {
+"blue": 22,
+"red": 13
+},
+"VT": {
+"blue": 2,
+"red": 1
+},
+"WI": {
+"blue": 11,
+"red": 1
+},
+"DE": {
+"blue": 1,
+"red": 2
+},
+"MN": {
+"blue": 11,
+"red": 1
+},
+"DC": {
+"blue": 1,
+"red": 2
+},
+"MO": {
+"blue": 11,
+"red": 1
+},
+"ID": {
+"blue": 1,
+"red": 2
+},
+"MD": {
+"blue": 11,
+"red": 1
+},
+"HI": {
+"blue": 1,
+"red": 2
+},
+"AZ": {
+"blue": 1,
+"red": 16
+},
+"ME": {
+"blue": 1,
+"red": 2
+},
+"IN": {
+"blue": 1,
+"red": 11
+},
+"NH": {
+"blue": 1,
+"red": 4
+},
+"TN": {
+"blue": 17,
+"red": 9
+},
+"RI": {
+"blue": 1,
+"red": 4
+},
+"MA": {
+"blue": 1,
+"red": 16
+},
+"NM": {
+"blue": 1,
+"red": 4
+},
+"WA": {
+"blue": 11,
+"red": 44
+},
+"NE": {
+"blue": 1,
+"red": 4
+},
+"VA": {
+"blue": 1,
+"red": 16
+},
+"WV": {
+"blue": 1,
+"red": 2
+},
+"NC": {
+"blue": 1,
+"red": 16
+},
+"MS": {
+"blue": 1,
+"red": 5
+},
+"NJ": {
+"blue": 31,
+"red": 30
+},
+"NV": {
+"blue": 1,
+"red": 5
+},
+"MI": {
+"blue": 11,
+"red": 39
+},
+"UT": {
+"blue": 1,
+"red": 5
+},
+"GA": {
+"blue": 27,
+"red": 17
+},
+"KS": {
+"blue": 1,
+"red": 9
+},
+"OH": {
+"blue": 21,
+"red": 1
+},
+"IA": {
+"blue": 1,
+"red": 10
+},
+"IL": {
+"blue": 15,
+"red": 68
+},
+"AR": {
+"blue": 1,
+"red": 5
+},
+"PA": {
+"blue": 16,
+"red": 1
+},
+"OR": {
+"blue": 1,
+"red": 5
+},
+"FL": {
+"blue": 71,
+"red": 43
+},
+"OK": {
+"blue": 1,
+"red": 10
+},
+"NY": {
+"blue": 26,
+"red": 71
+},
+"CT": {
+"blue": 1,
+"red": 5
+},
+"TX": {
+"blue": 111,
+"red": 55
+},
+"CA": {
+"blue": 79,
+"red": 236
+}
+},
+"grid": {
+"blue": 561,
+"red": 800
+},
+"cached": {
+"G15": 88,
+"G17": 102,
+"G18": 0.8627450980392157,
+"G19": 37,
+"G21": 0.6666666666666666,
+"G6": 580,
+"G7": 800,
+"G25": -19,
+"G26": 0
+},
+"cases": [
+{
+"p": 0.1,
+"target": 0,
+"line": 0.9545454545454546,
+"closed": []
+},
+{
+"p": 0.25,
+"target": 3,
+"line": 0.9411764705882353,
+"closed": [
+"OH"
+]
+},
+{
+"p": 0.4,
+"target": 8,
+"line": 0.9166666666666666,
+"closed": [
+"AZ",
+"MA",
+"NC",
+"OH",
+"PA",
+"VA"
+]
+},
+{
+"p": 0.5,
+"target": 12,
+"line": 0.9090909090909091,
+"closed": [
+"AZ",
+"IN",
+"MA",
+"MD",
+"MN",
+"MO",
+"NC",
+"OH",
+"PA",
+"VA",
+"WI"
+]
+},
+{
+"p": 0.6,
+"target": 18,
+"line": 0.8333333333333334,
+"closed": [
+"AK",
+"AZ",
+"IA",
+"IN",
+"KS",
+"MA",
+"MD",
+"MN",
+"MO",
+"NC",
+"OH",
+"OK",
+"PA",
+"VA",
+"WI"
+]
+},
+{
+"p": 0.75,
+"target": 28,
+"line": 0.7492063492063492,
+"closed": [
+"AK",
+"AR",
+"AZ",
+"CT",
+"IA",
+"IL",
+"IN",
+"KS",
+"MA",
+"MD",
+"MI",
+"MN",
+"MO",
+"MS",
+"NC",
+"NE",
+"NH",
+"NM",
+"NV",
+"OH",
+"OK",
+"OR",
+"PA",
+"RI",
+"UT",
+"VA",
+"WA",
+"WI"
+]
+},
+{
+"p": 0.9,
+"target": 41,
+"line": 0.6666666666666666,
+"closed": [
+"AK",
+"AR",
+"AZ",
+"CA",
+"CT",
+"IA",
+"IL",
+"IN",
+"KS",
+"MA",
+"MD",
+"MI",
+"MN",
+"MO",
+"MS",
+"NC",
+"NE",
+"NH",
+"NM",
+"NV",
+"NY",
+"OH",
+"OK",
+"OR",
+"PA",
+"RI",
+"TX",
+"UT",
+"VA",
+"WA",
+"WI"
+]
+},
+{
+"p": 0.95,
+"target": 46,
+"line": 0.6285714285714286,
+"closed": [
+"AK",
+"AR",
+"AZ",
+"CA",
+"CT",
+"DC",
+"DE",
+"HI",
+"IA",
+"ID",
+"IL",
+"IN",
+"KS",
+"MA",
+"MD",
+"ME",
+"MI",
+"MN",
+"MO",
+"MS",
+"MT",
+"NC",
+"ND",
+"NE",
+"NH",
+"NM",
+"NV",
+"NY",
+"OH",
+"OK",
+"OR",
+"PA",
+"RI",
+"SD",
+"TN",
+"TX",
+"UT",
+"VA",
+"VT",
+"WA",
+"WI",
+"WV",
+"WY"
+]
+}
+]
+},
+"Election24-1": {
+"raw": {
+"AK": {
+"blue": 1,
+"red": 6
+},
+"LA": {
+"blue": 16,
+"red": 1
+},
+"DC": {
+"blue": 1,
+"red": 9
+},
+"KY": {
+"blue": 16,
+"red": 1
+},
+"WY": {
+"blue": 15,
+"red": 6
+},
+"SC": {
+"blue": 16,
+"red": 1
+},
+"ND": {
+"blue": 6,
+"red": 6
+},
+"AL": {
+"blue": 26,
+"red": 1
+},
+"SD": {
+"blue": 6,
+"red": 6
+},
+"CO": {
+"blue": 51,
+"red": 1
+},
+"VT": {
+"blue": 1,
+"red": 6
+},
+"WI": {
+"blue": 26,
+"red": 1
+},
+"DE": {
+"blue": 1,
+"red": 6
+},
+"MN": {
+"blue": 86,
+"red": 1
+},
+"MT": {
+"blue": 6,
+"red": 17
+},
+"MO": {
+"blue": 26,
+"red": 1
+},
+"ID": {
+"blue": 6,
+"red": 17
+},
+"MD": {
+"blue": 26,
+"red": 2
+},
+"HI": {
+"blue": 6,
+"red": 17
+},
+"AZ": {
+"blue": 26,
+"red": 7
+},
+"ME": {
+"blue": 6,
+"red": 17
+},
+"IN": {
+"blue": 26,
+"red": 7
+},
+"NH": {
+"blue": 21,
+"red": 19
+},
+"TN": {
+"blue": 26,
+"red": 7
+},
+"RI": {
+"blue": 21,
+"red": 18
+},
+"MA": {
+"blue": 26,
+"red": 2
+},
+"WV": {
+"blue": 21,
+"red": 26
+},
+"WA": {
+"blue": 103,
+"red": 131
+},
+"NE": {
+"blue": 36,
+"red": 50
+},
+"VA": {
+"blue": 16,
+"red": 76
+},
+"NM": {
+"blue": 15,
+"red": 1
+},
+"NC": {
+"blue": 21,
+"red": 81
+},
+"MS": {
+"blue": 27,
+"red": 8
+},
+"NJ": {
+"blue": 11,
+"red": 71
+},
+"NV": {
+"blue": 41,
+"red": 45
+},
+"MI": {
+"blue": 11,
+"red": 41
+},
+"UT": {
+"blue": 41,
+"red": 21
+},
+"GA": {
+"blue": 81,
+"red": 108
+},
+"KS": {
+"blue": 56,
+"red": 43
+},
+"OH": {
+"blue": 16,
+"red": 58
+},
+"IA": {
+"blue": 21,
+"red": 8
+},
+"IL": {
+"blue": 21,
+"red": 56
+},
+"AR": {
+"blue": 24,
+"red": 8
+},
+"PA": {
+"blue": 21,
+"red": 91
+},
+"CT": {
+"blue": 1,
+"red": 9
+},
+"NY": {
+"blue": 144,
+"red": 41
+},
+"OK": {
+"blue": 64,
+"red": 47
+},
+"FL": {
+"blue": 26,
+"red": 81
+},
+"OR": {
+"blue": 16,
+"red": 1
+},
+"TX": {
+"blue": 339,
+"red": 156
+},
+"CA": {
+"blue": 44,
+"red": 142
+}
+},
+"grid": {
+"blue": 1656,
+"red": 1532
+},
+"cached": {
+"G15": 168,
+"G17": 168,
+"G18": 1,
+"G19": 51,
+"G21": "#NUM!",
+"G6": 1656,
+"G7": 1532,
+"G25": 1656,
+"G26": 1532
+},
+"cases": [
+{
+"p": 0.1,
+"target": 0,
+"line": 0.9885057471264368,
+"closed": []
+},
+{
+"p": 0.25,
+"target": 3,
+"line": 0.9629629629629629,
+"closed": [
+"CO",
+"MN"
+]
+},
+{
+"p": 0.4,
+"target": 8,
+"line": 0.9411764705882353,
+"closed": [
+"AL",
+"CO",
+"MN",
+"MO",
+"WI"
+]
+},
+{
+"p": 0.5,
+"target": 12,
+"line": 0.9,
+"closed": [
+"AL",
+"CO",
+"KY",
+"LA",
+"MA",
+"MD",
+"MN",
+"MO",
+"NM",
+"OR",
+"SC",
+"WI"
+]
+},
+{
+"p": 0.6,
+"target": 18,
+"line": 0.8260869565217391,
+"closed": [
+"AK",
+"AL",
+"CO",
+"CT",
+"DC",
+"DE",
+"KY",
+"LA",
+"MA",
+"MD",
+"MN",
+"MO",
+"NJ",
+"NM",
+"OR",
+"SC",
+"VT",
+"WI"
+]
+},
+{
+"p": 0.75,
+"target": 28,
+"line": 0.7634408602150538,
+"closed": [
+"AK",
+"AL",
+"AZ",
+"CO",
+"CT",
+"DC",
+"DE",
+"IN",
+"KY",
+"LA",
+"MA",
+"MD",
+"MI",
+"MN",
+"MO",
+"MS",
+"NC",
+"NJ",
+"NM",
+"NY",
+"OH",
+"OR",
+"PA",
+"SC",
+"TN",
+"VA",
+"VT",
+"WI"
+]
+},
+{
+"p": 0.9,
+"target": 41,
+"line": 0.5765765765765766,
+"closed": [
+"AK",
+"AL",
+"AR",
+"AZ",
+"CA",
+"CO",
+"CT",
+"DC",
+"DE",
+"FL",
+"HI",
+"IA",
+"ID",
+"IL",
+"IN",
+"KY",
+"LA",
+"MA",
+"MD",
+"ME",
+"MI",
+"MN",
+"MO",
+"MS",
+"MT",
+"NC",
+"NE",
+"NJ",
+"NM",
+"NY",
+"OH",
+"OR",
+"PA",
+"SC",
+"TN",
+"TX",
+"UT",
+"VA",
+"VT",
+"WI",
+"WY"
+]
+},
+{
+"p": 0.95,
+"target": 46,
+"line": 0.5384615384615384,
+"closed": [
+"AK",
+"AL",
+"AR",
+"AZ",
+"CA",
+"CO",
+"CT",
+"DC",
+"DE",
+"FL",
+"GA",
+"HI",
+"IA",
+"ID",
+"IL",
+"IN",
+"KS",
+"KY",
+"LA",
+"MA",
+"MD",
+"ME",
+"MI",
+"MN",
+"MO",
+"MS",
+"MT",
+"NC",
+"NE",
+"NJ",
+"NM",
+"NY",
+"OH",
+"OK",
+"OR",
+"PA",
+"SC",
+"TN",
+"TX",
+"UT",
+"VA",
+"VT",
+"WA",
+"WI",
+"WV",
+"WY"
+]
+}
+]
+},
+"Test (2)": {
+"raw": {
+"AK": {
+"blue": 1,
+"red": 1
+},
+"LA": {
+"blue": 1,
+"red": 6
+},
+"MT": {
+"blue": 1,
+"red": 1
+},
+"KY": {
+"blue": 2,
+"red": 1
+},
+"WY": {
+"blue": 1,
+"red": 1
+},
+"CO": {
+"blue": 2,
+"red": 2
+},
+"ND": {
+"blue": 1,
+"red": 4
+},
+"AL": {
+"blue": 1,
+"red": 4
+},
+"SD": {
+"blue": 1,
+"red": 4
+},
+"SC": {
+"blue": 1,
+"red": 4
+},
+"VT": {
+"blue": 1,
+"red": 1
+},
+"WI": {
+"blue": 3,
+"red": 1
+},
+"DE": {
+"blue": 1,
+"red": 1
+},
+"MN": {
+"blue": 3,
+"red": 1
+},
+"DC": {
+"blue": 1,
+"red": 1
+},
+"MO": {
+"blue": 3,
+"red": 1
+},
+"ID": {
+"blue": 1,
+"red": 1
+},
+"MD": {
+"blue": 4,
+"red": 1
+},
+"HI": {
+"blue": 1,
+"red": 1
+},
+"AZ": {
+"blue": 1,
+"red": 5
+},
+"ME": {
+"blue": 1,
+"red": 1
+},
+"IN": {
+"blue": 5,
+"red": 1
+},
+"NH": {
+"blue": 1,
+"red": 1
+},
+"TN": {
+"blue": 4,
+"red": 1
+},
+"RI": {
+"blue": 1,
+"red": 1
+},
+"MA": {
+"blue": 5,
+"red": 2
+},
+"NM": {
+"blue": 1,
+"red": 3
+},
+"WA": {
+"blue": 1,
+"red": 4
+},
+"NE": {
+"blue": 1,
+"red": 3
+},
+"VA": {
+"blue": 5,
+"red": 1
+},
+"WV": {
+"blue": 2,
+"red": 2
+},
+"NC": {
+"blue": 4,
+"red": 14
+},
+"MS": {
+"blue": 2,
+"red": 2
+},
+"NJ": {
+"blue": 1,
+"red": 9
+},
+"NV": {
+"blue": 1,
+"red": 3
+},
+"MI": {
+"blue": 9,
+"red": 4
+},
+"UT": {
+"blue": 2,
+"red": 1
+},
+"GA": {
+"blue": 7,
+"red": 3
+},
+"KS": {
+"blue": 1,
+"red": 3
+},
+"OH": {
+"blue": 8,
+"red": 2
+},
+"IA": {
+"blue": 2,
+"red": 1
+},
+"IL": {
+"blue": 10,
+"red": 5
+},
+"AR": {
+"blue": 2,
+"red": 2
+},
+"PA": {
+"blue": 8,
+"red": 5
+},
+"OR": {
+"blue": 2,
+"red": 2
+},
+"FL": {
+"blue": 22,
+"red": 18
+},
+"OK": {
+"blue": 2,
+"red": 2
+},
+"NY": {
+"blue": 14,
+"red": 3
+},
+"CT": {
+"blue": 2,
+"red": 5
+},
+"TX": {
+"blue": 14,
+"red": 3
+},
+"CA": {
+"blue": 4,
+"red": 22
+}
+},
+"grid": {
+"blue": 716,
+"red": 790
+},
+"cached": {
+"G15": 28,
+"G17": 32,
+"G18": 0.875,
+"G19": 39,
+"G21": 0.5,
+"G6": 124,
+"G7": 120,
+"G25": 4,
+"G26": 10
+},
+"cases": [
+{
+"p": 0.1,
+"target": 0,
+"line": 0.9,
+"closed": []
+},
+{
+"p": 0.25,
+"target": 3,
+"line": 0.8333333333333334,
+"closed": [
+"CA",
+"LA",
+"NJ"
+]
+},
+{
+"p": 0.4,
+"target": 8,
+"line": 0.8,
+"closed": [
+"AZ",
+"CA",
+"IN",
+"LA",
+"NJ",
+"NY",
+"TX",
+"VA"
+]
+},
+{
+"p": 0.5,
+"target": 12,
+"line": 0.8,
+"closed": [
+"AZ",
+"CA",
+"IN",
+"LA",
+"NJ",
+"NY",
+"TX",
+"VA"
+]
+},
+{
+"p": 0.6,
+"target": 18,
+"line": 0.75,
+"closed": [
+"AL",
+"AZ",
+"CA",
+"IN",
+"LA",
+"MD",
+"NC",
+"ND",
+"NJ",
+"NY",
+"OH",
+"SC",
+"SD",
+"TN",
+"TX",
+"VA",
+"WA"
+]
+},
+{
+"p": 0.75,
+"target": 28,
+"line": 0.6666666666666666,
+"closed": [
+"AL",
+"AZ",
+"CA",
+"CT",
+"GA",
+"IN",
+"KS",
+"LA",
+"MA",
+"MD",
+"MI",
+"MN",
+"MO",
+"NC",
+"ND",
+"NE",
+"NJ",
+"NM",
+"NV",
+"NY",
+"OH",
+"SC",
+"SD",
+"TN",
+"TX",
+"VA",
+"WA",
+"WI"
+]
+},
+{
+"p": 0.9,
+"target": 41,
+"line": 0.5,
+"closed": [
+"AL",
+"AZ",
+"CA",
+"CT",
+"FL",
+"GA",
+"IA",
+"IL",
+"IN",
+"KS",
+"KY",
+"LA",
+"MA",
+"MD",
+"MI",
+"MN",
+"MO",
+"NC",
+"ND",
+"NE",
+"NJ",
+"NM",
+"NV",
+"NY",
+"OH",
+"PA",
+"SC",
+"SD",
+"TN",
+"TX",
+"UT",
+"VA",
+"WA",
+"WI"
+]
+},
+{
+"p": 0.95,
+"target": 46,
+"line": 0.5,
+"closed": [
+"AL",
+"AZ",
+"CA",
+"CT",
+"FL",
+"GA",
+"IA",
+"IL",
+"IN",
+"KS",
+"KY",
+"LA",
+"MA",
+"MD",
+"MI",
+"MN",
+"MO",
+"NC",
+"ND",
+"NE",
+"NJ",
+"NM",
+"NV",
+"NY",
+"OH",
+"PA",
+"SC",
+"SD",
+"TN",
+"TX",
+"UT",
+"VA",
+"WA",
+"WI"
+]
+}
+]
+}
+}

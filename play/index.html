@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electoral College Game — Play</title>
+<link rel="stylesheet" href="../css/app.css">
+</head>
+<body class="phone">
+<div class="wrap" id="app"><p>Loading…</p></div>
+<script type="module">
+import { $, h, fill, qs, fmt, pct, toast, notConfigured } from '../js/ui.js';
+import { configured, signInGuest, gameRef, sub, db, fs } from '../js/firebase.js';
+import { loadStates, view, teamName } from '../js/game.js';
+import { margin, leader, validateDraft } from '../js/engine.js';
+import { COLORS } from '../js/map.js';
+
+const app = $('#app');
+let user, code, game, me, allStates, draft = {}, myAnswer = null, unsubs = [];
+
+if (!configured) notConfigured(app); else init();
+
+async function init() {
+  user = await signInGuest();
+  allStates = await loadStates();
+  code = (qs.get('code') || localStorage.getItem('ecg.code') || '').toUpperCase();
+  if (!code) return askCode();
+  join();
+}
+
+function askCode() {
+  fill(app, h('h1', {}, 'Join a game'),
+    h('form', { onsubmit: e => { e.preventDefault(); code = e.target.c.value.trim().toUpperCase(); join(); } },
+      h('label', {}, 'Room code'), h('input', { name: 'c', autocapitalize: 'characters', maxlength: 6, autofocus: true }),
+      h('button', { class: 'bigbtn' }, 'Join')));
+}
+
+async function join() {
+  const g = await fs.getDoc(gameRef(code));
+  if (!g.exists()) { toast(`No game with code ${code}`, 'err'); localStorage.removeItem('ecg.code'); return askCode(); }
+  localStorage.setItem('ecg.code', code);
+  const p = await fs.getDoc(sub(code, 'players', user.uid));
+  if (p.exists()) return listen();
+  pickProfile(g.data());
+}
+
+async function pickProfile(g) {
+  const snap = await fs.getDocs(fs.collection(db, 'profiles'));
+  const profiles = snap.docs.map(d => d.data()).sort((a, b) => a.name.localeCompare(b.name));
+  const filter = h('input', { placeholder: 'Find your name', oninput: () => render() });
+  const list = h('div');
+  const render = () => {
+    const f = filter.value.toLowerCase();
+    list.replaceChildren(...profiles.filter(p => p.name.toLowerCase().includes(f)).map(p =>
+      h('button', { class: 'bigbtn secondary', onclick: () => pickTeam(g, p) }, p.name)));
+  };
+  render();
+  fill(app, h('h1', {}, 'Who are you?'), filter, list,
+    h('details', {}, h('summary', {}, 'New player'),
+      h('form', { onsubmit: async e => {
+        e.preventDefault();
+        const name = e.target.n.value.trim(); if (!name) return;
+        const id = name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const prof = { id, name, games: [], seen: [] };
+        await fs.setDoc(fs.doc(db, 'profiles', id), prof, { merge: true });
+        pickTeam(g, prof);
+      } }, h('label', {}, 'Full name'), h('input', { name: 'n' }), h('button', { class: 'bigbtn' }, 'Create'))));
+}
+
+function pickTeam(g, prof) {
+  fill(app, h('h1', {}, `Hi ${prof.name.split(' ')[0]} — pick your party`),
+    ...g.settings.teams.map(t => h('button', { class: `bigbtn ${t.id}`, onclick: async () => {
+      await fs.setDoc(sub(code, 'players', user.uid), { uid: user.uid, profileId: prof.id, name: prof.name, team: t.id, joinedAt: Date.now() });
+      listen();
+    } }, t.name)));
+}
+
+function listen() {
+  unsubs.forEach(u => u()); unsubs = [];
+  unsubs.push(fs.onSnapshot(sub(code, 'players', user.uid), s => { me = s.data(); render(); }));
+  unsubs.push(fs.onSnapshot(gameRef(code), s => {
+    const prevQ = game?.current?.id;
+    game = s.data();
+    if (game?.current?.id !== prevQ) { myAnswer = null; watchAnswer(); }
+    render();
+  }));
+}
+
+let draftUnsub = null, answerUnsub = null;
+function watchDraft() {
+  if (draftUnsub || !me) return;
+  draftUnsub = () => {}; // placeholder: the first snapshot can arrive before onSnapshot returns
+  draftUnsub = fs.onSnapshot(sub(code, 'drafts', me.team), s => { draft = s.data()?.alloc || {}; render(); },
+    () => { draftUnsub = null; });
+}
+function answerId() { return game.settings.mode === 'party' ? `${game.current.id}__${me.team}` : `${game.current.id}__${user.uid}`; }
+function watchAnswer() {
+  answerUnsub?.(); answerUnsub = null;
+  if (!game?.current || !me) return;
+  answerUnsub = () => {};
+  answerUnsub = fs.onSnapshot(sub(code, 'answers', answerId()), s => { myAnswer = s.data() || null; render(); }, () => {});
+}
+
+function render() {
+  if (!game || !me) return;
+  if (!answerUnsub && game.current) watchAnswer();
+  const v = view(game, allStates);
+  const t = me.team;
+  const header = h('div', { class: 'row sticky' },
+    h('span', { class: `pill ${t}` }, teamName(game, t)),
+    h('span', { class: 'muted grow' }, me.name),
+    h('span', {}, `Balance `, h('b', {}, fmt(v.balance[t]))));
+  let body;
+  switch (game.status) {
+    case 'lobby': body = h('div', { class: 'card' }, h('h2', {}, 'You’re in'), h('p', {}, 'Waiting for the host to start.'),
+      game.leaders?.[t] === user.uid ? h('p', { class: 'pill' }, 'You are your party’s leader') : null); break;
+    case 'question': case 'scoring': body = questionView(v); break;
+    case 'spending': watchDraft(); body = spendingView(v); break;
+    case 'over': body = resultView(v); break;
+    default: body = h('p', {}, '…');
+  }
+  fill(app, header, body,
+    h('p', { class: 'muted', style: 'margin-top:2rem;font-size:.8rem' }, `Room ${code} · `,
+      h('a', { href: '#', onclick: e => { e.preventDefault(); localStorage.removeItem('ecg.code'); location.href = location.pathname; } }, 'leave')));
+}
+
+function questionView(v) {
+  const c = game.current;
+  if (!c) return h('div', { class: 'card' }, h('p', {}, 'Get ready for the next question…'));
+  const open = game.answersOpen && game.status === 'question';
+  const party = game.settings.mode === 'party';
+  const numeric = c.type === 'range' || c.type === 'closer';
+  const input = c.type === 'list'
+    ? h('textarea', { name: 'a', rows: 5, placeholder: 'One per line or separated by commas' })
+    : c.type === 'tf'
+      ? h('select', { name: 'a' }, h('option', { value: '' }, 'Pick one'), h('option', { value: 'True' }, 'True'), h('option', { value: 'False' }, 'False'))
+      : h('input', { name: 'a', inputmode: numeric ? 'decimal' : 'text', autocomplete: 'off' });
+  if (myAnswer) input.value = myAnswer.text;
+  const revealed = game.reveal?.qid === c.id;
+  return h('div', { class: 'card' },
+    h('div', { class: 'muted' }, `${c.category || ''} · up to ${c.value} pts${c.items ? ` · ${c.items} answers` : ''}`),
+    h('h2', {}, c.text),
+    open ? h('form', { onsubmit: async e => {
+      e.preventDefault();
+      const text = e.target.a.value.trim(); if (!text) return;
+      await fs.setDoc(sub(code, 'answers', answerId()), {
+        qid: c.id, team: me.team, uid: user.uid, name: me.name, profileId: me.profileId, text, at: Date.now() });
+      toast('Answer sent');
+    } }, input, h('button', { class: 'bigbtn' }, myAnswer ? 'Update answer' : 'Submit'))
+      : h('p', { class: 'muted' }, 'Answers are closed.'),
+    myAnswer ? h('p', { class: 'muted' }, party ? `Your party’s answer (from ${myAnswer.name}): ` : 'Your answer: ', h('b', {}, myAnswer.text)) : null,
+    revealed ? h('p', {}, 'Answer: ', h('b', {}, game.reveal.answer), ` · your party +${game.reveal.points[me.team] ?? 0}`) : null);
+}
+
+function spendingView(v) {
+  const t = me.team;
+  const locked = game.locked?.[t];
+  const canLock = game.settings.lockBy === 'anyone' || game.leaders?.[t] === user.uid;
+  const check = validateDraft(draft, v.balance[t], v.closed);
+  const set = async (codeSt, n) => {
+    n = Math.max(0, Math.floor(Number(n) || 0));
+    try { await fs.setDoc(sub(code, 'drafts', t), { alloc: { [codeSt]: n } }, { merge: true }); }
+    catch (e) { toast('Could not save — is spending open?', 'err'); }
+  };
+  const open = v.states.filter(s => !v.closed[s.code]).sort((a, b) => b.ev - a.ev || a.code.localeCompare(b.code));
+  const rows = open.map(s => {
+    const sp = v.spend[s.code] || {};
+    const lead = leader(sp, v.teams);
+    const mine = draft[s.code] || 0;
+    const inp = h('input', { type: 'number', min: 0, value: mine || '', disabled: locked, onchange: e => set(s.code, e.target.value) });
+    return h('div', { class: 'state-row' },
+      h('div', { class: 'code', style: `color:${lead ? COLORS[lead].solid : 'inherit'}` }, s.code),
+      h('div', {}, h('div', {}, `${s.name} · ${s.ev} EV`),
+        h('div', { class: 'info' }, v.teams.map(x => `${teamName(game, x)} ${sp[x] || 0}`).join(' · '), ` · ${pct(margin(sp, v.teams))}`)),
+      h('div', { class: 'stepper' },
+        h('button', { class: 'secondary', disabled: locked || !mine, onclick: () => set(s.code, mine - 1) }, '−'),
+        inp,
+        h('button', { class: 'secondary', disabled: locked, onclick: () => set(s.code, mine + 1) }, '+')));
+  });
+  return h('div', {},
+    h('div', { class: 'card' },
+      h('h2', {}, `Spending round ${game.round || ''}`),
+      h('p', {}, `Planned `, h('b', {}, fmt(check.total)), ` of `, h('b', {}, fmt(v.balance[t])),
+        check.ok ? '' : h('span', { class: 'pill warn' }, check.errors[0])),
+      h('p', { class: 'muted' }, 'Your party sees this draft live. The other party sees nothing until both lock.'),
+      locked ? h('p', { class: 'pill ok' }, 'Locked — waiting for reveal')
+        : h('button', { class: 'bigbtn', disabled: !check.ok || !canLock, onclick: async () => {
+            if (!confirm(`Lock ${check.total} points for ${teamName(game, t)}?`)) return;
+            try { await fs.updateDoc(gameRef(code), { [`locked.${t}`]: true }); }
+            catch (e) { toast('Could not lock', 'err'); }
+          } }, canLock ? 'Lock spending' : 'Only your leader can lock')),
+    h('div', { class: 'card' }, h('h3', {}, `${open.length} open states`), ...rows));
+}
+
+function resultView(v) {
+  const r = game.result; if (!r) return h('p', {}, 'Tallying…');
+  const [L, R] = v.teams;
+  return h('div', { class: 'card' }, h('h2', {}, r.ecWinner ? `${teamName(game, r.ecWinner)} wins!` : 'Tie — bonus question'),
+    h('p', {}, `Electoral College ${r.ec[L]}–${r.ec[R]} · Popular vote ${fmt(r.popular[L])}–${fmt(r.popular[R])}`),
+    game.playerTotals?.[user.uid] !== undefined ? h('p', {}, `Your points: ${fmt(game.playerTotals[user.uid])}`) : null);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electoral College Game — Board</title>
+<link rel="stylesheet" href="../css/app.css">
+<script src="../vendor/d3.min.js"></script>
+<script src="../vendor/topojson-client.min.js"></script>
+</head>
+<body class="board">
+<div id="app"><div class="wrap"><p>Loading…</p></div></div>
+<script type="module">
+import { $, h, fill, qs, fmt, notConfigured } from '../js/ui.js';
+import { configured, signInGuest, gameRef, fs } from '../js/firebase.js';
+import { loadStates, view, teamName, STATUS_TEXT } from '../js/game.js';
+import { drawMap, paintMap, COLORS } from '../js/map.js';
+
+const app = $('#app');
+const code = (qs.get('code') || '').toUpperCase();
+if (!configured) notConfigured(app);
+else if (!code) {
+  fill(app, h('div', { class: 'wrap' }, h('h1', {}, 'Board'),
+    h('p', {}, 'Open this page as board/?code=ABCD'),
+    h('form', { onsubmit: e => { e.preventDefault(); location.search = '?code=' + e.target.c.value.toUpperCase(); } },
+      h('input', { name: 'c', placeholder: 'Room code', style: 'max-width:200px' }), ' ', h('button', {}, 'Open'))));
+} else start();
+
+async function start() {
+  await signInGuest();
+  const allStates = await loadStates();
+  fill(app, 
+    h('div', { class: 'top' },
+      h('div', { class: 'team', id: 'tL' }), h('div', { class: 'center' }, h('div', { id: 'title' }), h('div', { class: 'muted', id: 'room' })),
+      h('div', { class: 'team right', id: 'tR' })),
+    h('div', { class: 'bar', id: 'ecbar' }, h('div', { id: 'ecL' }), h('div', { id: 'ecR' }), h('div', { class: 'mid' })),
+    h('div', { class: 'barlabel' }, h('span', { id: 'ecLt' }), h('span', {}, '270 to win'), h('span', { id: 'ecRt' })),
+    h('div', { class: 'mapwrap' }, h('svg', { id: 'map' })),
+    h('div', { class: 'status', id: 'status' }),
+    h('div', { class: 'bar', style: 'height:14px' }, h('div', { id: 'pvL' }), h('div', { id: 'pvR' }), h('div', { class: 'mid' })),
+    h('div', { class: 'barlabel' }, h('span', { id: 'pvLt' }), h('span', {}, 'Popular vote (points earned)'), h('span', { id: 'pvRt' })),
+    h('div', { id: 'q' }));
+  // svg needs the SVG namespace
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.id = 'map'; $('#map').replaceWith(svg);
+  await drawMap(svg, allStates.map(s => ({ ...s })));
+  let lastRound = null;
+
+  fs.onSnapshot(gameRef(code), snap => {
+    if (!snap.exists()) { $('#title').textContent = `No game ${code}`; return; }
+    const g = snap.data();
+    const v = view(g, allStates);
+    const [L, R] = v.teams;
+    $('#room').textContent = `Room ${code}`;
+    $('#title').textContent = g.name || 'Electoral College Game';
+    const teamBlock = (t, el) => {
+      el.style.color = COLORS[t]?.solid;
+      el.replaceChildren(h('div', {}, `${v.ec.final[t]}`), h('small', {}, `${teamName(g, t)} · +${v.ec.lean[t]} leaning`));
+    };
+    teamBlock(L, $('#tL')); teamBlock(R, $('#tR'));
+    const w = n => `${(n / 538) * 100}%`;
+    Object.assign($('#ecL').style, { left: 0, width: w(v.ec.final[L]), background: COLORS[L].solid });
+    Object.assign($('#ecR').style, { right: 0, width: w(v.ec.final[R]), background: COLORS[R].solid });
+    $('#ecLt').textContent = `${teamName(g, L)} ${v.ec.final[L]}`;
+    $('#ecRt').textContent = `${v.ec.final[R]} ${teamName(g, R)}`;
+    const pvTot = (v.earned[L] + v.earned[R]) || 1;
+    Object.assign($('#pvL').style, { left: 0, width: `${v.earned[L] / pvTot * 100}%`, background: COLORS[L].solid });
+    Object.assign($('#pvR').style, { right: 0, width: `${v.earned[R] / pvTot * 100}%`, background: COLORS[R].solid });
+    $('#pvLt').textContent = `${fmt(v.earned[L])}`; $('#pvRt').textContent = `${fmt(v.earned[R])}`;
+
+    const reveal = g.lastReveal;
+    const flash = reveal && reveal.round !== lastRound && lastRound !== null ? reveal.closedNow || [] : [];
+    lastRound = reveal?.round ?? lastRound ?? 0;
+    paintMap(svg, { states: v.states, spend: v.spend, closed: v.closed, teams: v.teams, ev: s => s.ev, highlight: flash });
+
+    const locks = g.status === 'spending'
+      ? v.teams.map(t => `${teamName(g, t)} ${g.locked?.[t] ? '🔒 locked' : '… planning'}`).join(' · ') : '';
+    fill($('#status'), 
+      h('span', {}, `${STATUS_TEXT[g.status] || ''}`),
+      h('span', {}, `Question ${Math.min((g.qIndex || 0) + (g.current && !g.scored?.[g.current.id] ? 1 : 0), g.total || 0)} of ${g.total || 0}`),
+      h('span', {}, `${v.closedCount} of 51 states closed`),
+      g.status !== 'over' ? h('span', {}, `Next spending after Q${v.nextCheckpoint}`) : null,
+      locks ? h('span', {}, locks) : null);
+
+    if (g.status === 'over' && g.result) {
+      const r = g.result;
+      const winner = r.ecWinner ? teamName(g, r.ecWinner) : 'Tie — bonus question';
+      fill($('#q'), h('div', { class: 'question' },
+        h('div', { class: 'meta' }, 'Final'),
+        h('div', {}, `${winner} wins the Electoral College ${r.ec[L]}–${r.ec[R]}`),
+        h('div', { class: 'meta' }, `Popular vote: ${teamName(g, L)} ${fmt(r.popular[L])} – ${fmt(r.popular[R])} ${teamName(g, R)}${r.how === 'popular-tiebreak' ? ' · EC tie decided by popular vote' : ''}${r.how === 'bonus-decided' ? ' · decided by bonus question' : ''}`)));
+    } else if (g.current) {
+      const c = g.current;
+      fill($('#q'), h('div', { class: 'question' },
+        h('div', { class: 'meta' }, `${c.category || ''} · ${c.type === 'range' ? 'closest number' : c.type === 'list' ? 'list' : c.type === 'closer' ? 'closest takes all' : c.type === 'tf' ? 'true / false' : 'answer'} · up to ${c.value} pts${g.answersOpen ? '' : ' · answers closed'}`),
+        h('div', {}, c.text),
+        g.reveal?.qid === c.id ? h('div', { class: 'meta', style: 'margin-top:.5rem;font-size:1.2rem;opacity:1' }, `Answer: ${g.reveal.answer} · ${v.teams.map(t => `${teamName(g, t)} +${g.reveal.points[t]}`).join(' · ')}`) : null));
+    } else fill($('#q'), );
+  });
+}
+</script>
+</body>
+</html>

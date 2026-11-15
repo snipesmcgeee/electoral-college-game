@@ -1,0 +1,32 @@
+// Run with:  node tests/scoring.test.mjs
+import { readFileSync } from 'node:fs';
+import { autoScore, closerPoints } from '../js/scoring.js';
+const Q = Object.fromEntries(JSON.parse(readFileSync(process.env.QUESTIONS || new URL('../../import-files/questions.json', import.meta.url))).map(q => [q.id, q]));
+let pass = 0, fail = 0;
+const eq = (name, got, want) => { got === want ? pass++ : (fail++, console.log('FAIL', name, 'got', got, 'want', want)); };
+const find = t => Object.values(Q).find(q => q.text.includes(t));
+
+eq('Kansas statehood exact', autoScore(Q['kansas-026'], '1861').points, 12);
+eq('Kansas statehood 1860', autoScore(Q['kansas-026'], '1860').points, 10);
+eq('Kansas statehood 1871', autoScore(Q['kansas-026'], '1871').points, 2);
+eq('Kansas statehood 1872', autoScore(Q['kansas-026'], '1872').points, 0);
+const teeth = find('teeth do adult');
+eq('teeth 30', autoScore(teeth, '30').points, 8);
+eq('teeth 37', autoScore(teeth, '37').points, 2);
+const wings = find('most wings eaten');
+eq('wings 420 in exact range', autoScore(wings, '420').points, 12);
+eq('wings 380', autoScore(wings, '380').points, 10);
+const cap = find('capital of Kansas');
+eq('capital exact', autoScore(cap, 'topeka').points, 10);
+eq('capital typo flagged', autoScore(cap, 'Topkea').confidence, 'check');
+eq('capital wrong', autoScore(cap, 'Wichita').points, 0);
+const touch = find('4 States touch');
+eq('list 3 of 4', autoScore(touch, 'NE, CO, OK').points, 6);
+const tf = find('richest ever');
+eq('T/F true', autoScore(tf, 'T').points, 2);
+const biden = find('votes did Joe Biden');
+eq('Biden votes in millions', autoScore(biden, '80').points, 3);
+const closer = Object.values(Q).find(q => q.type === 'closer');
+eq('closer', JSON.stringify(closerPoints(closer, { blue: '9000', red: '15000' })), JSON.stringify({ blue: 15, red: 0 }));
+console.log(`${pass} passed, ${fail} failed`);
+process.exit(fail ? 1 : 0);

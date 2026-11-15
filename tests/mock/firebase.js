@@ -10,7 +10,10 @@ export const auth = {};
 
 const tabUid = sessionStorage.getItem('uid') || ('u' + Math.random().toString(36).slice(2, 8));
 sessionStorage.setItem('uid', tabUid);
-export async function signInGuest() { return { uid: tabUid, isAnonymous: true }; }
+export async function signInGuest() { return sessionStorage.getItem('google') ? { uid: 'admin-uid', isAnonymous: false } : { uid: tabUid, isAnonymous: true }; }
+export async function signInGoogle() { sessionStorage.setItem('google', '1'); return { uid: 'admin-uid', isAnonymous: false }; }
+export function currentUser() { return null; }
+export async function isAdmin(uid) { return uid === 'admin-uid'; }
 
 const docRef = path => ({ kind: 'doc', path, id: path.split('/').pop() });
 const colRef = path => ({ kind: 'col', path, cons: [] });

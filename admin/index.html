@@ -9,48 +9,81 @@
 <div class="wrap" id="app"><p>Loading…</p></div>
 <script type="module">
 import { $, h, fill, toast, notConfigured } from '../js/ui.js';
-import { configured, signInGuest } from '../js/firebase.js';
-import { loadQuestions, loadUsage, usageLabel } from '../js/questions.js';
+import { configured, signInGuest, signInGoogle, currentUser, isAdmin } from '../js/firebase.js';
+import { loadQuestions, loadUsage, usageLabel, saveQuestion, setHidden, deleteForever, isCustom } from '../js/questions.js';
 import { autoScore } from '../js/scoring.js';
 
-// Read-only browser for data/questions.json. Edits are made in the repo.
+// Anyone can browse. Editing needs Google sign-in with an account listed in Firestore `admins`.
 const app = $('#app');
-let Q = {}, usage = {}, filter = { text: '', review: false, game: '', unused: false }, open = null;
+let Q = {}, usage = {}, admin = false, editing = null, open = null;
+const filter = { text: '', review: false, game: '', unused: false, hidden: false };
 
 if (!configured) notConfigured(app); else init();
 
 async function init() {
-  await signInGuest();
-  Q = await loadQuestions();
-  usage = await loadUsage(Q);
-  render();
+  const u = await signInGuest();
+  if (u && !u.isAnonymous) admin = await isAdmin(u.uid);
+  await reload();
+}
+async function reload() { Q = await loadQuestions(); usage = await loadUsage(Q); render(); }
+
+async function signIn() {
+  try {
+    const u = await signInGoogle();
+    admin = await isAdmin(u.uid);
+    if (!admin) {
+      fill(app, h('div', { class: 'card warn' }, h('h2', {}, 'This account can’t edit yet'),
+        h('p', {}, 'In Firebase → Firestore → admins, add a document whose ID is:'), h('pre', {}, u.uid),
+        h('button', { class: 'secondary', onclick: render }, 'Back')));
+      return;
+    }
+    toast('Editing on'); render();
+  } catch (e) { toast('Sign-in failed: ' + e.message, 'err'); }
 }
 
 function render() {
+  if (editing) return editView();
   const all = Object.values(Q);
   const games = [...new Set(all.flatMap(q => q.games || []))].sort();
-  const list = all.filter(q => (!filter.review || q.needsReview) && (!filter.game || (q.games || []).includes(filter.game)) &&
+  const list = all.filter(q => (filter.hidden ? q.hidden : !q.hidden) &&
+    (!filter.review || q.needsReview) && (!filter.game || (q.games || []).includes(filter.game)) &&
     (!filter.unused || !usage[q.id]?.length) &&
     (!filter.text || (q.text + ' ' + q.answer + ' ' + q.category).toLowerCase().includes(filter.text.toLowerCase())))
     .sort((a, b) => a.id.localeCompare(b.id));
+  const check = (key, label) => h('label', { class: 'row', style: 'margin:0' },
+    h('input', { type: 'checkbox', style: 'width:auto', checked: filter[key], onchange: e => { filter[key] = e.target.checked; render(); } }), label);
   fill(app,
     h('div', { class: 'row' }, h('h1', { class: 'grow' }, 'Question bank'), h('a', { href: '../host/' }, '← Host')),
-    h('p', { class: 'muted' }, 'Questions live in the repo (data/questions.json). Ask Claude to add or fix questions.'),
+    h('div', { class: 'row', style: 'margin-bottom:1rem' },
+      admin ? h('span', { class: 'pill ok' }, 'Editing on') : h('button', { class: 'secondary small', onclick: signIn }, 'Sign in with Google to edit'),
+      admin ? h('button', { class: 'small', onclick: () => { editing = { id: `custom-${Date.now()}`, text: '', answer: '', type: 'qa', value: 10, category: '', games: [], accepted: [], custom: true }; render(); } }, 'Add question') : null),
     h('div', { class: 'card' },
       h('div', { class: 'row' },
         h('input', { class: 'grow', placeholder: 'Search', value: filter.text, onchange: e => { filter.text = e.target.value; render(); } }),
-        h('select', { onchange: e => { filter.game = e.target.value; render(); } }, h('option', { value: '' }, 'All games'), ...games.map(g => h('option', { selected: filter.game === g }, g))),
-        h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: filter.unused, onchange: e => { filter.unused = e.target.checked; render(); } }), 'Never used'),
-        h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: filter.review, onchange: e => { filter.review = e.target.checked; render(); } }), 'Needs review')),
-      h('p', { class: 'muted' }, `${list.length} of ${all.length} questions · ${all.filter(q => q.needsReview).length} flagged for review`),
-      h('table', {}, h('tr', {}, h('th', {}, 'Question'), h('th', {}, 'Answer'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Used in')),
+        h('select', { onchange: e => { filter.game = e.target.value; render(); } }, h('option', { value: '' }, 'All games'), ...games.map(g => h('option', { selected: filter.game === g }, g)))),
+      h('div', { class: 'row', style: 'margin-top:.5rem' }, check('unused', 'Never used'), check('review', 'Needs review'), check('hidden', 'Show hidden only')),
+      h('p', { class: 'muted' }, `${list.length} shown · ${all.filter(q => !q.hidden).length} active · ${all.filter(q => q.hidden).length} hidden · ${all.filter(q => q.needsReview && !q.hidden).length} flagged`),
+      h('table', {}, h('tr', {}, h('th', {}, 'Question'), h('th', {}, 'Answer'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Used in'), admin ? h('th', {}, '') : null),
         ...list.map(q => [
-          h('tr', { style: 'cursor:pointer', onclick: () => { open = open === q.id ? null : q.id; render(); } },
-            h('td', {}, q.text, q.needsReview ? h('div', { class: 'muted' }, '⚠ ', (q.reviewNotes || []).join(' · ')) : null),
+          h('tr', {},
+            h('td', { style: 'cursor:pointer', onclick: () => { open = open === q.id ? null : q.id; render(); } }, q.text,
+              q.custom ? h('span', { class: 'pill' }, ' added') : null,
+              q.needsReview ? h('div', { class: 'muted' }, '⚠ ', (q.reviewNotes || []).join(' · ')) : null),
             h('td', {}, q.answer), h('td', {}, q.type, q.judge === 'host' ? ' (host)' : ''), h('td', {}, q.value),
-            h('td', { class: 'muted' }, usageLabel(usage[q.id]))),
-          open === q.id ? h('tr', {}, h('td', { colspan: 5 }, tester(q))) : null,
+            h('td', { class: 'muted' }, usageLabel(usage[q.id])),
+            admin ? h('td', { style: 'white-space:nowrap' },
+              h('button', { class: 'small secondary', onclick: () => { editing = structuredClone(q); render(); } }, 'Edit'), ' ',
+              h('button', { class: 'small secondary', onclick: () => act(() => setHidden(q.id, !q.hidden), q.hidden ? 'Restored' : 'Hidden') }, q.hidden ? 'Unhide' : 'Hide'), ' ',
+              h('button', { class: 'small red', onclick: () => {
+                if (!confirm(`Permanently delete this question?\n\n"${q.text}"\n\nThis can't be undone.`)) return;
+                act(() => deleteForever(q.id), 'Deleted');
+              } }, 'Delete')) : null),
+          open === q.id ? h('tr', {}, h('td', { colspan: admin ? 6 : 5 }, tester(q))) : null,
         ]).flat())));
+}
+
+async function act(fn, msg) {
+  try { await fn(); toast(msg); await reload(); } catch (e) { toast('Could not save: ' + e.message, 'err'); }
 }
 
 function tester(q) {
@@ -61,6 +94,45 @@ function tester(q) {
     q.type === 'range' && !q.bands && q.step ? h('p', { class: 'muted' }, `Exact ${q.answerLo}${q.answerHi !== q.answerLo ? '–' + q.answerHi : ''}, step width ${q.step}`) : null,
     q.type === 'list' ? h('p', { class: 'muted' }, `${q.perItem} pts each: ${(q.items || []).join(', ')}`) : null,
     h('div', { class: 'row' }, inp, out));
+}
+
+function editView() {
+  const q = editing;
+  const f = (label, key, attrs = {}) => h('div', {}, h('label', {}, label),
+    h('input', { value: q[key] ?? '', ...attrs, onchange: e => { q[key] = attrs.type === 'number' ? (e.target.value === '' ? null : Number(e.target.value)) : e.target.value; } }));
+  const csv = (label, key) => h('div', {}, h('label', {}, label + ' (comma-separated)'),
+    h('input', { value: (q[key] || []).join(', '), onchange: e => { q[key] = e.target.value.split(',').map(s => s.trim()).filter(Boolean); } }));
+  const test = h('input', { placeholder: 'Try an answer to test scoring' });
+  const out = h('span', { class: 'pill' }, '');
+  test.oninput = () => { const r = autoScore(q, test.value); out.textContent = `${r.points} pts ${r.note || ''}`; };
+  fill(app, h('div', { class: 'card' },
+    h('h2', {}, Q[q.id] ? 'Edit question' : 'Add question'),
+    h('div', {}, h('label', {}, 'Question'), h('textarea', { rows: 3, onchange: e => { q.text = e.target.value; } }, q.text)),
+    h('div', { class: 'grid2' },
+      h('div', {}, f('Answer (shown to host and on the board after scoring)', 'answer'),
+        h('label', {}, 'Type'), h('select', { onchange: e => { q.type = e.target.value; render(); } },
+          ...[['qa', 'Exact answer'], ['range', 'Closest number (steps)'], ['list', 'List (points per item)'], ['closer', 'Closest takes all'], ['tf', 'True / False']]
+            .map(([v, t]) => h('option', { value: v, selected: q.type === v }, t))),
+        f('Points (max)', 'value', { type: 'number' }), f('Category', 'category'), csv('Games', 'games')),
+      h('div', {},
+        q.type === 'qa' || q.type === 'tf' ? csv('Accepted answers', 'accepted') : null,
+        q.type === 'list' ? h('div', {}, csv('Items', 'items'), f('Points per item', 'perItem', { type: 'number', step: 'any' })) : null,
+        q.type === 'range' || q.type === 'closer' ? h('div', {}, f('Exact answer (low)', 'answerLo', { type: 'number', step: 'any' }), f('Exact answer (high, if a range)', 'answerHi', { type: 'number', step: 'any' })) : null,
+        q.type === 'range' ? h('div', {}, f('Step width', 'step', { type: 'number', step: 'any' }), f('Points lost per step (2 on the 12-pt scale, 1 on the 6-pt scale)', 'stepPoints', { type: 'number' }),
+          q.bands ? h('p', {}, 'Using your typed steps: ', q.bands.map(b => `${b.points}: ${b.ranges.map(([a, z]) => a === z ? a : `${a}–${z ?? '+'}`).join(', ')}`).join(' | '), ' ',
+            h('button', { class: 'small secondary', onclick: () => { delete q.bands; render(); } }, 'Use step width instead')) : null) : null,
+        h('label', { class: 'row' }, h('input', { type: 'checkbox', style: 'width:auto', checked: q.judge === 'host', onchange: e => { q.judge = e.target.checked ? 'host' : null; } }), 'Host judges this one'),
+        h('label', { class: 'row' }, h('input', { type: 'checkbox', style: 'width:auto', checked: !!q.needsReview, onchange: e => { q.needsReview = e.target.checked; } }), 'Needs review'),
+        q.reviewNotes ? h('p', { class: 'muted' }, q.reviewNotes.join(' · ')) : null)),
+    h('div', { class: 'row', style: 'margin-top:.6rem' }, test, out),
+    h('div', { class: 'row', style: 'margin-top:1rem' },
+      h('button', { onclick: async () => {
+        if (!q.text?.trim() || !String(q.answer ?? '').trim()) return toast('Question and answer are required', 'err');
+        if (q.type === 'range' && q.answerHi == null) q.answerHi = q.answerLo;
+        if (q.type === 'list' && q.items?.length && !q.perItem) q.perItem = Math.round(q.value / q.items.length * 100) / 100;
+        try { await saveQuestion(q); editing = null; toast('Saved'); await reload(); } catch (e) { toast('Could not save: ' + e.message, 'err'); }
+      } }, 'Save'),
+      h('button', { class: 'secondary', onclick: () => { editing = null; render(); } }, 'Cancel'))));
 }
 </script>
 </body>

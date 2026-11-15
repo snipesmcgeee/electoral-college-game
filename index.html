@@ -12,9 +12,12 @@
   <form onsubmit="event.preventDefault(); location.href='play/?code=' + this.c.value.trim().toUpperCase();">
     <label>Room code</label>
     <input name="c" autocapitalize="characters" maxlength="6" autofocus>
-    <button class="bigbtn">Join game</button>
+    <button class="bigbtn">Play</button>
   </form>
-  <p style="margin-top:2rem"><a href="board/">Board (TV)</a> · <a href="host/">Host</a> · <a href="admin/">Admin</a></p>
+  <p style="margin-top:1.5rem" class="muted">Running the game?</p>
+  <a href="host/"><button class="bigbtn secondary">Host a game</button></a>
+  <a href="board/"><button class="bigbtn secondary">Show the board (TV)</button></a>
+  <p style="margin-top:1rem"><a href="admin/">Question bank</a></p>
 </div>
 </body>
 </html>

@@ -11,8 +11,6 @@ export const auth = {};
 const tabUid = sessionStorage.getItem('uid') || ('u' + Math.random().toString(36).slice(2, 8));
 sessionStorage.setItem('uid', tabUid);
 export async function signInGuest() { return { uid: tabUid, isAnonymous: true }; }
-export async function signInHost() { return { uid: 'host-uid', isAnonymous: false }; }
-export async function isAdmin(uid) { return uid === 'host-uid'; }
 
 const docRef = path => ({ kind: 'doc', path, id: path.split('/').pop() });
 const colRef = path => ({ kind: 'col', path, cons: [] });

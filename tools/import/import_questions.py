@@ -1,4 +1,4 @@
-"""Convert Jack's Electoral_Games.xlsx into data/questions.json and data/profiles.json.
+"""Convert Jack's Electoral_Games.xlsx into data/questions.json.
 
 Usage:  python3 tools/import/import_questions.py Electoral_Games.xlsx data/
 Needs:  pip install openpyxl
@@ -321,32 +321,7 @@ for tab in ['Cousins', 'Cabin']:
         elif mode == 'count' and not a:
             mode = None
 
-# ---------------- Profiles ----------------
-ws = wb['MASTER']
-games_hdr = {c: ws.cell(1, c).value for c in range(2, ws.max_column + 1)}
-alias = {'Trump': 'Trump 2020'}
-profiles = {}
-for r in range(2, ws.max_row + 1):
-    name = ws.cell(r, 1).value
-    if not name:
-        continue
-    pid = slug(name)
-    games = [alias.get(games_hdr[c], games_hdr[c]) for c in games_hdr if ws.cell(r, c).value]
-    profiles[pid] = dict(id=pid, name=name, games=games)
-# Cabin = UTNYE game; its 8 players (Jack confirmed the name matches 2026-11-14)
-cabin = ['Marissa Heruth', 'Jack Heruth', 'Mike Eigenmann', 'Katie Eigenmann', 'Susie Pederson',
-         'Sam Liebowitz', 'Nathan Miller', 'Melissa Miller']
-for name in cabin:
-    pid = slug(name)
-    profiles.setdefault(pid, dict(id=pid, name=name, games=[]))
-    if 'Cabin' not in profiles[pid]['games']:
-        profiles[pid]['games'].append('Cabin')
-for p in profiles.values():
-    p['seen'] = sorted(q['id'] for q in questions if set(q['games']) & set(p['games']))
-
 json.dump(questions, open(f'{OUT}/questions.json', 'w'), indent=1, ensure_ascii=False)
-json.dump(sorted(profiles.values(), key=lambda p: p['name']), open(f'{OUT}/profiles.json', 'w'), indent=1, ensure_ascii=False)
 from collections import Counter
 print(len(questions), 'questions', dict(Counter(q['type'] for q in questions)))
 print(sum(1 for q in questions if q.get('needsReview')), 'flagged for review')
-print(len(profiles), 'profiles')

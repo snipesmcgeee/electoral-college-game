@@ -12,7 +12,7 @@ export const fs = F; // doc, getDoc, setDoc, updateDoc, onSnapshot, collection, 
 
 export const configured = !String(firebaseConfig.apiKey).includes('PASTE');
 
-// Resolves with the signed-in user (anonymous if nobody is signed in).
+// Every device gets an invisible anonymous ID (no login screen). Firestore rules only check that one exists.
 export function signInGuest() {
   return new Promise((resolve, reject) => {
     const stop = A.onAuthStateChanged(auth, async user => {
@@ -20,18 +20,6 @@ export function signInGuest() {
       try { await A.signInAnonymously(auth); } catch (e) { stop(); reject(e); }
     });
   });
-}
-
-// Host/admin: Google sign-in so the same account works on any device.
-export async function signInHost() {
-  const user = await new Promise(r => { const s = A.onAuthStateChanged(auth, u => { s(); r(u); }); });
-  if (user && !user.isAnonymous) return user;
-  const res = await A.signInWithPopup(auth, new A.GoogleAuthProvider());
-  return res.user;
-}
-
-export async function isAdmin(uid) {
-  try { return (await F.getDoc(F.doc(db, 'admins', uid))).exists(); } catch { return false; }
 }
 
 export const gameRef = code => F.doc(db, 'games', code);

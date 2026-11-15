@@ -1,6 +1,6 @@
 """End-to-end run of a full game with the in-browser mock database.
 
-    python3 tests/e2e.py ../import-files   (needs: pip install playwright; Chrome installed)
+    python3 tests/e2e.py   (needs: pip install playwright; Chrome installed)
 
 Opens host, board and two phones in one browser, plays every question of the Kansas game
 with spending at every checkpoint, and checks the closings against the engine's rules.
@@ -9,13 +9,11 @@ import json, re, subprocess, sys, time, pathlib, random
 from playwright.sync_api import sync_playwright
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-DATA = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ROOT.parent / 'import-files')
+DATA = ROOT / 'data'
 OUT = ROOT.parent / 'e2e-shots'
 OUT.mkdir(exist_ok=True)
 questions = json.loads((DATA / 'questions.json').read_text())
-profiles = json.loads((DATA / 'profiles.json').read_text())
-seed = {f'questions/{q["id"]}': q for q in questions}
-seed.update({f'profiles/{p["id"]}': p for p in profiles})
+seed = {}
 mock = (ROOT / 'tests/mock/firebase.js').read_text()
 
 srv = subprocess.Popen([sys.executable, '-m', 'http.server', '8765', '-d', str(ROOT)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -39,7 +37,6 @@ try:
         host = page('/host/')
         host.evaluate('d => localStorage.setItem("mockdb", JSON.stringify(d))', seed)
         host.reload()
-        host.get_by_text('Sign in with Google').click()
         import os
         if os.environ.get('MODE') == 'candidate':
             host.locator('select[name=mode]').select_option('candidate')
@@ -49,16 +46,15 @@ try:
         print('game', code)
 
         blue = page(f'/play/?code={code}', 420, 900)
-        blue.get_by_role('button', name='Jack Heruth').click()
+        blue.get_by_placeholder('Nickname (optional, just for tonight)').fill('Jack')
         blue.get_by_role('button', name='Blue').click()
         red = page(f'/play/?code={code}', 420, 900)
-        red.get_by_role('button', name='Marissa Heruth').click()
         red.get_by_role('button', name='Red').click()
         board = page(f'/board/?code={code}', 1600, 1000)
         host.wait_for_timeout(600)
 
-        # Pick the Kansas questions (both players have seen them, so turn off "hide seen")
-        host.get_by_label('Hide questions anyone here has seen').uncheck()
+        # Pick the Kansas questions (already used in the Excel game, so turn off "hide used")
+        host.get_by_label('Hide questions already used in a game').uncheck()
         host.get_by_label('Kansas').check()
         host.get_by_role('button', name=re.compile(r'^Add all \d+ shown')).click()
         host.wait_for_timeout(300)
@@ -169,6 +165,9 @@ try:
         assert sum(g['result']['ec'].values()) == 538
         earned = {t: sum(v[t] for v in g['scored'].values()) for t in ('blue', 'red')}
         assert earned == g['result']['popular'], (earned, g['result']['popular'])
+        used = host.evaluate('Object.keys(JSON.parse(localStorage.mockdb)).filter(k => k.startsWith("usage/")).length')
+        print('questions logged as used:', used)
+        assert used == g['total'], used
         print('earned', earned)
         br.close()
 finally:

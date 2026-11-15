@@ -9,39 +9,33 @@
 <div class="wrap" id="app"><p>Loading…</p></div>
 <script type="module">
 import { $, h, fill, qs, fmt, pct, toast, makeCode, notConfigured } from '../js/ui.js';
-import { configured, signInHost, isAdmin, gameRef, sub, subCol, db, fs } from '../js/firebase.js';
+import { configured, signInGuest, gameRef, sub, subCol, db, fs } from '../js/firebase.js';
+import { loadQuestions, loadUsage, recordUse, usageLabel } from '../js/questions.js';
 import { loadStates, view, teamName, STATUS_TEXT } from '../js/game.js';
 import * as E from '../js/engine.js';
 import { autoScore, closerPoints, publicQuestion, parseNumber } from '../js/scoring.js';
 
 const app = $('#app');
-let user, allStates, Q = {}, code, game, players = [], answers = [], unsubs = [];
-const picked = { ids: [], filter: { games: new Set(), cat: '', type: '', text: '', hideSeen: true, hideReview: false } };
+let user, allStates, Q = {}, usage = {}, code, game, players = [], answers = [], unsubs = [];
+const picked = { ids: [], filter: { games: new Set(), cat: '', type: '', text: '', hideUsed: true, hideReview: false } };
 
 if (!configured) notConfigured(app); else init();
 
 async function init() {
-  fill(app, h('div', { class: 'card' }, h('h1', {}, 'Host'), h('button', { onclick: login }, 'Sign in with Google')));
+  user = await signInGuest();
   allStates = await loadStates();
-}
-
-async function login() {
-  try { user = await signInHost(); } catch (e) { return toast('Sign-in failed: ' + e.message, 'err'); }
-  if (!(await isAdmin(user.uid))) {
-    return fill(app, h('div', { class: 'card warn' }, h('h2', {}, 'Not an admin yet'),
-      h('p', {}, 'In the Firebase console → Firestore, create a collection ', h('b', {}, 'admins'),
-        ' with a document whose ID is:'), h('pre', {}, user.uid), h('p', {}, 'Then reload this page.')));
-  }
-  const snap = await fs.getDocs(fs.collection(db, 'questions'));
-  snap.docs.forEach(d => { Q[d.id] = d.data(); });
+  Q = await loadQuestions();
+  usage = await loadUsage(Q);
   if (qs.get('code')) openGame(qs.get('code').toUpperCase()); else home();
 }
+
+const hosted = () => { try { return JSON.parse(localStorage.getItem('ecg.hosted') || '[]'); } catch { return []; } };
+const remember = c => { try { localStorage.setItem('ecg.hosted', JSON.stringify([c, ...hosted().filter(x => x !== c)].slice(0, 20))); } catch {} };
 
 // ---------------------------------------------------------------- home
 async function home() {
   unsubs.forEach(u => u()); unsubs = [];
-  const games = (await fs.getDocs(fs.query(fs.collection(db, 'games'), fs.where('hostUid', '==', user.uid)))).docs
-    .map(d => d.data()).sort((a, b) => b.createdAt - a.createdAt);
+  const games = (await Promise.all(hosted().map(c => fs.getDoc(gameRef(c))))).filter(d => d.exists()).map(d => d.data());
   const f = h('form', { onsubmit: createGame },
     h('div', { class: 'grid2' },
       h('div', {}, h('label', {}, 'Game name'), h('input', { name: 'name', value: 'Game night' }),
@@ -53,10 +47,12 @@ async function home() {
         h('label', {}, 'Red party name'), h('input', { name: 'red', value: 'Red' }))),
     h('p', {}, h('button', {}, 'Create game')));
   fill(app, 
-    h('div', { class: 'row' }, h('h1', { class: 'grow' }, 'Host'), h('a', { href: '../admin/' }, 'Question warehouse & profiles →')),
-    Object.keys(Q).length ? null : h('div', { class: 'card warn' }, 'No questions in the warehouse yet. Import them on the admin page first.'),
+    h('div', { class: 'row' }, h('h1', { class: 'grow' }, 'Host'), h('a', { href: '../admin/' }, 'Question bank →')),
+    h('div', { class: 'card' }, h('h2', {}, 'Open a game'),
+      h('form', { class: 'row', onsubmit: e => { e.preventDefault(); const c = e.target.c.value.trim().toUpperCase(); if (c) openGame(c); } },
+        h('input', { name: 'c', placeholder: 'Room code', style: 'max-width:160px' }), h('button', {}, 'Open'))),
     h('div', { class: 'card' }, h('h2', {}, 'New game'), f),
-    h('div', { class: 'card' }, h('h2', {}, 'Your games'),
+    h('div', { class: 'card' }, h('h2', {}, 'Games on this device'),
       games.length ? h('table', {}, h('tr', {}, h('th', {}, 'Code'), h('th', {}, 'Name'), h('th', {}, 'Status'), h('th', {}, '')),
         ...games.map(g => h('tr', {}, h('td', {}, g.code), h('td', {}, g.name), h('td', {}, STATUS_TEXT[g.status]),
           h('td', {}, h('button', { class: 'small', onclick: () => openGame(g.code) }, 'Open')))))
@@ -76,12 +72,13 @@ async function createGame(e) {
     playerTotals: {}, lastReveal: null, reveal: null, result: null,
   };
   await fs.setDoc(gameRef(c), g);
+  remember(c);
   openGame(c);
 }
 
 // ---------------------------------------------------------------- game
 function openGame(c) {
-  code = c; history.replaceState(null, '', `?code=${c}`);
+  code = c; remember(c); history.replaceState(null, '', `?code=${c}`);
   unsubs.forEach(u => u()); unsubs = [];
   unsubs.push(fs.onSnapshot(gameRef(c), s => { game = s.data(); if (game) { if (!picked.loaded && game.questionIds?.length) { picked.ids = [...game.questionIds]; } picked.loaded = true; render(); } }));
   unsubs.push(fs.onSnapshot(subCol(c, 'players'), s => { players = s.docs.map(d => d.data()); autoLeaders(); render(); }));
@@ -132,27 +129,12 @@ function lobbyView(v) {
       h('td', {}, h('button', { class: 'small secondary', onclick: () => fs.deleteDoc(sub(code, 'players', p.uid)) }, 'Remove')))));
   return h('div', {},
     h('div', { class: 'card' }, h('h2', {}, 'Players join here'), h('p', {}, h('a', { href: join, target: '_blank' }, join)),
-      h('p', { class: 'muted' }, `Or open play/ and enter ${code}. ${players.length} joined.`), plist),
+      h('p', { class: 'muted' }, `Or open the site, tap Play and enter ${code}. ${players.length} joined.`), plist),
     pickerView(), checkpointView(),
     h('div', { class: 'card' }, h('button', { disabled: !picked.ids.length, onclick: startGame }, `Start game with ${picked.ids.length} questions`)));
 }
 
-let seenCache = { key: '', counts: {} };
-async function refreshSeen() {
-  const ids = [...new Set(players.map(p => p.profileId))].sort();
-  const key = ids.join(',');
-  if (key === seenCache.key) return;
-  const counts = {};
-  for (const id of ids) {
-    const p = await fs.getDoc(fs.doc(db, 'profiles', id));
-    for (const q of p.data()?.seen || []) counts[q] = (counts[q] || []).concat(p.data().name);
-  }
-  seenCache = { key, counts };
-  render();
-}
-
 function pickerView() {
-  refreshSeen();
   const F = picked.filter;
   const all = Object.values(Q);
   const games = [...new Set(all.flatMap(q => q.games || []))].sort();
@@ -161,7 +143,7 @@ function pickerView() {
     (!F.games.size || (q.games || []).some(g => F.games.has(g))) &&
     (!F.cat || q.category === F.cat) && (!F.type || q.type === F.type) &&
     (!F.text || (q.text + ' ' + q.answer).toLowerCase().includes(F.text.toLowerCase())) &&
-    (!F.hideSeen || !seenCache.counts[q.id]) && (!F.hideReview || !q.needsReview));
+    (!F.hideUsed || !usage[q.id]?.length) && (!F.hideReview || !q.needsReview));
   const sel = new Set(picked.ids);
   const re = () => render();
   return h('div', { class: 'card' },
@@ -173,7 +155,7 @@ function pickerView() {
       h('select', { onchange: e => { F.type = e.target.value; re(); } }, h('option', { value: '' }, 'All types'), ...['qa', 'range', 'list', 'closer', 'tf'].map(t => h('option', { selected: F.type === t }, t))),
       h('input', { placeholder: 'Search', value: F.text, 'data-keep': 'qsearch', oninput: e => { F.text = e.target.value; re(); }, class: 'grow' })),
     h('div', { class: 'row' },
-      h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.hideSeen, onchange: e => { F.hideSeen = e.target.checked; re(); } }), 'Hide questions anyone here has seen'),
+      h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.hideUsed, onchange: e => { F.hideUsed = e.target.checked; re(); } }), 'Hide questions already used in a game'),
       h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.hideReview, onchange: e => { F.hideReview = e.target.checked; re(); } }), 'Hide ones flagged for review')),
     h('div', { class: 'row', style: 'margin:.6rem 0' },
       h('button', { class: 'small', onclick: () => { shown.forEach(q => { if (!sel.has(q.id)) picked.ids.push(q.id); }); saveIds(); } }, `Add all ${shown.length} shown`),
@@ -181,13 +163,13 @@ function pickerView() {
       h('button', { class: 'small secondary', onclick: () => { picked.ids.sort(() => Math.random() - .5); saveIds(); } }, 'Shuffle picked'),
       h('button', { class: 'small secondary', onclick: () => { picked.ids = []; saveIds(); } }, 'Clear')),
     h('div', { style: 'max-height:360px;overflow:auto' }, h('table', {},
-      h('tr', {}, h('th', {}, ''), h('th', {}, 'Question'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Game'), h('th', {}, 'Seen by')),
+      h('tr', {}, h('th', {}, ''), h('th', {}, 'Question'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Used in')),
       ...shown.map(q => h('tr', {},
         h('td', {}, h('input', { type: 'checkbox', style: 'width:auto', checked: sel.has(q.id), onchange: e => {
           if (e.target.checked) picked.ids.push(q.id); else picked.ids = picked.ids.filter(i => i !== q.id); saveIds(); } })),
         h('td', {}, q.text, q.needsReview ? h('span', { class: 'pill warn', title: (q.reviewNotes || []).join('\n') }, ' review') : null),
-        h('td', {}, q.type), h('td', {}, q.value), h('td', {}, (q.games || []).join(', ')),
-        h('td', { class: 'muted' }, (seenCache.counts[q.id] || []).join(', ')))))));
+        h('td', {}, q.type), h('td', {}, q.value),
+        h('td', { class: 'muted' }, usageLabel(usage[q.id])))))));
 }
 
 async function saveIds() {
@@ -275,19 +257,18 @@ async function showQuestion(q) {
   await snapshot();
   resetPending();
   await fs.updateDoc(gameRef(code), { current: publicQuestion(q), answersOpen: true, status: 'question', reveal: null });
-  // seen-it: log to every profile in this game
-  const b = fs.writeBatch(db);
-  for (const pid of new Set(players.map(p => p.profileId))) b.update(fs.doc(db, 'profiles', pid), { seen: fs.arrayUnion(q.id) });
-  await b.commit().catch(() => {});
+  // remember this question was used in this game
+  await recordUse(q.id, game).catch(() => {});
+  (usage[q.id] ||= []).push({ game: game.name, code, date: new Date().toISOString().slice(0, 10) });
 }
 
 async function skipQuestion(q) {
-  const pool = Object.values(Q).filter(x => !game.questionIds.includes(x.id) && !seenCache.counts[x.id] && x.category === q.category);
+  const pool = Object.values(Q).filter(x => !game.questionIds.includes(x.id) && !usage[x.id]?.length && x.category === q.category);
   const alt = pool[Math.floor(Math.random() * pool.length)];
   const ids = [...game.questionIds];
   if (alt) ids[game.qIndex] = alt.id; else ids.splice(game.qIndex, 1);
   await fs.updateDoc(gameRef(code), { questionIds: ids, total: ids.length, checkpoints: (game.checkpoints || []).map(c => Math.min(c, ids.length)) });
-  toast(alt ? `Swapped in: ${alt.text.slice(0, 50)}…` : 'Removed (no unseen swap in that category)');
+  toast(alt ? `Swapped in: ${alt.text.slice(0, 50)}…` : 'Removed (no unused swap in that category)');
 }
 
 async function award(q, rows, party) {

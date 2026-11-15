@@ -1,7 +1,7 @@
 // Run with:  node tests/scoring.test.mjs
 import { readFileSync } from 'node:fs';
 import { autoScore, closerPoints } from '../js/scoring.js';
-const Q = Object.fromEntries(JSON.parse(readFileSync(process.env.QUESTIONS || new URL('../../import-files/questions.json', import.meta.url))).map(q => [q.id, q]));
+const Q = Object.fromEntries(JSON.parse(readFileSync(new URL('../data/questions.json', import.meta.url))).map(q => [q.id, q]));
 let pass = 0, fail = 0;
 const eq = (name, got, want) => { got === want ? pass++ : (fail++, console.log('FAIL', name, 'got', got, 'want', want)); };
 const find = t => Object.values(Q).find(q => q.text.includes(t));

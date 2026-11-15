@@ -9,7 +9,7 @@
 <div class="wrap" id="app"><p>Loading…</p></div>
 <script type="module">
 import { $, h, fill, qs, fmt, pct, toast, notConfigured } from '../js/ui.js';
-import { configured, signInGuest, gameRef, sub, db, fs } from '../js/firebase.js';
+import { configured, signInGuest, gameRef, sub, fs } from '../js/firebase.js';
 import { loadStates, view, teamName } from '../js/game.js';
 import { margin, leader, validateDraft } from '../js/engine.js';
 import { COLORS } from '../js/map.js';
@@ -40,36 +40,16 @@ async function join() {
   localStorage.setItem('ecg.code', code);
   const p = await fs.getDoc(sub(code, 'players', user.uid));
   if (p.exists()) return listen();
-  pickProfile(g.data());
+  pickTeam(g.data());
 }
 
-async function pickProfile(g) {
-  const snap = await fs.getDocs(fs.collection(db, 'profiles'));
-  const profiles = snap.docs.map(d => d.data()).sort((a, b) => a.name.localeCompare(b.name));
-  const filter = h('input', { placeholder: 'Find your name', oninput: () => render() });
-  const list = h('div');
-  const render = () => {
-    const f = filter.value.toLowerCase();
-    list.replaceChildren(...profiles.filter(p => p.name.toLowerCase().includes(f)).map(p =>
-      h('button', { class: 'bigbtn secondary', onclick: () => pickTeam(g, p) }, p.name)));
-  };
-  render();
-  fill(app, h('h1', {}, 'Who are you?'), filter, list,
-    h('details', {}, h('summary', {}, 'New player'),
-      h('form', { onsubmit: async e => {
-        e.preventDefault();
-        const name = e.target.n.value.trim(); if (!name) return;
-        const id = name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-        const prof = { id, name, games: [], seen: [] };
-        await fs.setDoc(fs.doc(db, 'profiles', id), prof, { merge: true });
-        pickTeam(g, prof);
-      } }, h('label', {}, 'Full name'), h('input', { name: 'n' }), h('button', { class: 'bigbtn' }, 'Create'))));
-}
-
-function pickTeam(g, prof) {
-  fill(app, h('h1', {}, `Hi ${prof.name.split(' ')[0]} — pick your party`),
+function pickTeam(g) {
+  const nick = h('input', { placeholder: 'Nickname (optional, just for tonight)', maxlength: 20, value: localStorage.getItem('ecg.nick') || '' });
+  fill(app, h('h1', {}, 'Pick your party'), nick,
     ...g.settings.teams.map(t => h('button', { class: `bigbtn ${t.id}`, onclick: async () => {
-      await fs.setDoc(sub(code, 'players', user.uid), { uid: user.uid, profileId: prof.id, name: prof.name, team: t.id, joinedAt: Date.now() });
+      const name = nick.value.trim() || 'Player';
+      try { localStorage.setItem('ecg.nick', nick.value.trim()); } catch {}
+      await fs.setDoc(sub(code, 'players', user.uid), { uid: user.uid, name, team: t.id, joinedAt: Date.now() });
       listen();
     } }, t.name)));
 }
@@ -143,7 +123,7 @@ function questionView(v) {
       e.preventDefault();
       const text = e.target.a.value.trim(); if (!text) return;
       await fs.setDoc(sub(code, 'answers', answerId()), {
-        qid: c.id, team: me.team, uid: user.uid, name: me.name, profileId: me.profileId, text, at: Date.now() });
+        qid: c.id, team: me.team, uid: user.uid, name: me.name, text, at: Date.now() });
       toast('Answer sent');
     } }, input, h('button', { class: 'bigbtn' }, myAnswer ? 'Update answer' : 'Submit'))
       : h('p', { class: 'muted' }, 'Answers are closed.'),

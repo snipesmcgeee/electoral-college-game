@@ -9,7 +9,7 @@ No logins and no accounts. Anyone can open the site and pick a role:
 | `host/` | Whoever runs the game | Start a game, pick questions and checkpoints, score, reveal spending, undo |
 | `board/?code=ABCD` | TV | Live map, 270 tracker, popular vote, current question |
 | `play/?code=ABCD` | Phones | Join with the room code, answer, plan spending with your party, lock |
-| `admin/` | Anyone | Browse the question bank, review flags, test how an answer scores |
+| `admin/` | Anyone browses; admins edit | Question bank: browse, test scoring; signed-in admins can add, edit, hide or delete |
 
 ## Setup (already done)
 - Firebase project `electoral-college-game`: Firestore, Anonymous sign-in (invisible to players), rules from `firestore.rules`.
@@ -37,7 +37,9 @@ Questions remember which games they were used in (the Excel games, plus every ga
 `qa` exact answer · `range` closest number in steps (your typed steps are kept when they're clean; otherwise steps come from the step width) · `list` points per correct item · `closer` closest takes all · `tf` true/false. Anything flagged `needsReview` shows a ⚠ in admin with the reason.
 
 ## Updating questions
-Questions live in `data/questions.json`. To rebuild from Excel:
+On the Question bank page, sign in with Google (account must be in Firestore `admins`) to add, edit, hide (restorable) or delete (permanent) questions. Edits are saved in Firestore (`questionEdits`) on top of `data/questions.json`.
+
+The base bank lives in `data/questions.json`. To rebuild from Excel:
 ```
 pip install openpyxl
 python3 tools/import/import_questions.py Electoral_Games.xlsx data

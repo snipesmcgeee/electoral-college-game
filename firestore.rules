@@ -1,11 +1,18 @@
 rules_version = '2';
-// Paste into Firebase console → Firestore → Rules, then Publish.
-// Every device signs in anonymously (invisible to players). That's the only check:
-// it keeps random bots off the database without any logins for people.
+// Paste into Firebase console → Firestore Database → Rules, then Publish.
+// Playing, hosting and the board need no login (devices sign in anonymously, invisibly).
+// Editing questions needs Google sign-in with an account listed in the `admins` collection.
 service cloud.firestore {
   match /databases/{db}/documents {
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && exists(/databases/$(db)/documents/admins/$(request.auth.uid)); }
+
+    match /games/{document=**} { allow read, write: if signedIn(); }
+    match /usage/{id} { allow read, write: if signedIn(); }
+    match /questionEdits/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
     }
+    match /admins/{uid} { allow read: if signedIn() && request.auth.uid == uid; }
   }
 }

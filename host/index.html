@@ -148,7 +148,7 @@ function pickerView() {
   const all = Object.values(Q);
   const games = [...new Set(all.flatMap(q => q.games || []))].sort();
   const cats = [...new Set(all.map(q => q.category))].sort();
-  const shown = all.filter(q =>
+  const shown = all.filter(q => !q.hidden &&
     (!F.games.size || (q.games || []).some(g => F.games.has(g))) &&
     (!F.cat || q.category === F.cat) && (!F.type || q.type === F.type) &&
     (!F.text || (q.text + ' ' + q.answer).toLowerCase().includes(F.text.toLowerCase())) &&
@@ -218,7 +218,7 @@ function questionView(v) {
   const q = currentFull();
   const awarded = q && game.scored?.[q.id];
   if (!q || awarded) {
-    const nq = Q[nextId];
+    const nq = nextId && (Q[nextId] || { id: nextId, text: '(This question was deleted — skip it)', answer: '', category: '', type: 'qa', value: 0 });
     return h('div', { class: 'card' },
       awarded ? h('p', {}, `Awarded: ${v.teams.map(t => `${teamName(game, t)} +${awarded[t]}`).join(' · ')}`) : null,
       nq ? h('div', {}, h('p', { class: 'muted' }, `Next: Q${game.qIndex + 1} of ${game.total} · ${nq.category} · ${nq.type} · ${nq.value} pts`),
@@ -272,7 +272,7 @@ async function showQuestion(q) {
 }
 
 async function skipQuestion(q) {
-  const pool = Object.values(Q).filter(x => !game.questionIds.includes(x.id) && !usage[x.id]?.length && x.category === q.category);
+  const pool = Object.values(Q).filter(x => !x.hidden && !game.questionIds.includes(x.id) && !usage[x.id]?.length && x.category === q.category);
   const alt = pool[Math.floor(Math.random() * pool.length)];
   const ids = [...game.questionIds];
   if (alt) ids[game.qIndex] = alt.id; else ids.splice(game.qIndex, 1);

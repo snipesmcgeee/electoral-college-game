@@ -22,6 +22,16 @@ export function signInGuest() {
   });
 }
 
+// Question editing only: Google sign-in, and the account must be listed in Firestore `admins`.
+export async function signInGoogle() {
+  const res = await A.signInWithPopup(auth, new A.GoogleAuthProvider());
+  return res.user;
+}
+export function currentUser() { return auth.currentUser; }
+export async function isAdmin(uid) {
+  try { return (await F.getDoc(F.doc(db, 'admins', uid))).exists(); } catch { return false; }
+}
+
 export const gameRef = code => F.doc(db, 'games', code);
 export const sub = (code, ...path) => F.doc(db, 'games', code, ...path);
 export const subCol = (code, name) => F.collection(db, 'games', code, name);

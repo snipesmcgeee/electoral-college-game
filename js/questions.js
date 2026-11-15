@@ -1,11 +1,43 @@
-// The question bank lives in the repo (data/questions.json).
-// Usage ("which games has this question been played in") lives in Firestore: usage/{questionId}.
+// The question bank: data/questions.json in the repo, plus edits saved in Firestore (questionEdits/{id}).
+//   edit doc = full question  → replaces the repo version (or adds a new question, custom: true)
+//   { hidden: true }          → kept, but not offered to hosts (restorable)
+//   { deleted: true }         → gone everywhere (repo questions); added questions are erased outright
+// Usage ("which games has this question been played in") lives in usage/{questionId}.
 import { db, fs } from './firebase.js';
 
-let BANK = null;
+let REPO = null;
+export async function loadRepo(base = '..') {
+  if (!REPO) REPO = Object.fromEntries((await (await fetch(`${base}/data/questions.json`)).json()).map(q => [q.id, q]));
+  return REPO;
+}
+
+// { id: question } with edits applied; deleted ones removed. Hidden ones keep hidden: true.
 export async function loadQuestions(base = '..') {
-  if (!BANK) BANK = Object.fromEntries((await (await fetch(`${base}/data/questions.json`)).json()).map(q => [q.id, q]));
-  return BANK;
+  const repo = await loadRepo(base);
+  const out = Object.fromEntries(Object.entries(repo).map(([id, q]) => [id, { ...q }]));
+  try {
+    const snap = await fs.getDocs(fs.collection(db, 'questionEdits'));
+    for (const d of snap.docs) {
+      const e = d.data();
+      if (e.deleted) { delete out[d.id]; continue; }
+      out[d.id] = { ...(out[d.id] || {}), ...e, id: d.id };
+    }
+  } catch (e) { console.warn('question edits not loaded', e); }
+  return out;
+}
+
+export const isCustom = id => !(REPO && REPO[id]);
+
+export function saveQuestion(q) {
+  const clean = JSON.parse(JSON.stringify(q));
+  if (!clean.needsReview) delete clean.reviewNotes;
+  return fs.setDoc(fs.doc(db, 'questionEdits', q.id), clean);
+}
+export function setHidden(id, hidden) {
+  return fs.setDoc(fs.doc(db, 'questionEdits', id), { hidden }, { merge: true });
+}
+export function deleteForever(id) {
+  return isCustom(id) ? fs.deleteDoc(fs.doc(db, 'questionEdits', id)) : fs.setDoc(fs.doc(db, 'questionEdits', id), { deleted: true });
 }
 
 // { questionId: [{ game, code, date }] } — Excel games come from each question's `games` field.

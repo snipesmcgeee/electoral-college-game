@@ -1,0 +1,359 @@
+[
+ {
+  "code": "AK",
+  "fips": "02",
+  "name": "Alaska",
+  "ev2024": 3,
+  "ev2020": 3
+ },
+ {
+  "code": "AL",
+  "fips": "01",
+  "name": "Alabama",
+  "ev2024": 9,
+  "ev2020": 9
+ },
+ {
+  "code": "AR",
+  "fips": "05",
+  "name": "Arkansas",
+  "ev2024": 6,
+  "ev2020": 6
+ },
+ {
+  "code": "AZ",
+  "fips": "04",
+  "name": "Arizona",
+  "ev2024": 11,
+  "ev2020": 11
+ },
+ {
+  "code": "CA",
+  "fips": "06",
+  "name": "California",
+  "ev2024": 54,
+  "ev2020": 55
+ },
+ {
+  "code": "CO",
+  "fips": "08",
+  "name": "Colorado",
+  "ev2024": 10,
+  "ev2020": 9
+ },
+ {
+  "code": "CT",
+  "fips": "09",
+  "name": "Connecticut",
+  "ev2024": 7,
+  "ev2020": 7
+ },
+ {
+  "code": "DC",
+  "fips": "11",
+  "name": "District of Columbia",
+  "ev2024": 3,
+  "ev2020": 3
+ },
+ {
+  "code": "DE",
+  "fips": "10",
+  "name": "Delaware",
+  "ev2024": 3,
+  "ev2020": 3
+ },
+ {
+  "code": "FL",
+  "fips": "12",
+  "name": "Florida",
+  "ev2024": 30,
+  "ev2020": 29
+ },
+ {
+  "code": "GA",
+  "fips": "13",
+  "name": "Georgia",
+  "ev2024": 16,
+  "ev2020": 16
+ },
+ {
+  "code": "HI",
+  "fips": "15",
+  "name": "Hawaii",
+  "ev2024": 4,
+  "ev2020": 4
+ },
+ {
+  "code": "IA",
+  "fips": "19",
+  "name": "Iowa",
+  "ev2024": 6,
+  "ev2020": 6
+ },
+ {
+  "code": "ID",
+  "fips": "16",
+  "name": "Idaho",
+  "ev2024": 4,
+  "ev2020": 4
+ },
+ {
+  "code": "IL",
+  "fips": "17",
+  "name": "Illinois",
+  "ev2024": 19,
+  "ev2020": 20
+ },
+ {
+  "code": "IN",
+  "fips": "18",
+  "name": "Indiana",
+  "ev2024": 11,
+  "ev2020": 11
+ },
+ {
+  "code": "KS",
+  "fips": "20",
+  "name": "Kansas",
+  "ev2024": 6,
+  "ev2020": 6
+ },
+ {
+  "code": "KY",
+  "fips": "21",
+  "name": "Kentucky",
+  "ev2024": 8,
+  "ev2020": 8
+ },
+ {
+  "code": "LA",
+  "fips": "22",
+  "name": "Louisiana",
+  "ev2024": 8,
+  "ev2020": 8
+ },
+ {
+  "code": "MA",
+  "fips": "25",
+  "name": "Massachusetts",
+  "ev2024": 11,
+  "ev2020": 11
+ },
+ {
+  "code": "MD",
+  "fips": "24",
+  "name": "Maryland",
+  "ev2024": 10,
+  "ev2020": 10
+ },
+ {
+  "code": "ME",
+  "fips": "23",
+  "name": "Maine",
+  "ev2024": 4,
+  "ev2020": 4
+ },
+ {
+  "code": "MI",
+  "fips": "26",
+  "name": "Michigan",
+  "ev2024": 15,
+  "ev2020": 16
+ },
+ {
+  "code": "MN",
+  "fips": "27",
+  "name": "Minnesota",
+  "ev2024": 10,
+  "ev2020": 10
+ },
+ {
+  "code": "MO",
+  "fips": "29",
+  "name": "Missouri",
+  "ev2024": 10,
+  "ev2020": 10
+ },
+ {
+  "code": "MS",
+  "fips": "28",
+  "name": "Mississippi",
+  "ev2024": 6,
+  "ev2020": 6
+ },
+ {
+  "code": "MT",
+  "fips": "30",
+  "name": "Montana",
+  "ev2024": 4,
+  "ev2020": 3
+ },
+ {
+  "code": "NC",
+  "fips": "37",
+  "name": "North Carolina",
+  "ev2024": 15,
+  "ev2020": 14
+ },
+ {
+  "code": "ND",
+  "fips": "38",
+  "name": "North Dakota",
+  "ev2024": 3,
+  "ev2020": 3
+ },
+ {
+  "code": "NE",
+  "fips": "31",
+  "name": "Nebraska",
+  "ev2024": 5,
+  "ev2020": 5
+ },
+ {
+  "code": "NH",
+  "fips": "33",
+  "name": "New Hampshire",
+  "ev2024": 4,
+  "ev2020": 4
+ },
+ {
+  "code": "NJ",
+  "fips": "34",
+  "name": "New Jersey",
+  "ev2024": 15,
+  "ev2020": 15
+ },
+ {
+  "code": "NM",
+  "fips": "35",
+  "name": "New Mexico",
+  "ev2024": 5,
+  "ev2020": 5
+ },
+ {
+  "code": "NV",
+  "fips": "32",
+  "name": "Nevada",
+  "ev2024": 6,
+  "ev2020": 6
+ },
+ {
+  "code": "NY",
+  "fips": "36",
+  "name": "New York",
+  "ev2024": 28,
+  "ev2020": 29
+ },
+ {
+  "code": "OH",
+  "fips": "39",
+  "name": "Ohio",
+  "ev2024": 17,
+  "ev2020": 18
+ },
+ {
+  "code": "OK",
+  "fips": "40",
+  "name": "Oklahoma",
+  "ev2024": 7,
+  "ev2020": 7
+ },
+ {
+  "code": "OR",
+  "fips": "41",
+  "name": "Oregon",
+  "ev2024": 8,
+  "ev2020": 7
+ },
+ {
+  "code": "PA",
+  "fips": "42",
+  "name": "Pennsylvania",
+  "ev2024": 19,
+  "ev2020": 20
+ },
+ {
+  "code": "RI",
+  "fips": "44",
+  "name": "Rhode Island",
+  "ev2024": 4,
+  "ev2020": 4
+ },
+ {
+  "code": "SC",
+  "fips": "45",
+  "name": "South Carolina",
+  "ev2024": 9,
+  "ev2020": 9
+ },
+ {
+  "code": "SD",
+  "fips": "46",
+  "name": "South Dakota",
+  "ev2024": 3,
+  "ev2020": 3
+ },
+ {
+  "code": "TN",
+  "fips": "47",
+  "name": "Tennessee",
+  "ev2024": 11,
+  "ev2020": 11
+ },
+ {
+  "code": "TX",
+  "fips": "48",
+  "name": "Texas",
+  "ev2024": 40,
+  "ev2020": 38
+ },
+ {
+  "code": "UT",
+  "fips": "49",
+  "name": "Utah",
+  "ev2024": 6,
+  "ev2020": 6
+ },
+ {
+  "code": "VA",
+  "fips": "51",
+  "name": "Virginia",
+  "ev2024": 13,
+  "ev2020": 13
+ },
+ {
+  "code": "VT",
+  "fips": "50",
+  "name": "Vermont",
+  "ev2024": 3,
+  "ev2020": 3
+ },
+ {
+  "code": "WA",
+  "fips": "53",
+  "name": "Washington",
+  "ev2024": 12,
+  "ev2020": 12
+ },
+ {
+  "code": "WI",
+  "fips": "55",
+  "name": "Wisconsin",
+  "ev2024": 10,
+  "ev2020": 10
+ },
+ {
+  "code": "WV",
+  "fips": "54",
+  "name": "West Virginia",
+  "ev2024": 4,
+  "ev2020": 5
+ },
+ {
+  "code": "WY",
+  "fips": "56",
+  "name": "Wyoming",
+  "ev2024": 3,
+  "ev2020": 3
+ }
+]

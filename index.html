@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electoral College Game</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body class="phone">
+<div class="wrap">
+  <h1 style="margin-top:2rem">Electoral College Game</h1>
+  <p class="muted">Answer trivia, earn points, spend them on states. Most electoral votes wins.</p>
+  <form onsubmit="event.preventDefault(); location.href='play/?code=' + this.c.value.trim().toUpperCase();">
+    <label>Room code</label>
+    <input name="c" autocapitalize="characters" maxlength="6" autofocus>
+    <button class="bigbtn">Join game</button>
+  </form>
+  <p style="margin-top:2rem"><a href="board/">Board (TV)</a> · <a href="host/">Host</a> · <a href="admin/">Admin</a></p>
+</div>
+</body>
+</html>

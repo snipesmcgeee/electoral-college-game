@@ -12,10 +12,11 @@ import { $, h, fill, qs, fmt, pct, toast, notConfigured, showError } from '../js
 import { configured, signInGuest, gameRef, sub, subCol, fs } from '../js/firebase.js';
 import { loadStates, view, teamName } from '../js/game.js';
 import { margin, leader, validateDraft } from '../js/engine.js';
-import { COLORS } from '../js/map.js';
+import { applyTeamColors } from '../js/map.js';
 
 const app = $('#app');
 let user, code, game, me, allStates, draft = {}, myAnswer = null, unsubs = [], roster = [];
+let sortBy = (() => { try { return localStorage.getItem('ecg.sort') || 'ev'; } catch { return 'ev'; } })();
 
 if (!configured) notConfigured(app); else init();
 
@@ -88,10 +89,15 @@ function render() {
   if (!answerUnsub && game.current) watchAnswer();
   const v = view(game, allStates);
   const t = me.team;
+  applyTeamColors(game);
+  const planned = game.status === 'spending' ? validateDraft(draft, v.balance[t], v.closed).total : 0;
   const header = h('div', { class: 'row sticky' },
     h('span', { class: `pill ${t}` }, teamName(game, t)),
     h('span', { class: 'muted grow' }, me.name),
-    h('span', {}, `Balance `, h('b', {}, fmt(v.balance[t]))));
+    game.status === 'spending'
+      ? h('span', {}, 'Balance ', h('b', {}, fmt(v.balance[t])), ' · Spent ', h('b', {}, fmt(planned)), ' · Left ',
+          h('b', { style: v.balance[t] - planned ? '' : 'color:var(--ok)' }, fmt(v.balance[t] - planned)))
+      : h('span', {}, 'Balance ', h('b', {}, fmt(v.balance[t]))));
   let body;
   switch (game.status) {
     case 'lobby': body = h('div', { class: 'card' }, h('h2', {}, 'You’re in'), h('p', {}, 'Waiting for the host to start.'),
@@ -147,14 +153,31 @@ function spendingView(v) {
     try { await fs.setDoc(sub(code, 'drafts', t), { alloc: { [codeSt]: n } }, { merge: true }); }
     catch (e) { toast('Could not save — is spending open?', 'err'); }
   };
-  const open = v.states.filter(s => !v.closed[s.code]).sort((a, b) => b.ev - a.ev || a.code.localeCompare(b.code));
+  const other = v.teams.find(x => x !== t);
+  const m = s => margin(v.spend[s.code], v.teams);
+  const sorters = {
+    ev: (a, b) => b.ev - a.ev || a.name.localeCompare(b.name),
+    lead: (a, b) => {
+      const g = s => { const l = leader(v.spend[s.code], v.teams); return l === t ? 0 : l ? 2 : 1; };
+      return g(a) - g(b) || (g(a) === 0 ? m(b) - m(a) : g(a) === 2 ? m(a) - m(b) : 0) || b.ev - a.ev;
+    },
+    lock: (a, b) => m(b) - m(a) || b.ev - a.ev,
+    abc: (a, b) => a.name.localeCompare(b.name),
+  };
+  const open = v.states.filter(s => !v.closed[s.code]).sort(sorters[sortBy] || sorters.ev);
+  const sortBtns = h('div', { class: 'row', style: 'gap:.3rem' }, ...[['ev', 'Electoral votes'], ['lead', 'Biggest lead'], ['lock', 'Closest to locking'], ['abc', 'A–Z']]
+    .map(([k, label]) => h('button', { class: `small ${sortBy === k ? '' : 'secondary'}`, onclick: () => { sortBy = k; try { localStorage.setItem('ecg.sort', k); } catch {} render(); } }, label)));
+  const need = x => Math.max(0, 270 - v.ec.final[x]);
+  const toWin = h('div', { class: 'muted', style: 'font-size:.9rem' }, 'To win (270): ',
+    ...v.teams.map((x, i) => h('span', {}, i ? ' · ' : '', h('b', { style: `color:var(--${x})` }, teamName(game, x)),
+      ` ${v.ec.final[x]} locked +${v.ec.lean[x]} leaning, needs ${need(x)}`)));
   const rows = open.map(s => {
     const sp = v.spend[s.code] || {};
     const lead = leader(sp, v.teams);
     const mine = draft[s.code] || 0;
     const inp = h('input', { type: 'number', min: 0, value: mine || '', disabled: locked, onchange: e => set(s.code, e.target.value) });
     return h('div', { class: 'state-row' },
-      h('div', { class: 'code', style: `color:${lead ? COLORS[lead].solid : 'inherit'}` }, s.code),
+      h('div', { class: 'code', style: `color:${lead ? `var(--${lead})` : 'inherit'}` }, s.code),
       h('div', {}, h('div', {}, `${s.name} · ${s.ev} EV`),
         h('div', { class: 'info' }, v.teams.map(x => `${teamName(game, x)} ${sp[x] || 0}`).join(' · '), ` · ${pct(margin(sp, v.teams))}`)),
       h('div', { class: 'stepper' },
@@ -165,16 +188,16 @@ function spendingView(v) {
   return h('div', {},
     h('div', { class: 'card' },
       h('h2', {}, `Spending round ${game.round || ''}`),
-      h('p', {}, `Planned `, h('b', {}, fmt(check.total)), ` of `, h('b', {}, fmt(v.balance[t])),
-        check.ok ? '' : h('span', { class: 'pill warn' }, check.errors[0])),
+      toWin,
+      check.ok ? null : h('p', {}, h('span', { class: 'pill warn' }, check.errors[0])),
       h('p', { class: 'muted' }, 'Your party sees this draft live. The other party sees nothing until both lock.'),
       locked ? h('p', { class: 'pill ok' }, 'Locked — waiting for reveal')
-        : h('button', { class: 'bigbtn', disabled: !check.ok || !canLock, onclick: async () => {
+        : h('button', { class: 'bigbtn', disabled: !check.ok || !canLock || check.total !== v.balance[t], onclick: async () => {
             if (!confirm(`Lock ${check.total} points for ${teamName(game, t)}?`)) return;
             try { await fs.updateDoc(gameRef(code), { [`locked.${t}`]: true }); }
             catch (e) { toast('Could not lock', 'err'); }
-          } }, canLock ? 'Lock spending' : 'Only your leader can lock')),
-    h('div', { class: 'card' }, h('h3', {}, `${open.length} open states`), ...rows));
+          } }, !canLock ? 'Only your leader can lock' : check.total !== v.balance[t] ? `Spend all points to lock (${fmt(v.balance[t] - check.total)} left)` : 'Lock spending')),
+    h('div', { class: 'card' }, h('h3', {}, `${open.length} open states`), sortBtns, ...rows));
 }
 
 function resultView(v) {

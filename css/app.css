@@ -73,3 +73,12 @@ body.board { background: #101318; color: #f3f3f3; }
 .stepper input { width: 4rem; text-align: center; padding: .4rem; }
 .stepper button { padding: .4rem .6rem; }
 .sticky { position: sticky; top: 0; background: var(--bg); padding: .6rem 0; z-index: 5; }
+
+/* board: state-closing callout */
+.board .callout { position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%) scale(.6); opacity: 0;
+  background: rgba(16,19,24,.94); border: 2px solid #fff3; border-radius: 18px; padding: 1.2rem 2.4rem; text-align: center;
+  pointer-events: none; transition: opacity .35s, transform .35s cubic-bezier(.2,1.6,.4,1); min-width: 22rem; }
+.board .callout.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; cursor: pointer; }
+.board .callout .c-team { font-size: 2.6rem; font-weight: 800; }
+.board .callout .c-state { font-size: 3.2rem; font-weight: 800; margin: .2rem 0; }
+.board .callout .c-nums { font-size: 1.8rem; opacity: .85; font-variant-numeric: tabular-nums; }

@@ -8,14 +8,14 @@
 <body class="phone">
 <div class="wrap" id="app"><p>Loading…</p></div>
 <script type="module">
-import { $, h, fill, qs, fmt, pct, toast, notConfigured } from '../js/ui.js';
-import { configured, signInGuest, gameRef, sub, fs } from '../js/firebase.js';
+import { $, h, fill, qs, fmt, pct, toast, notConfigured, showError } from '../js/ui.js';
+import { configured, signInGuest, gameRef, sub, subCol, fs } from '../js/firebase.js';
 import { loadStates, view, teamName } from '../js/game.js';
 import { margin, leader, validateDraft } from '../js/engine.js';
 import { COLORS } from '../js/map.js';
 
 const app = $('#app');
-let user, code, game, me, allStates, draft = {}, myAnswer = null, unsubs = [];
+let user, code, game, me, allStates, draft = {}, myAnswer = null, unsubs = [], roster = [];
 
 if (!configured) notConfigured(app); else init();
 
@@ -44,11 +44,13 @@ async function join() {
 }
 
 function pickTeam(g) {
-  const nick = h('input', { placeholder: 'Nickname (optional, just for tonight)', maxlength: 20, value: localStorage.getItem('ecg.nick') || '' });
-  fill(app, h('h1', {}, 'Pick your party'), nick,
+  const nick = h('input', { placeholder: 'Your name', maxlength: 20, value: localStorage.getItem('ecg.nick') || '' });
+  fill(app, h('h1', {}, 'Join the game'), h('label', {}, 'Name (so the host knows you’re here)'), nick,
+    h('label', {}, 'Pick your party'),
     ...g.settings.teams.map(t => h('button', { class: `bigbtn ${t.id}`, onclick: async () => {
-      const name = nick.value.trim() || 'Player';
-      try { localStorage.setItem('ecg.nick', nick.value.trim()); } catch {}
+      const name = nick.value.trim();
+      if (!name) { nick.focus(); return toast('Enter your name first', 'err'); }
+      try { localStorage.setItem('ecg.nick', name); } catch {}
       await fs.setDoc(sub(code, 'players', user.uid), { uid: user.uid, name, team: t.id, joinedAt: Date.now() });
       listen();
     } }, t.name)));
@@ -56,13 +58,14 @@ function pickTeam(g) {
 
 function listen() {
   unsubs.forEach(u => u()); unsubs = [];
-  unsubs.push(fs.onSnapshot(sub(code, 'players', user.uid), s => { me = s.data(); render(); }));
+  unsubs.push(fs.onSnapshot(sub(code, 'players', user.uid), s => { me = s.data(); render(); }, showError));
+  unsubs.push(fs.onSnapshot(subCol(code, 'players'), s => { roster = s.docs.map(d => d.data()); if (game?.status === 'lobby') render(); }, showError));
   unsubs.push(fs.onSnapshot(gameRef(code), s => {
     const prevQ = game?.current?.id;
     game = s.data();
     if (game?.current?.id !== prevQ) { myAnswer = null; watchAnswer(); }
     render();
-  }));
+  }, showError));
 }
 
 let draftUnsub = null, answerUnsub = null;
@@ -92,7 +95,10 @@ function render() {
   let body;
   switch (game.status) {
     case 'lobby': body = h('div', { class: 'card' }, h('h2', {}, 'You’re in'), h('p', {}, 'Waiting for the host to start.'),
-      game.leaders?.[t] === user.uid ? h('p', { class: 'pill' }, 'You are your party’s leader') : null); break;
+      game.leaders?.[t] === user.uid ? h('p', { class: 'pill' }, 'You are your party’s leader') : null,
+      h('h3', { style: 'margin-top:1rem' }, `In the room (${roster.length})`),
+      ...game.settings.teams.map(tm => h('p', {}, h('span', { class: `pill ${tm.id}` }, tm.name), ' ',
+        roster.filter(p => p.team === tm.id).map(p => p.name).sort().join(', ') || '—'))); break;
     case 'question': case 'scoring': body = questionView(v); break;
     case 'spending': watchDraft(); body = spendingView(v); break;
     case 'over': body = resultView(v); break;

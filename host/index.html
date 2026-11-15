@@ -8,7 +8,7 @@
 <body>
 <div class="wrap" id="app"><p>Loading…</p></div>
 <script type="module">
-import { $, h, fill, qs, fmt, pct, toast, makeCode, notConfigured } from '../js/ui.js';
+import { $, h, fill, qs, fmt, pct, toast, makeCode, notConfigured, showError } from '../js/ui.js';
 import { configured, signInGuest, gameRef, sub, subCol, db, fs } from '../js/firebase.js';
 import { loadQuestions, loadUsage, recordUse, usageLabel } from '../js/questions.js';
 import { loadStates, view, teamName, STATUS_TEXT } from '../js/game.js';
@@ -80,9 +80,11 @@ async function createGame(e) {
 function openGame(c) {
   code = c; remember(c); history.replaceState(null, '', `?code=${c}`);
   unsubs.forEach(u => u()); unsubs = [];
-  unsubs.push(fs.onSnapshot(gameRef(c), s => { game = s.data(); if (game) { if (!picked.loaded && game.questionIds?.length) { picked.ids = [...game.questionIds]; } picked.loaded = true; render(); } }));
-  unsubs.push(fs.onSnapshot(subCol(c, 'players'), s => { players = s.docs.map(d => d.data()); autoLeaders(); render(); }));
-  unsubs.push(fs.onSnapshot(subCol(c, 'answers'), s => { answers = s.docs.map(d => ({ id: d.id, ...d.data() })); render(); }));
+  unsubs.push(fs.onSnapshot(gameRef(c), s => {
+    if (!s.exists()) { toast(`No game with code ${c}. Create a new game instead.`, 'err'); history.replaceState(null, '', location.pathname); return home(); }
+    game = s.data(); if (game) { if (!picked.loaded && game.questionIds?.length) { picked.ids = [...game.questionIds]; } picked.loaded = true; render(); } }, showError));
+  unsubs.push(fs.onSnapshot(subCol(c, 'players'), s => { players = s.docs.map(d => d.data()); autoLeaders(); render(); }, showError));
+  unsubs.push(fs.onSnapshot(subCol(c, 'answers'), s => { answers = s.docs.map(d => ({ id: d.id, ...d.data() })); render(); }, showError));
 }
 
 async function autoLeaders() {

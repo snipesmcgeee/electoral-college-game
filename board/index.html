@@ -10,7 +10,7 @@
 <body class="board">
 <div id="app"><div class="wrap"><p>Loading…</p></div></div>
 <script type="module">
-import { $, h, fill, qs, fmt, notConfigured } from '../js/ui.js';
+import { $, h, fill, qs, fmt, notConfigured, showError } from '../js/ui.js';
 import { configured, signInGuest, gameRef, fs } from '../js/firebase.js';
 import { loadStates, view, teamName, STATUS_TEXT } from '../js/game.js';
 import { drawMap, paintMap, COLORS } from '../js/map.js';
@@ -43,10 +43,17 @@ async function start() {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.id = 'map'; $('#map').replaceWith(svg);
   await drawMap(svg, allStates.map(s => ({ ...s })));
+  // EV numbers show right away, before the game record loads
+  paintMap(svg, { states: allStates.map(s => ({ code: s.code, ev: s.ev2024 })), spend: {}, closed: {}, teams: ['blue', 'red'], ev: s => s.ev });
+  $('#room').textContent = `Room ${code}`;
   let lastRound = null;
 
   fs.onSnapshot(gameRef(code), snap => {
-    if (!snap.exists()) { $('#title').textContent = `No game ${code}`; return; }
+    if (!snap.exists()) {
+      $('#title').textContent = `No game with code ${code}`;
+      fill($('#q'), h('div', { class: 'question' }, h('div', { class: 'meta' }, 'Waiting'), h('div', {}, `No game with code ${code} yet. Create it on the Host page, then this board updates by itself.`)));
+      return;
+    }
     const g = snap.data();
     const v = view(g, allStates);
     const [L, R] = v.teams;
@@ -95,7 +102,7 @@ async function start() {
         h('div', {}, c.text),
         g.reveal?.qid === c.id ? h('div', { class: 'meta', style: 'margin-top:.5rem;font-size:1.2rem;opacity:1' }, `Answer: ${g.reveal.answer} · ${v.teams.map(t => `${teamName(g, t)} +${g.reveal.points[t]}`).join(' · ')}`) : null));
     } else fill($('#q'), );
-  });
+  }, showError);
 }
 </script>
 </body>

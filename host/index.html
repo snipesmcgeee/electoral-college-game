@@ -14,6 +14,7 @@ import { loadQuestions, loadUsage, recordUse, usageLabel } from '../js/questions
 import { loadStates, view, teamName, STATUS_TEXT } from '../js/game.js';
 import * as E from '../js/engine.js';
 import { autoScore, closerPoints, publicQuestion, parseNumber } from '../js/scoring.js';
+import { PALETTE, applyTeamColors } from '../js/map.js';
 
 const app = $('#app');
 let user, allStates, Q = {}, usage = {}, code, game, players = [], answers = [], unsubs = [];
@@ -43,8 +44,8 @@ async function home() {
           h('option', { value: 'candidate' }, 'Candidate mode — everyone answers, points pool to the party')),
         h('label', {}, 'Who can lock spending'), h('select', { name: 'lockBy' }, h('option', { value: 'anyone' }, 'Anyone in the party'), h('option', { value: 'leader' }, 'Party leader only'))),
       h('div', {}, h('label', {}, 'Electoral votes'), h('select', { name: 'year' }, h('option', { value: '2024' }, '2024 map (current)'), h('option', { value: '2020' }, '2020 map')),
-        h('label', {}, 'Blue party name'), h('input', { name: 'blue', value: 'Blue' }),
-        h('label', {}, 'Red party name'), h('input', { name: 'red', value: 'Red' }))),
+        h('label', {}, 'Party 1 name and color'), h('div', { class: 'row' }, h('input', { name: 'blue', value: 'Blue', class: 'grow' }), colorPick('c1', 'blue')),
+        h('label', {}, 'Party 2 name and color'), h('div', { class: 'row' }, h('input', { name: 'red', value: 'Red', class: 'grow' }), colorPick('c2', 'red')))),
     h('p', {}, h('button', {}, 'Create game')));
   fill(app, 
     h('div', { class: 'row' }, h('h1', { class: 'grow' }, 'Host'), h('a', { href: '../admin/' }, 'Question bank →')),
@@ -59,14 +60,19 @@ async function home() {
         : h('p', { class: 'muted' }, 'None yet.')));
 }
 
+function colorPick(name, def) {
+  return h('select', { name, style: 'max-width:9rem' }, ...Object.entries(PALETTE).map(([k, v]) => h('option', { value: k, selected: k === def }, v.label)));
+}
+
 async function createGame(e) {
   e.preventDefault();
   const f = e.target;
+  if (f.c1.value === f.c2.value) return toast('Pick two different colors', 'err');
   let c; for (let i = 0; i < 5; i++) { c = makeCode(); if (!(await fs.getDoc(gameRef(c))).exists()) break; }
   const g = {
     code: c, name: f.name.value.trim() || 'Game night', hostUid: user.uid, createdAt: Date.now(), status: 'lobby',
     settings: { mode: f.mode.value, lockBy: f.lockBy.value, mapYear: Number(f.year.value),
-      teams: [{ id: 'blue', name: f.blue.value || 'Blue' }, { id: 'red', name: f.red.value || 'Red' }] },
+      teams: [{ id: 'blue', name: f.blue.value.trim() || PALETTE[f.c1.value].label, color: f.c1.value }, { id: 'red', name: f.red.value.trim() || PALETTE[f.c2.value].label, color: f.c2.value }] },
     questionIds: [], checkpoints: [], total: 0, qIndex: 0, current: null, answersOpen: false,
     scored: {}, spend: {}, closed: {}, round: 0, locked: { blue: false, red: false }, leaders: {},
     playerTotals: {}, lastReveal: null, reveal: null, result: null,
@@ -82,7 +88,8 @@ function openGame(c) {
   unsubs.forEach(u => u()); unsubs = [];
   unsubs.push(fs.onSnapshot(gameRef(c), s => {
     if (!s.exists()) { toast(`No game with code ${c}. Create a new game instead.`, 'err'); history.replaceState(null, '', location.pathname); return home(); }
-    game = s.data(); if (game) { if (!picked.loaded && game.questionIds?.length) { picked.ids = [...game.questionIds]; } picked.loaded = true; render(); } }, showError));
+    game = s.data();
+    applyTeamColors(game); if (game) { if (!picked.loaded && game.questionIds?.length) { picked.ids = [...game.questionIds]; } picked.loaded = true; render(); } }, showError));
   unsubs.push(fs.onSnapshot(subCol(c, 'players'), s => { players = s.docs.map(d => d.data()); autoLeaders(); render(); }, showError));
   unsubs.push(fs.onSnapshot(subCol(c, 'answers'), s => { answers = s.docs.map(d => ({ id: d.id, ...d.data() })); render(); }, showError));
 }

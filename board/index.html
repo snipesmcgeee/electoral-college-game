@@ -13,7 +13,8 @@
 import { $, h, fill, qs, fmt, notConfigured, showError } from '../js/ui.js';
 import { configured, signInGuest, gameRef, fs } from '../js/firebase.js';
 import { loadStates, view, teamName, STATUS_TEXT } from '../js/game.js';
-import { drawMap, paintMap, COLORS } from '../js/map.js';
+import { drawMap, paintMap, applyTeamColors } from '../js/map.js';
+import { electoralTotals, margin } from '../js/engine.js';
 
 const app = $('#app');
 const code = (qs.get('code') || '').toUpperCase();
@@ -32,9 +33,9 @@ async function start() {
     h('div', { class: 'top' },
       h('div', { class: 'team', id: 'tL' }), h('div', { class: 'center' }, h('div', { id: 'title' }), h('div', { class: 'muted', id: 'room' })),
       h('div', { class: 'team right', id: 'tR' })),
-    h('div', { class: 'bar', id: 'ecbar' }, h('div', { id: 'ecL' }), h('div', { id: 'ecR' }), h('div', { class: 'mid' })),
+    h('div', { class: 'bar', id: 'ecbar' }, h('div', { id: 'ecL' }), h('div', { id: 'ecLl' }), h('div', { id: 'ecRl' }), h('div', { id: 'ecR' }), h('div', { class: 'mid' })),
     h('div', { class: 'barlabel' }, h('span', { id: 'ecLt' }), h('span', {}, '270 to win'), h('span', { id: 'ecRt' })),
-    h('div', { class: 'mapwrap' }, h('svg', { id: 'map' })),
+    h('div', { class: 'mapwrap', style: 'position:relative' }, h('svg', { id: 'map' }), h('div', { id: 'callout', class: 'callout', onclick: () => skip() })),
     h('div', { class: 'status', id: 'status' }),
     h('div', { class: 'bar', style: 'height:14px' }, h('div', { id: 'pvL' }), h('div', { id: 'pvR' }), h('div', { class: 'mid' })),
     h('div', { class: 'barlabel' }, h('span', { id: 'pvLt' }), h('span', {}, 'Popular vote (points earned)'), h('span', { id: 'pvRt' })),
@@ -46,49 +47,68 @@ async function start() {
   // EV numbers show right away, before the game record loads
   paintMap(svg, { states: allStates.map(s => ({ code: s.code, ev: s.ev2024 })), spend: {}, closed: {}, teams: ['blue', 'red'], ev: s => s.ev });
   $('#room').textContent = `Room ${code}`;
-  let lastRound = null;
+  let lastRound = null, g = null, shown = null, queue = [], timer = null;
 
-  fs.onSnapshot(gameRef(code), snap => {
-    if (!snap.exists()) {
-      $('#title').textContent = `No game with code ${code}`;
-      fill($('#q'), h('div', { class: 'question' }, h('div', { class: 'meta' }, 'Waiting'), h('div', {}, `No game with code ${code} yet. Create it on the Host page, then this board updates by itself.`)));
-      return;
-    }
-    const g = snap.data();
+  // Closings are revealed one at a time, 3 seconds apart, biggest blowouts first.
+  const STEP = 3000;
+  function runQueue() {
+    if (timer || !queue.length) return;
+    const next = queue.shift();
+    shown.add(next);
+    callout(next);
+    draw([next]);
+    timer = setTimeout(() => { timer = null; if (queue.length) runQueue(); else { $('#callout').classList.remove('show'); draw(); } }, STEP);
+  }
+  function skip() { queue.forEach(c => shown.add(c)); queue = []; clearTimeout(timer); timer = null; $('#callout').classList.remove('show'); draw(); }
+  function callout(codeSt) {
+    const st = allStates.find(x => x.code === codeSt);
+    const year = g.settings.mapYear || 2024;
+    const teams = g.settings.teams.map(t => t.id);
+    const team = g.closed[codeSt];
+    const sp = g.spend?.[codeSt] || {};
+    const el = $('#callout');
+    fill(el,
+      h('div', { class: 'c-team', style: `color:var(--${team})` }, `${teamName(g, team)} +${st[`ev${year}`]}`),
+      h('div', { class: 'c-state' }, st.name),
+      h('div', { class: 'c-nums' }, `${teams.map(t => sp[t] || 0).join(' | ')}  •  ${Math.round(margin(sp, teams) * 100)}%`));
+    el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+  }
+
+  function draw(highlight = []) {
+    if (!g) return;
     const v = view(g, allStates);
     const [L, R] = v.teams;
-    $('#room').textContent = `Room ${code}`;
-    $('#title').textContent = g.name || 'Electoral College Game';
+    const colors = applyTeamColors(g);
+    const closedShown = Object.fromEntries(Object.entries(v.closed).filter(([c]) => shown.has(c)));
+    const ec = electoralTotals({ states: v.states, spend: v.spend, closed: closedShown, teams: v.teams });
     const teamBlock = (t, el) => {
-      el.style.color = COLORS[t]?.solid;
-      el.replaceChildren(h('div', {}, `${v.ec.final[t]}`), h('small', {}, `${teamName(g, t)} · +${v.ec.lean[t]} leaning`));
+      el.style.color = colors[t].solid;
+      fill(el, h('div', {}, `${ec.final[t]}`), h('small', {}, `${teamName(g, t)} · +${ec.lean[t]} leaning`));
     };
     teamBlock(L, $('#tL')); teamBlock(R, $('#tR'));
     const w = n => `${(n / 538) * 100}%`;
-    Object.assign($('#ecL').style, { left: 0, width: w(v.ec.final[L]), background: COLORS[L].solid });
-    Object.assign($('#ecR').style, { right: 0, width: w(v.ec.final[R]), background: COLORS[R].solid });
-    $('#ecLt').textContent = `${teamName(g, L)} ${v.ec.final[L]}`;
-    $('#ecRt').textContent = `${v.ec.final[R]} ${teamName(g, R)}`;
+    Object.assign($('#ecL').style, { left: 0, width: w(ec.final[L]), background: colors[L].solid });
+    Object.assign($('#ecLl').style, { left: w(ec.final[L]), width: w(ec.lean[L]), background: colors[L].lean });
+    Object.assign($('#ecR').style, { right: 0, width: w(ec.final[R]), background: colors[R].solid });
+    Object.assign($('#ecRl').style, { right: w(ec.final[R]), width: w(ec.lean[R]), background: colors[R].lean });
+    $('#ecLt').textContent = `${teamName(g, L)} ${ec.final[L]} (+${ec.lean[L]})`;
+    $('#ecRt').textContent = `(+${ec.lean[R]}) ${ec.final[R]} ${teamName(g, R)}`;
     const pvTot = (v.earned[L] + v.earned[R]) || 1;
-    Object.assign($('#pvL').style, { left: 0, width: `${v.earned[L] / pvTot * 100}%`, background: COLORS[L].solid });
-    Object.assign($('#pvR').style, { right: 0, width: `${v.earned[R] / pvTot * 100}%`, background: COLORS[R].solid });
+    Object.assign($('#pvL').style, { left: 0, width: `${v.earned[L] / pvTot * 100}%`, background: colors[L].solid });
+    Object.assign($('#pvR').style, { right: 0, width: `${v.earned[R] / pvTot * 100}%`, background: colors[R].solid });
     $('#pvLt').textContent = `${fmt(v.earned[L])}`; $('#pvRt').textContent = `${fmt(v.earned[R])}`;
-
-    const reveal = g.lastReveal;
-    const flash = reveal && reveal.round !== lastRound && lastRound !== null ? reveal.closedNow || [] : [];
-    lastRound = reveal?.round ?? lastRound ?? 0;
-    paintMap(svg, { states: v.states, spend: v.spend, closed: v.closed, teams: v.teams, ev: s => s.ev, highlight: flash });
+    paintMap(svg, { states: v.states, spend: v.spend, closed: closedShown, teams: v.teams, ev: s => s.ev, highlight, colors });
 
     const locks = g.status === 'spending'
       ? v.teams.map(t => `${teamName(g, t)} ${g.locked?.[t] ? '🔒 locked' : '… planning'}`).join(' · ') : '';
-    fill($('#status'), 
+    fill($('#status'),
       h('span', {}, `${STATUS_TEXT[g.status] || ''}`),
       h('span', {}, `Question ${Math.min((g.qIndex || 0) + (g.current && !g.scored?.[g.current.id] ? 1 : 0), g.total || 0)} of ${g.total || 0}`),
-      h('span', {}, `${v.closedCount} of 51 states closed`),
+      h('span', {}, `${Object.keys(closedShown).length} of 51 states closed`),
       g.status !== 'over' ? h('span', {}, `Next spending after Q${v.nextCheckpoint}`) : null,
       locks ? h('span', {}, locks) : null);
 
-    if (g.status === 'over' && g.result) {
+    if (g.status === 'over' && g.result && !queue.length && !timer) {
       const r = g.result;
       const winner = r.ecWinner ? teamName(g, r.ecWinner) : 'Tie — bonus question';
       fill($('#q'), h('div', { class: 'question' },
@@ -101,7 +121,32 @@ async function start() {
         h('div', { class: 'meta' }, `${c.category || ''} · ${c.type === 'range' ? 'closest number' : c.type === 'list' ? 'list' : c.type === 'closer' ? 'closest takes all' : c.type === 'tf' ? 'true / false' : 'answer'} · up to ${c.value} pts${g.answersOpen ? '' : ' · answers closed'}`),
         h('div', {}, c.text),
         g.reveal?.qid === c.id ? h('div', { class: 'meta', style: 'margin-top:.5rem;font-size:1.2rem;opacity:1' }, `Answer: ${g.reveal.answer} · ${v.teams.map(t => `${teamName(g, t)} +${g.reveal.points[t]}`).join(' · ')}`) : null));
-    } else fill($('#q'), );
+    } else fill($('#q'));
+  }
+
+  fs.onSnapshot(gameRef(code), snap => {
+    if (!snap.exists()) {
+      $('#title').textContent = `No game with code ${code}`;
+      fill($('#q'), h('div', { class: 'question' }, h('div', { class: 'meta' }, 'Waiting'), h('div', {}, `No game with code ${code} yet. Create it on the Host page, then this board updates by itself.`)));
+      return;
+    }
+    g = snap.data();
+    $('#room').textContent = `Room ${code}`;
+    $('#title').textContent = g.name || 'Electoral College Game';
+    const round = g.lastReveal?.round ?? 0;
+    if (shown === null) shown = new Set(Object.keys(g.closed || {}));          // first load: no replay
+    else if (round !== lastRound) {
+      const teams = g.settings.teams.map(t => t.id);
+      const fresh = (g.lastReveal?.closedNow || []).filter(c => !shown.has(c) && !queue.includes(c));
+      fresh.sort((a, b) => margin(g.spend?.[b], teams) - margin(g.spend?.[a], teams));
+      queue.push(...fresh);
+    }
+    // undo can un-close states: drop them from what's shown
+    for (const c of [...shown]) if (!g.closed?.[c]) shown.delete(c);
+    queue = queue.filter(c => g.closed?.[c]);
+    lastRound = round;
+    draw();
+    runQueue();
   }, showError);
 }
 </script>

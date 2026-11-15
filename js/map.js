@@ -2,13 +2,31 @@
 // Needs vendor/d3.min.js and vendor/topojson-client.min.js loaded on the page first.
 import { leader, margin } from './engine.js';
 
-export const COLORS = {
-  blue: { solid: '#1f5fd1', lean: '#9fbdf0', name: 'Blue' },
-  red: { solid: '#cf3a32', lean: '#f2aaa5', name: 'Red' },
-  green: { solid: '#2f9e57', lean: '#a9dcb9', name: 'Green' },
-  gold: { solid: '#c98a12', lean: '#ecd29a', name: 'Gold' },
-  tossup: '#d3d3d6',
+export const PALETTE = {
+  blue: { solid: '#1f5fd1', lean: '#9fbdf0', label: 'Blue' },
+  red: { solid: '#cf3a32', lean: '#f2aaa5', label: 'Red' },
+  green: { solid: '#2f9e57', lean: '#a9dcb9', label: 'Green' },
+  purple: { solid: '#7b3fc4', lean: '#c9b1ea', label: 'Purple' },
+  orange: { solid: '#e07a1f', lean: '#f5c79c', label: 'Orange' },
+  gold: { solid: '#c98a12', lean: '#ecd29a', label: 'Gold' },
+  teal: { solid: '#128c8c', lean: '#9fd6d6', label: 'Teal' },
+  pink: { solid: '#d1407f', lean: '#f2b0cd', label: 'Pink' },
+  black: { solid: '#2b2b2b', lean: '#a8a8a8', label: 'Black' },
 };
+export const TOSSUP = '#d3d3d6';
+
+// { blue: {solid, lean}, red: {...} } for this game's chosen colors (team ids stay 'blue'/'red' as slots).
+export function teamColors(game) {
+  const out = {};
+  for (const t of game?.settings?.teams || [{ id: 'blue' }, { id: 'red' }]) out[t.id] = PALETTE[t.color || t.id] || PALETTE.blue;
+  return out;
+}
+// Also recolor pills/buttons (CSS uses --blue / --red for the two party slots).
+export function applyTeamColors(game) {
+  const c = teamColors(game);
+  for (const [id, v] of Object.entries(c)) document.documentElement.style.setProperty(`--${id}`, v.solid);
+  return c;
+}
 
 // Small states shown as boxes off the east coast, like 270toWin.
 const BOXES = ['VT', 'NH', 'MA', 'RI', 'CT', 'NJ', 'DE', 'MD', 'DC'];
@@ -45,14 +63,14 @@ export async function drawMap(svgEl, states, base = '..') {
 }
 
 // Color every state: closed = solid team color with a lock outline; open = pale lean; tied = grey.
-export function paintMap(svgEl, { states, spend, closed, teams, ev, highlight = [] }) {
+export function paintMap(svgEl, { states, spend, closed, teams, ev, highlight = [], colors = teamColors(null) }) {
   const evOf = Object.fromEntries(states.map(s => [s.code, ev(s)]));
   for (const node of svgEl.querySelectorAll('.st')) {
     const code = node.dataset.code;
     if (!code) continue;
     const c = closed[code];
     const l = c || leader(spend[code], teams);
-    node.style.fill = c ? COLORS[c].solid : l ? COLORS[l].lean : COLORS.tossup;
+    node.style.fill = c ? colors[c].solid : l ? colors[l].lean : TOSSUP;
     node.classList.toggle('closed', !!c);
     node.classList.toggle('flash', highlight.includes(code));
     const m = margin(spend[code], teams);

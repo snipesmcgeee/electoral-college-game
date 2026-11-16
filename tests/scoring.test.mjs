@@ -27,7 +27,7 @@ const tf = find('richest ever');
 eq('T/F true', autoScore(tf, 'T').points, 2);
 const biden = find('votes did Joe Biden');
 eq('Biden votes in millions', autoScore(biden, '80').points, 3);
-const closer = Object.values(Q).find(q => q.numberMode === 'closer');
+const closer = { type: 'number', numberMode: 'closer', value: 15, answerLo: 10000, answerHi: 10000 };
 eq('closer', JSON.stringify(closerPoints(closer, { blue: '9000', red: '15000' })), JSON.stringify({ blue: 15, red: 0 }));
 // uneven and lopsided tables
 const lop = { type: 'number', value: 12, answerLo: 100, answerHi: 100, scale: [{ points: 10, below: 5, above: 20 }, { points: 6, below: 30, above: null }] };

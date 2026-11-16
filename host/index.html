@@ -15,10 +15,11 @@ import { loadStates, view, teamName, STATUS_TEXT } from '../js/game.js';
 import * as E from '../js/engine.js';
 import { autoScore, closerPoints, publicQuestion, parseNumber } from '../js/scoring.js';
 import { PALETTE, applyTeamColors } from '../js/map.js';
+import { CATEGORIES, TYPES, recheckDue } from '../js/qformat.js';
 
 const app = $('#app');
 let user, allStates, Q = {}, usage = {}, code, game, players = [], answers = [], unsubs = [];
-const picked = { ids: [], filter: { games: new Set(), cat: '', type: '', text: '', hideUsed: true, hideReview: false } };
+const picked = { ids: [], filter: { games: new Set(), cat: '', type: '', text: '', hideUsed: true, hideReview: false, generalOnly: false, dueOnly: false } };
 
 if (!configured) notConfigured(app); else init();
 
@@ -41,8 +42,9 @@ async function home() {
     h('div', { class: 'grid2' },
       h('div', {}, h('label', {}, 'Game name'), h('input', { name: 'name', value: 'Game night' }),
         h('label', {}, 'Mode'), h('select', { name: 'mode' }, h('option', { value: 'party' }, 'Party mode — one answer per party'),
-          h('option', { value: 'candidate' }, 'Candidate mode — everyone answers, points pool to the party')),
-        h('label', {}, 'Who can lock spending'), h('select', { name: 'lockBy' }, h('option', { value: 'anyone' }, 'Anyone in the party'), h('option', { value: 'leader' }, 'Party leader only'))),
+          h('option', { value: 'candidate' }, 'Candidate mode — everyone answers and spends their own points')),
+        h('label', {}, 'Who can lock spending (party mode)'), h('select', { name: 'lockBy' }, h('option', { value: 'anyone' }, 'Anyone in the party'), h('option', { value: 'leader' }, 'Party leader only')),
+        h('label', {}, 'Teammates’ spending (candidate mode)'), h('select', { name: 'seeTeam' }, h('option', { value: 'yes' }, 'Visible to the party live'), h('option', { value: 'no' }, 'Hidden until the reveal'))),
       h('div', {}, h('label', {}, 'Electoral votes'), h('select', { name: 'year' }, h('option', { value: '2024' }, '2024 map (current)'), h('option', { value: '2020' }, '2020 map')),
         h('label', {}, 'Party 1 name and color'), h('div', { class: 'row' }, h('input', { name: 'blue', value: 'Blue', class: 'grow' }), colorPick('c1', 'blue')),
         h('label', {}, 'Party 2 name and color'), h('div', { class: 'row' }, h('input', { name: 'red', value: 'Red', class: 'grow' }), colorPick('c2', 'red')))),
@@ -71,11 +73,11 @@ async function createGame(e) {
   let c; for (let i = 0; i < 5; i++) { c = makeCode(); if (!(await fs.getDoc(gameRef(c))).exists()) break; }
   const g = {
     code: c, name: f.name.value.trim() || 'Game night', hostUid: user.uid, createdAt: Date.now(), status: 'lobby',
-    settings: { mode: f.mode.value, lockBy: f.lockBy.value, mapYear: Number(f.year.value),
+    settings: { mode: f.mode.value, lockBy: f.lockBy.value, seeTeam: f.seeTeam.value !== 'no', mapYear: Number(f.year.value),
       teams: [{ id: 'blue', name: f.blue.value.trim() || PALETTE[f.c1.value].label, color: f.c1.value }, { id: 'red', name: f.red.value.trim() || PALETTE[f.c2.value].label, color: f.c2.value }] },
     questionIds: [], checkpoints: [], total: 0, qIndex: 0, current: null, answersOpen: false,
-    scored: {}, spend: {}, closed: {}, round: 0, locked: { blue: false, red: false }, leaders: {},
-    playerTotals: {}, lastReveal: null, reveal: null, result: null,
+    scored: {}, spend: {}, closed: {}, round: 0, locked: { blue: false, red: false }, plocked: {}, leaders: {},
+    playerTotals: {}, playerSpent: {}, lastReveal: null, reveal: null, result: null,
   };
   await fs.setDoc(gameRef(c), g);
   remember(c);
@@ -120,7 +122,8 @@ function render() {
   const scoreline = h('div', { class: 'card row' },
     ...v.teams.map(t => h('div', { class: 'grow' }, h('span', { class: `pill ${t}` }, teamName(game, t)),
       ` EV ${v.ec.final[t]} (+${v.ec.lean[t]} lean) · earned ${fmt(v.earned[t])} · balance ${fmt(v.balance[t])}`)),
-    h('div', { class: 'muted' }, `Q ${game.qIndex}/${game.total} done · ${v.closedCount}/51 closed · next spending after Q${v.nextCheckpoint}`));
+    h('div', { class: 'muted' }, `Q ${game.qIndex}/${game.total} done · ${v.closedCount}/51 called · next spending after Q${v.nextCheckpoint}`));
+  syncPartyLocks();
   const main = game.status === 'lobby' ? lobbyView(v) : game.status === 'spending' ? spendingView(v) : game.status === 'over' ? overView(v) : questionView(v);
   fill(app, ...[top, game.status === 'lobby' ? null : scoreline, main].filter(Boolean));
   if (focus) app.querySelector(`[data-keep="${focus}"]`)?.focus();
@@ -140,6 +143,9 @@ function lobbyView(v) {
     h('div', { class: 'card' }, h('h2', {}, 'Players join here'), h('p', {}, h('a', { href: join, target: '_blank' }, join)),
       h('p', { class: 'muted' }, `Or open the site, tap Play and enter ${code}. ${players.length} joined.`), plist),
     pickerView(), checkpointView(),
+    (() => { const due = picked.ids.map(i => Q[i]).filter(q => q && recheckDue(q));
+      return due.length ? h('div', { class: 'card warn' }, h('p', {}, `⚠ ${due.length} picked question${due.length === 1 ? ' is' : 's are'} past the re-check date:`),
+        h('ul', {}, ...due.map(q => h('li', {}, `${q.text} — ${q.recheckNote || 'check the answer'} (${q.recheckBy})`)))) : null; })(),
     h('div', { class: 'card' }, h('button', { disabled: !picked.ids.length, onclick: startGame }, `Start game with ${picked.ids.length} questions`)));
 }
 
@@ -147,12 +153,15 @@ function pickerView() {
   const F = picked.filter;
   const all = Object.values(Q);
   const games = [...new Set(all.flatMap(q => q.games || []))].sort();
-  const cats = [...new Set(all.map(q => q.category))].sort();
+  const typeOf = q => q.type === 'number' ? `number-${q.numberMode}` : q.type;
   const shown = all.filter(q => !q.hidden &&
     (!F.games.size || (q.games || []).some(g => F.games.has(g))) &&
-    (!F.cat || q.category === F.cat) && (!F.type || q.type === F.type) &&
-    (!F.text || (q.text + ' ' + q.answer).toLowerCase().includes(F.text.toLowerCase())) &&
-    (!F.hideUsed || !usage[q.id]?.length) && (!F.hideReview || !q.needsReview));
+    (!F.cat || (q.categories || []).includes(F.cat)) &&
+    (!F.type || (F.type === 'number' ? q.type === 'number' : typeOf(q) === F.type)) &&
+    (!F.text || [q.text, q.answer, ...(q.tags || [])].join(' ').toLowerCase().includes(F.text.toLowerCase())) &&
+    (!F.hideUsed || !usage[q.id]?.length) && (!F.hideReview || !q.needsReview) &&
+    (!F.generalOnly || q.general !== false) && (!F.dueOnly || recheckDue(q)));
+  const dueCount = all.filter(q => !q.hidden && recheckDue(q)).length;
   const sel = new Set(picked.ids);
   const re = () => render();
   return h('div', { class: 'card' },
@@ -160,24 +169,31 @@ function pickerView() {
     h('div', { class: 'row' }, ...games.map(g => h('label', { class: 'row', style: 'margin:0;gap:.25rem' },
       h('input', { type: 'checkbox', style: 'width:auto', checked: F.games.has(g), onchange: e => { e.target.checked ? F.games.add(g) : F.games.delete(g); re(); } }), g))),
     h('div', { class: 'row' },
-      h('select', { onchange: e => { F.cat = e.target.value; re(); } }, h('option', { value: '' }, 'All categories'), ...cats.map(c => h('option', { selected: F.cat === c }, c))),
-      h('select', { onchange: e => { F.type = e.target.value; re(); } }, h('option', { value: '' }, 'All types'), ...['qa', 'range', 'list', 'closer', 'tf'].map(t => h('option', { selected: F.type === t }, t))),
-      h('input', { placeholder: 'Search', value: F.text, 'data-keep': 'qsearch', oninput: e => { F.text = e.target.value; re(); }, class: 'grow' })),
+      h('select', { onchange: e => { F.cat = e.target.value; re(); } }, h('option', { value: '' }, 'All categories'), ...CATEGORIES.map(c => h('option', { selected: F.cat === c }, c))),
+      h('select', { onchange: e => { F.type = e.target.value; re(); } }, h('option', { value: '' }, 'All types'),
+        ...[['qa', TYPES.qa], ['number', 'Number (any)'], ['number-range', 'Number — range'], ['number-closer', 'Number — closest takes all'], ['list', TYPES.list], ['tf', TYPES.tf]]
+          .map(([k, l]) => h('option', { value: k, selected: F.type === k }, l))),
+      h('input', { placeholder: 'Search text, answer or tag', value: F.text, 'data-keep': 'qsearch', oninput: e => { F.text = e.target.value; re(); }, class: 'grow' })),
     h('div', { class: 'row' },
       h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.hideUsed, onchange: e => { F.hideUsed = e.target.checked; re(); } }), 'Hide questions already used in a game'),
-      h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.hideReview, onchange: e => { F.hideReview = e.target.checked; re(); } }), 'Hide ones flagged for review')),
+      h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.hideReview, onchange: e => { F.hideReview = e.target.checked; re(); } }), 'Hide ones flagged for review'),
+      h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.generalOnly, onchange: e => { F.generalOnly = e.target.checked; re(); } }), 'General only'),
+      h('label', { class: 'row', style: 'margin:0' }, h('input', { type: 'checkbox', style: 'width:auto', checked: F.dueOnly, onchange: e => { F.dueOnly = e.target.checked; re(); } }), `Due for check (${dueCount})`)),
     h('div', { class: 'row', style: 'margin:.6rem 0' },
       h('button', { class: 'small', onclick: () => { shown.forEach(q => { if (!sel.has(q.id)) picked.ids.push(q.id); }); saveIds(); } }, `Add all ${shown.length} shown`),
       h('button', { class: 'small secondary', onclick: () => { const s = new Set(shown.map(q => q.id)); picked.ids = picked.ids.filter(i => !s.has(i)); saveIds(); } }, 'Remove shown'),
       h('button', { class: 'small secondary', onclick: () => { picked.ids.sort(() => Math.random() - .5); saveIds(); } }, 'Shuffle picked'),
       h('button', { class: 'small secondary', onclick: () => { picked.ids = []; saveIds(); } }, 'Clear')),
     h('div', { style: 'max-height:360px;overflow:auto' }, h('table', {},
-      h('tr', {}, h('th', {}, ''), h('th', {}, 'Question'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Used in')),
+      h('tr', {}, h('th', {}, ''), h('th', {}, 'Question'), h('th', {}, 'Category'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Used in')),
       ...shown.map(q => h('tr', {},
         h('td', {}, h('input', { type: 'checkbox', style: 'width:auto', checked: sel.has(q.id), onchange: e => {
           if (e.target.checked) picked.ids.push(q.id); else picked.ids = picked.ids.filter(i => i !== q.id); saveIds(); } })),
-        h('td', {}, q.text, q.needsReview ? h('span', { class: 'pill warn', title: (q.reviewNotes || []).join('\n') }, ' review') : null),
-        h('td', {}, q.type), h('td', {}, q.value),
+        h('td', {}, q.text, q.needsReview ? h('span', { class: 'pill warn', title: (q.reviewNotes || []).join('\n') }, ' review') : null,
+          recheckDue(q) ? h('span', { class: 'pill warn', title: q.recheckNote || '' }, ` re-check (${q.recheckBy})`) : null,
+          q.general === false ? h('span', { class: 'pill', title: 'Too specific for a general game' }, ' niche') : null),
+        h('td', { class: 'muted' }, (q.categories || []).join(', ')),
+        h('td', {}, q.type === 'number' ? (q.numberMode === 'closer' ? 'number · closest' : 'number · range') : q.type), h('td', {}, q.value),
         h('td', { class: 'muted' }, usageLabel(usage[q.id])))))));
 }
 
@@ -191,7 +207,7 @@ function checkpointView() {
   const total = picked.ids.length;
   const cps = game.checkpoints || [];
   return h('div', { class: 'card' }, h('h2', {}, 'Spending checkpoints'),
-    h('p', { class: 'muted' }, 'Spending happens after these question numbers. The last question is always one. States only close at checkpoints.'),
+    h('p', { class: 'muted' }, 'Spending happens after these question numbers. The last question is always one. States are only called at checkpoints.'),
     h('div', { class: 'row' },
       h('span', {}, 'Every'), h('input', { type: 'number', min: 1, style: 'width:5rem', id: 'every', value: 8 }), h('span', {}, 'questions'),
       h('button', { class: 'small', onclick: () => fs.updateDoc(gameRef(code), { checkpoints: E.checkpointsEvery(Number($('#every').value) || 8, total) }) }, 'Set')),
@@ -201,7 +217,7 @@ function checkpointView() {
         const list = $('#cps').value.split(/[^0-9]+/).map(Number).filter(n => n > 0 && n <= total);
         fs.updateDoc(gameRef(code), { checkpoints: [...new Set([...list, total])].sort((a, b) => a - b) });
       } }, 'Use these')),
-    h('p', {}, cps.length ? cps.map(c => `Q${c} → ${E.closeTarget(E.progress(c, total))} closed`).join(' · ') : 'None set.'));
+    h('p', {}, cps.length ? cps.map(c => `Q${c} → ${E.closeTarget(E.progress(c, total))} called`).join(' · ') : 'None set.'));
 }
 
 async function startGame() {
@@ -231,13 +247,14 @@ function questionView(v) {
   const mine = answers.filter(a => a.qid === q.id);
   const party = game.settings.mode === 'party';
   const rows = party ? v.teams.map(t => mine.find(a => a.team === t) || { team: t, text: '', name: '—', id: `${q.id}__${t}` }) : mine;
-  const closer = q.type === 'closer' ? closerPoints(q, Object.fromEntries(v.teams.map(t => {
+  const isCloser = q.type === 'number' && q.numberMode === 'closer';
+  const closer = isCloser ? closerPoints(q, Object.fromEntries(v.teams.map(t => {
     const best = rows.filter(r => r.team === t && r.text).map(r => r.text).sort((a, b) => Math.abs(parseNumber(a) - q.answerLo) - Math.abs(parseNumber(b) - q.answerLo))[0];
     return [t, best ?? '']; }))) : null;
   pending.q = q.id;
   const table = h('table', {}, h('tr', {}, h('th', {}, party ? 'Party' : 'Player'), h('th', {}, 'Answer'), h('th', {}, 'Auto'), h('th', {}, 'Points')),
     ...rows.map(r => {
-      const auto = q.type === 'closer' ? { points: closer?.[r.team] ?? 0, confidence: 'auto', note: 'closest takes all' } : autoScore(q, r.text);
+      const auto = isCloser ? { points: closer?.[r.team] ?? 0, confidence: 'auto', note: 'closest takes all' } : autoScore(q, r.text);
       const key = r.id;
       pending.auto[key] = auto.points; // live auto score until the host types over it
       const shownPts = pending.edited.has(key) ? pending.pts[key] : auto.points;
@@ -250,7 +267,8 @@ function questionView(v) {
   return h('div', { class: 'card' },
     h('p', { class: 'muted' }, `Q${game.qIndex + 1} of ${game.total} · ${q.category} · ${q.type} · up to ${q.value} pts`),
     h('h2', {}, q.text),
-    h('p', {}, 'Answer: ', h('b', {}, q.answer), q.reviewNotes ? h('div', { class: 'muted' }, q.reviewNotes.join(' · ')) : null),
+    h('p', {}, 'Answer: ', h('b', {}, q.answer), q.reviewNotes ? h('div', { class: 'muted' }, q.reviewNotes.join(' · ')) : null,
+      recheckDue(q) ? h('div', { class: 'pill warn' }, `Re-check due ${q.recheckBy}: ${q.recheckNote || 'answer may be out of date'}`) : null),
     h('p', { class: 'muted' }, `${mine.length} answer${mine.length === 1 ? '' : 's'} in · answers ${game.answersOpen ? 'open' : 'closed'}`),
     table,
     h('div', { class: 'row', style: 'margin-top:.8rem' },
@@ -294,41 +312,93 @@ async function award(q, rows, party) {
   const qIndex = game.qIndex + 1;
   Object.assign(upd, { [`scored.${q.id}`]: pts, qIndex, answersOpen: false, reveal: { qid: q.id, answer: q.answer, points: pts } });
   if (E.isCheckpoint(qIndex, game.checkpoints, game.total)) {
-    Object.assign(upd, { status: 'spending', round: (game.round || 0) + 1, locked: Object.fromEntries(teams.map(t => [t, false])) });
-    for (const t of teams) await fs.setDoc(sub(code, 'drafts', t), { alloc: {} });
+    Object.assign(upd, { status: 'spending', round: (game.round || 0) + 1, locked: Object.fromEntries(teams.map(t => [t, false])), plocked: {} });
+    await clearDrafts();
   } else upd.status = 'question';
   await fs.updateDoc(gameRef(code), upd);
   resetPending();
 }
 
 // ---------------------------------------------------------------- spending
+const candMode = () => game.settings.mode === 'candidate';
+const teamPlayers = t => players.filter(p => p.team === t);
+// Candidate mode: a party is locked once every player in it has locked (or the host force-locks).
+function partyLocked(t) {
+  if (game.locked?.[t]) return true;
+  if (!candMode()) return false;
+  const ps = teamPlayers(t);
+  return ps.length > 0 && ps.every(p => game.plocked?.[p.uid]);
+}
+// Mark a party locked on the game record once all its players have locked, so the board and phones see it.
+function syncPartyLocks() {
+  if (!candMode() || game.status !== 'spending') return;
+  const upd = {};
+  for (const t of game.settings.teams.map(x => x.id)) if (!game.locked?.[t] && partyLocked(t)) upd[`locked.${t}`] = true;
+  if (Object.keys(upd).length) fs.updateDoc(gameRef(code), upd).catch(() => {});
+}
+async function clearDrafts() {
+  const docs = (await fs.getDocs(subCol(code, 'drafts'))).docs;
+  for (const d of docs) await fs.setDoc(d.ref, { ...d.data(), alloc: {} });
+  for (const t of game.settings.teams) if (!docs.some(d => d.id === t.id)) await fs.setDoc(sub(code, 'drafts', t.id), { alloc: {} });
+}
+async function allDrafts() {
+  return Object.fromEntries((await fs.getDocs(subCol(code, 'drafts'))).docs.map(d => [d.id, d.data()]));
+}
+
 function spendingView(v) {
   const teams = v.teams;
-  const allLocked = teams.every(t => game.locked?.[t]);
+  const allLocked = teams.every(partyLocked);
   const final = game.qIndex >= game.total;
   const popTie = !E.topTeam(v.earned, teams);
+  const cand = candMode();
   return h('div', { class: 'card' },
     h('h2', {}, `Spending round ${game.round}${final ? ' · final' : ''}`),
-    h('p', {}, `After the reveal, ${E.closeTarget(E.progress(game.qIndex, game.total))} of 51 states should be closed (${v.closedCount} now).`),
-    ...teams.map(t => h('div', { class: 'row' }, h('span', { class: `pill ${t}` }, teamName(game, t)),
-      h('span', { class: 'grow' }, game.locked?.[t] ? 'Locked' : 'Planning…', ` · balance ${fmt(v.balance[t])}`),
-      game.locked?.[t] ? h('button', { class: 'small secondary', onclick: () => fs.updateDoc(gameRef(code), { [`locked.${t}`]: false }) }, 'Unlock')
-        : h('button', { class: 'small secondary', onclick: () => fs.updateDoc(gameRef(code), { [`locked.${t}`]: true }) }, 'Force lock'))),
+    h('p', {}, `After the reveal, ${E.closeTarget(E.progress(game.qIndex, game.total))} of 51 states should be called (${v.closedCount} now).`),
+    ...teams.map(t => h('div', {}, h('div', { class: 'row' }, h('span', { class: `pill ${t}` }, teamName(game, t)),
+      h('span', { class: 'grow' }, partyLocked(t) ? 'Locked' : 'Planning…',
+        cand ? ` · ${teamPlayers(t).filter(p => game.plocked?.[p.uid]).length}/${teamPlayers(t).length} players locked` : '',
+        ` · balance ${fmt(v.balance[t])}`),
+      game.locked?.[t] || (cand && partyLocked(t))
+        ? h('button', { class: 'small secondary', onclick: () => {
+            const upd = { [`locked.${t}`]: false };
+            if (cand) for (const p of teamPlayers(t)) upd[`plocked.${p.uid}`] = false;
+            fs.updateDoc(gameRef(code), upd); } }, 'Unlock')
+        : h('button', { class: 'small secondary', onclick: () => fs.updateDoc(gameRef(code), { [`locked.${t}`]: true }) }, 'Force lock')),
+      cand ? h('div', { class: 'muted', style: 'margin:0 0 .4rem 1rem;font-size:.9rem' },
+        teamPlayers(t).map(p => `${p.name} ${game.plocked?.[p.uid] ? '✓' : '…'} (${fmt(E.playerBalance(game, p.uid))})`).join(' · ') || 'No players') : null)),
     final && popTie ? h('div', { class: 'card warn' }, h('p', {}, 'Popular vote is tied. Tied states (and an EC tie) need a bonus question. Who won it?'),
       ...teams.map(t => h('button', { class: `small ${t}`, onclick: () => fs.updateDoc(gameRef(code), { bonusWinner: t }) }, teamName(game, t))),
       game.bonusWinner ? h('p', {}, `Bonus winner: ${teamName(game, game.bonusWinner)}`) : null) : null,
-    h('p', {}, h('button', { disabled: !allLocked || (final && popTie && !game.bonusWinner), onclick: () => reveal(v) }, 'Reveal spending & close states')));
+    h('p', {}, h('button', { disabled: !allLocked || (final && popTie && !game.bonusWinner), onclick: () => reveal(v) }, 'Reveal spending & call states')));
 }
 
 async function reveal(v) {
   const teams = v.teams;
-  const drafts = {};
-  for (const t of teams) drafts[t] = (await fs.getDoc(sub(code, 'drafts', t))).data()?.alloc || {};
-  for (const t of teams) {
-    const c = E.validateDraft(drafts[t], v.balance[t], v.closed);
-    if (!c.ok) { await fs.updateDoc(gameRef(code), { [`locked.${t}`]: false }); return toast(`${teamName(game, t)}: ${c.errors[0]} — unlocked them to fix`, 'err'); }
+  const raw = await allDrafts();
+  let drafts;
+  const playerSpend = {};
+  if (candMode()) {
+    // each player's plan must fit their own wallet
+    const pd = {};
+    for (const p of players) {
+      const alloc = raw[p.uid]?.alloc || {};
+      const c = E.validateDraft(alloc, E.playerBalance(game, p.uid), v.closed);
+      if (!c.ok) {
+        await fs.updateDoc(gameRef(code), { [`plocked.${p.uid}`]: false, [`locked.${p.team}`]: false });
+        return toast(`${p.name}: ${c.errors[0]} — unlocked them to fix`, 'err');
+      }
+      pd[p.uid] = { team: p.team, alloc };
+      if (c.total) playerSpend[p.uid] = c.total;
+    }
+    drafts = E.sumPlayerDrafts(pd, teams);
+  } else {
+    drafts = Object.fromEntries(teams.map(t => [t, raw[t]?.alloc || {}]));
+    for (const t of teams) {
+      const c = E.validateDraft(drafts[t], v.balance[t], v.closed);
+      if (!c.ok) { await fs.updateDoc(gameRef(code), { [`locked.${t}`]: false }); return toast(`${teamName(game, t)}: ${c.errors[0]} — unlocked them to fix`, 'err'); }
+    }
   }
-  await snapshot(drafts);
+  await snapshot(raw);
   const spend = E.applyDrafts(game.spend, drafts, game.closed);
   const final = game.qIndex >= game.total;
   const popLeader = E.topTeam(v.earned, teams) || game.bonusWinner || null;
@@ -336,15 +406,16 @@ async function reveal(v) {
   const closed = { ...(game.closed || {}) };
   for (const c of closedNow) closed[c.code] = c.team;
   const upd = { spend, closed, lastReveal: { round: game.round, added: drafts, closedNow: closedNow.map(c => c.code), at: Date.now() },
-    current: null, reveal: null, locked: Object.fromEntries(teams.map(t => [t, false])) };
-  for (const t of teams) await fs.setDoc(sub(code, 'drafts', t), { alloc: {} });
+    current: null, reveal: null, locked: Object.fromEntries(teams.map(t => [t, false])), plocked: {} };
+  for (const [uid, n] of Object.entries(playerSpend)) upd[`playerSpent.${uid}`] = fs.increment(n);
+  await clearDrafts();
   if (final) {
     const r = E.finalResult({ states: v.states, closed, scored: game.scored, teams });
     if (r.needsBonus && game.bonusWinner) Object.assign(r, { ecWinner: game.bonusWinner, how: 'bonus-decided', needsBonus: false });
     Object.assign(upd, { status: 'over', result: r, endedAt: Date.now() });
   } else upd.status = 'question';
   await fs.updateDoc(gameRef(code), upd);
-  toast(`${closedNow.length} state${closedNow.length === 1 ? '' : 's'} closed: ${closedNow.map(c => c.code).join(', ') || 'none'}`);
+  toast(`${closedNow.length} state${closedNow.length === 1 ? '' : 's'} called: ${closedNow.map(c => c.code).join(', ') || 'none'}`);
 }
 
 function overView(v) {
@@ -359,19 +430,19 @@ function overView(v) {
 }
 
 // ---------------------------------------------------------------- undo
-async function snapshot(drafts = null) {
+async function snapshot(raw = null) {
   const s = (await fs.getDoc(gameRef(code))).data();
-  if (!drafts) { drafts = {}; for (const t of s.settings.teams) drafts[t.id] = (await fs.getDoc(sub(code, 'drafts', t.id))).data()?.alloc || {}; }
-  await fs.setDoc(fs.doc(db, 'games', code, 'log', String(Date.now())), { game: s, drafts });
+  await fs.setDoc(fs.doc(db, 'games', code, 'log', String(Date.now())), { game: s, draftDocs: raw || await allDrafts() });
 }
 async function undo() {
   const logs = await fs.getDocs(fs.query(subCol(code, 'log'), fs.orderBy(fs.documentId(), 'desc'), fs.limit(1)));
   if (logs.empty) return toast('Nothing to undo');
   const d = logs.docs[0];
   if (!confirm('Undo the last action?')) return;
-  const { game: g, drafts } = d.data();
+  const { game: g, drafts, draftDocs } = d.data();
   await fs.setDoc(gameRef(code), g);
-  for (const [t, alloc] of Object.entries(drafts || {})) await fs.setDoc(sub(code, 'drafts', t), { alloc });
+  for (const [t, alloc] of Object.entries(drafts || {})) await fs.setDoc(sub(code, 'drafts', t), { alloc }); // older logs
+  for (const [id, data] of Object.entries(draftDocs || {})) await fs.setDoc(sub(code, 'drafts', id), data);
   await fs.deleteDoc(d.ref);
   resetPending();
   toast('Undone');

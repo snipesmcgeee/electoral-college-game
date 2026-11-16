@@ -40,7 +40,11 @@ check('curve 50%', E.closeTarget(0.5) === 12);
 check('curve 75%', E.closeTarget(0.75) === 28);
 check('curve 100%', E.closeTarget(1) === 51);
 check('curve over 100% capped', E.closeTarget(1.0125) === 51);
-check('progress = (scored+1)/total', E.progress(8, 32) === 9 / 32);
+check('progress = scored/total', E.progress(8, 32) === 8 / 32);
+check('no early 100%: Q3 of 4', E.closeTarget(E.progress(3, 4)) === 28);
+check('32-question game every 8', [8,16,24,32].map(q => E.closeTarget(E.progress(q, 32))).join() === '3,12,28,51');
+check('sumPlayerDrafts', JSON.stringify(E.sumPlayerDrafts({ a: { team: 'blue', alloc: { CA: 3 } }, b: { team: 'blue', alloc: { CA: 2, TX: 1 } }, c: { team: 'red', alloc: { CA: 4 } } }, ['blue','red'])) === JSON.stringify({ blue: { CA: 5, TX: 1 }, red: { CA: 4 } }));
+check('playerBalance', E.playerBalance({ playerTotals: { a: 10 }, playerSpent: { a: 4 } }, 'a') === 6);
 check('progress capped', E.progress(32, 32) === 1);
 
 // Seed: one point in an empty state (2–1, 67%) outranks 10–5 (11–6, 65%)

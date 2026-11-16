@@ -12,11 +12,12 @@ import { $, h, fill, toast, notConfigured } from '../js/ui.js';
 import { configured, signInGuest, signInGoogle, currentUser, isAdmin } from '../js/firebase.js';
 import { loadQuestions, loadUsage, usageLabel, saveQuestion, setHidden, deleteForever, isCustom } from '../js/questions.js';
 import { autoScore } from '../js/scoring.js';
+import { CATEGORIES, TYPES, recheckDue, normalizeQuestion } from '../js/qformat.js';
 
 // Anyone can browse. Editing needs Google sign-in with an account listed in Firestore `admins`.
 const app = $('#app');
 let Q = {}, usage = {}, admin = false, editing = null, open = null;
-const filter = { text: '', review: false, game: '', unused: false, hidden: false };
+const filter = { text: '', review: false, game: '', unused: false, hidden: false, cat: '', type: '', general: false, due: false };
 
 if (!configured) notConfigured(app); else init();
 
@@ -48,7 +49,10 @@ function render() {
   const list = all.filter(q => (filter.hidden ? q.hidden : !q.hidden) &&
     (!filter.review || q.needsReview) && (!filter.game || (q.games || []).includes(filter.game)) &&
     (!filter.unused || !usage[q.id]?.length) &&
-    (!filter.text || (q.text + ' ' + q.answer + ' ' + q.category).toLowerCase().includes(filter.text.toLowerCase())))
+    (!filter.cat || (q.categories || []).includes(filter.cat)) &&
+    (!filter.type || (filter.type === 'number' ? q.type === 'number' : typeKey(q) === filter.type)) &&
+    (!filter.general || q.general !== false) && (!filter.due || recheckDue(q)) &&
+    (!filter.text || [q.text, q.answer, ...(q.categories || []), ...(q.tags || [])].join(' ').toLowerCase().includes(filter.text.toLowerCase())))
     .sort((a, b) => a.id.localeCompare(b.id));
   const check = (key, label) => h('label', { class: 'row', style: 'margin:0' },
     h('input', { type: 'checkbox', style: 'width:auto', checked: filter[key], onchange: e => { filter[key] = e.target.checked; render(); } }), label);
@@ -56,20 +60,28 @@ function render() {
     h('div', { class: 'row' }, h('h1', { class: 'grow' }, 'Question bank'), h('a', { href: '../host/' }, '← Host')),
     h('div', { class: 'row', style: 'margin-bottom:1rem' },
       admin ? h('span', { class: 'pill ok' }, 'Editing on') : h('button', { class: 'secondary small', onclick: signIn }, 'Sign in with Google to edit'),
-      admin ? h('button', { class: 'small', onclick: () => { editing = { id: `custom-${Date.now()}`, text: '', answer: '', type: 'qa', value: 10, category: '', games: [], accepted: [], custom: true }; render(); } }, 'Add question') : null),
+      admin ? h('button', { class: 'small', onclick: () => { editing = { id: `custom-${Date.now()}`, text: '', answer: '', type: 'qa', value: 10, categories: [], tags: [], general: true, games: [], accepted: [], custom: true }; render(); } }, 'Add question') : null),
     h('div', { class: 'card' },
       h('div', { class: 'row' },
         h('input', { class: 'grow', placeholder: 'Search', value: filter.text, onchange: e => { filter.text = e.target.value; render(); } }),
-        h('select', { onchange: e => { filter.game = e.target.value; render(); } }, h('option', { value: '' }, 'All games'), ...games.map(g => h('option', { selected: filter.game === g }, g)))),
-      h('div', { class: 'row', style: 'margin-top:.5rem' }, check('unused', 'Never used'), check('review', 'Needs review'), check('hidden', 'Show hidden only')),
+        h('select', { onchange: e => { filter.game = e.target.value; render(); } }, h('option', { value: '' }, 'All games'), ...games.map(g => h('option', { selected: filter.game === g }, g))),
+        h('select', { onchange: e => { filter.cat = e.target.value; render(); } }, h('option', { value: '' }, 'All categories'), ...CATEGORIES.map(c => h('option', { selected: filter.cat === c }, c))),
+        h('select', { onchange: e => { filter.type = e.target.value; render(); } }, h('option', { value: '' }, 'All types'),
+          ...TYPE_OPTS.map(([k, l]) => h('option', { value: k, selected: filter.type === k }, l)))),
+      h('div', { class: 'row', style: 'margin-top:.5rem' }, check('unused', 'Never used'), check('review', 'Needs review'), check('general', 'General only'),
+        check('due', `Due for check (${all.filter(q => !q.hidden && recheckDue(q)).length})`), check('hidden', 'Show hidden only')),
       h('p', { class: 'muted' }, `${list.length} shown · ${all.filter(q => !q.hidden).length} active · ${all.filter(q => q.hidden).length} hidden · ${all.filter(q => q.needsReview && !q.hidden).length} flagged`),
-      h('table', {}, h('tr', {}, h('th', {}, 'Question'), h('th', {}, 'Answer'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Used in'), admin ? h('th', {}, '') : null),
+      h('table', {}, h('tr', {}, h('th', {}, 'Question'), h('th', {}, 'Answer'), h('th', {}, 'Category'), h('th', {}, 'Type'), h('th', {}, 'Pts'), h('th', {}, 'Used in'), admin ? h('th', {}, '') : null),
         ...list.map(q => [
           h('tr', {},
             h('td', { style: 'cursor:pointer', onclick: () => { open = open === q.id ? null : q.id; render(); } }, q.text,
               q.custom ? h('span', { class: 'pill' }, ' added') : null,
-              q.needsReview ? h('div', { class: 'muted' }, '⚠ ', (q.reviewNotes || []).join(' · ')) : null),
-            h('td', {}, q.answer), h('td', {}, q.type, q.judge === 'host' ? ' (host)' : ''), h('td', {}, q.value),
+              q.general === false ? h('span', { class: 'pill' }, ' niche') : null,
+              q.needsReview ? h('div', { class: 'muted' }, '⚠ ', (q.reviewNotes || []).join(' · ')) : null,
+              recheckDue(q) ? h('div', { class: 'muted' }, `⏰ re-check due ${q.recheckBy}: ${q.recheckNote || ''}`) : null),
+            h('td', {}, q.answer),
+            h('td', { class: 'muted' }, (q.categories || []).join(', '), q.tags?.length ? h('div', { style: 'font-size:.8rem' }, q.tags.map(t => `#${t}`).join(' ')) : null),
+            h('td', {}, typeLabel(q), q.judge === 'host' ? ' (host)' : ''), h('td', {}, q.value),
             h('td', { class: 'muted' }, usageLabel(usage[q.id])),
             admin ? h('td', { style: 'white-space:nowrap' },
               h('button', { class: 'small secondary', onclick: () => { editing = structuredClone(q); render(); } }, 'Edit'), ' ',
@@ -78,7 +90,7 @@ function render() {
                 if (!confirm(`Permanently delete this question?\n\n"${q.text}"\n\nThis can't be undone.`)) return;
                 act(() => deleteForever(q.id), 'Deleted');
               } }, 'Delete')) : null),
-          open === q.id ? h('tr', {}, h('td', { colspan: admin ? 6 : 5 }, tester(q))) : null,
+          open === q.id ? h('tr', {}, h('td', { colspan: admin ? 7 : 6 }, tester(q))) : null,
         ]).flat())));
 }
 
@@ -90,14 +102,56 @@ function tester(q) {
   const out = h('span', { class: 'pill' }, '');
   const inp = h('input', { placeholder: 'Try an answer to see how it scores', oninput: () => { const r = autoScore(q, inp.value); out.textContent = `${r.points} pts ${r.note || ''}`; } });
   return h('div', {},
-    q.type === 'range' && q.bands ? h('p', { class: 'muted' }, 'Steps: ', q.bands.map(b => `${b.points}: ${b.ranges.map(([a, z]) => a === z ? a : `${a}–${z ?? '+'}`).join(', ')}`).join(' | ')) : null,
-    q.type === 'range' && !q.bands && q.step ? h('p', { class: 'muted' }, `Exact ${q.answerLo}${q.answerHi !== q.answerLo ? '–' + q.answerHi : ''}, step width ${q.step}`) : null,
+    q.type === 'number' && q.numberMode !== 'closer' ? h('p', { class: 'muted' }, scaleText(q)) : null,
     q.type === 'list' ? h('p', { class: 'muted' }, `${q.perItem} pts each: ${(q.items || []).join(', ')}`) : null,
     h('div', { class: 'row' }, inp, out));
 }
 
+const TYPE_OPTS = [['qa', TYPES.qa], ['number', 'Number (any)'], ['number-range', 'Number — range'], ['number-closer', 'Number — closest takes all'], ['list', TYPES.list], ['tf', TYPES.tf]];
+const typeKey = q => q.type === 'number' ? `number-${q.numberMode || 'range'}` : q.type;
+const typeLabel = q => q.type === 'number' ? (q.numberMode === 'closer' ? 'number · closest takes all' : 'number · range') : (TYPES[q.type] || q.type);
+const ex = q => q.answerHi != null && q.answerHi !== q.answerLo ? `${q.answerLo}–${q.answerHi}` : `${q.answerLo}`;
+function scaleText(q) {
+  const rows = (q.scale || []).map(r => `${r.points}: ${r.below == null ? '—' : `−${r.below}`} / ${r.above == null ? '—' : `+${r.above}`}`);
+  return `Exact ${ex(q)} = ${q.value} · ` + (rows.join(' | ') || 'no rows: only the exact answer scores');
+}
+
+// Scoring table: one row per point level, how far under / over the answer still earns it.
+function scaleEditor(q) {
+  q.scale ||= [];
+  const num = (r, key) => h('input', { type: 'number', step: 'any', min: 0, style: 'width:6rem', value: r[key] ?? '',
+    onchange: e => { r[key] = e.target.value === '' ? null : Number(e.target.value); } });
+  const widthIn = h('input', { type: 'number', step: 'any', min: 0, style: 'width:6rem', placeholder: 'e.g. 5' });
+  return h('div', { class: 'card', style: 'margin-top:.5rem' },
+    h('h3', {}, 'Scoring table'),
+    h('p', { class: 'muted' }, `Exact answer (${ex(q)}) = ${q.value ?? '?'} pts. For each lower level, how far under and over the answer still earns it. Leave a side blank if that level doesn't count on that side. Steps can be uneven.`),
+    h('table', {}, h('tr', {}, h('th', {}, 'Points'), h('th', {}, 'Under by up to'), h('th', {}, 'Over by up to'), h('th', {}, '')),
+      ...q.scale.map((r, i) => h('tr', {},
+        h('td', {}, h('input', { type: 'number', min: 0, style: 'width:5rem', value: r.points, onchange: e => { r.points = Number(e.target.value) || 0; } })),
+        h('td', {}, num(r, 'below')), h('td', {}, num(r, 'above')),
+        h('td', {}, h('button', { class: 'small secondary', onclick: () => { q.scale.splice(i, 1); render(); } }, 'Remove'))))),
+    h('div', { class: 'row', style: 'margin-top:.4rem' },
+      h('button', { class: 'small secondary', onclick: () => {
+        const last = q.scale.length ? q.scale[q.scale.length - 1].points : Number(q.value) || 12;
+        if (last - 2 <= 0) return toast('Already down to the lowest level', 'err');
+        q.scale.push({ points: last - 2, below: null, above: null }); render();
+      } }, 'Add row (−2)'),
+      h('button', { class: 'small secondary', onclick: () => {
+        // rows by 2s from the max value down to 2, keeping reaches already typed for a level
+        const keep = Object.fromEntries(q.scale.map(r => [r.points, r]));
+        const rows = []; for (let p = (Number(q.value) || 12) - 2; p > 0; p -= 2) rows.push(keep[p] || { points: p, below: null, above: null });
+        q.scale = rows; render();
+      } }, 'Rows by 2s'),
+      h('span', { class: 'muted' }, 'Even steps of'), widthIn,
+      h('button', { class: 'small secondary', onclick: () => {
+        const w = Number(widthIn.value); if (!(w > 0)) return toast('Enter a step width', 'err');
+        if (!q.scale.length) { for (let p = (Number(q.value) || 12) - 2; p > 0; p -= 2) q.scale.push({ points: p }); }
+        q.scale.sort((a, b) => b.points - a.points).forEach((r, k) => { r.below = w * (k + 1); r.above = w * (k + 1); }); render();
+      } }, 'Fill reaches')));
+}
+
 function editView() {
-  const q = editing;
+  const q = editing = normalizeQuestion(editing);
   const f = (label, key, attrs = {}) => h('div', {}, h('label', {}, label),
     h('input', { value: q[key] ?? '', ...attrs, onchange: e => { q[key] = attrs.type === 'number' ? (e.target.value === '' ? null : Number(e.target.value)) : e.target.value; } }));
   const csv = (label, key) => h('div', {}, h('label', {}, label + ' (comma-separated)'),
@@ -105,30 +159,49 @@ function editView() {
   const test = h('input', { placeholder: 'Try an answer to test scoring' });
   const out = h('span', { class: 'pill' }, '');
   test.oninput = () => { const r = autoScore(q, test.value); out.textContent = `${r.points} pts ${r.note || ''}`; };
+  const cats = h('div', {}, h('label', {}, 'Categories (pick 1–2)'),
+    h('div', { class: 'row', style: 'gap:.3rem' }, ...CATEGORIES.map(c => h('label', { class: 'row', style: 'margin:0;gap:.2rem' },
+      h('input', { type: 'checkbox', style: 'width:auto', checked: q.categories.includes(c), onchange: e => {
+        if (e.target.checked) { if (q.categories.length >= 2) { e.target.checked = false; return toast('Pick at most 2', 'err'); } q.categories.push(c); }
+        else q.categories = q.categories.filter(x => x !== c);
+      } }), c))));
   fill(app, h('div', { class: 'card' },
     h('h2', {}, Q[q.id] ? 'Edit question' : 'Add question'),
-    h('div', {}, h('label', {}, 'Question'), h('textarea', { rows: 3, onchange: e => { q.text = e.target.value; } }, q.text)),
+    h('div', {}, h('label', {}, 'Question (a ? is added at the end on save)'), h('textarea', { rows: 3, onchange: e => { q.text = e.target.value; } }, q.text)),
+    cats,
     h('div', { class: 'grid2' },
       h('div', {}, f('Answer (shown to host and on the board after scoring)', 'answer'),
-        h('label', {}, 'Type'), h('select', { onchange: e => { q.type = e.target.value; render(); } },
-          ...[['qa', 'Exact answer'], ['range', 'Closest number (steps)'], ['list', 'List (points per item)'], ['closer', 'Closest takes all'], ['tf', 'True / False']]
-            .map(([v, t]) => h('option', { value: v, selected: q.type === v }, t))),
-        f('Points (max)', 'value', { type: 'number' }), f('Category', 'category'), csv('Games', 'games')),
+        h('label', {}, 'Type'), h('select', { onchange: e => { q.type = e.target.value; if (q.type === 'number') { q.numberMode ||= 'range'; q.scale ||= []; } render(); } },
+          ...Object.entries(TYPES).map(([v, t]) => h('option', { value: v, selected: q.type === v }, t))),
+        f('Points (max)', 'value', { type: 'number' }), csv('Sub-tags', 'tags'), csv('Games', 'games'),
+        h('label', { class: 'row' }, h('input', { type: 'checkbox', style: 'width:auto', checked: q.general !== false, onchange: e => { q.general = e.target.checked; } }), 'General question (works for any crowd)')),
       h('div', {},
         q.type === 'qa' || q.type === 'tf' ? csv('Accepted answers', 'accepted') : null,
         q.type === 'list' ? h('div', {}, csv('Items', 'items'), f('Points per item', 'perItem', { type: 'number', step: 'any' })) : null,
-        q.type === 'range' || q.type === 'closer' ? h('div', {}, f('Exact answer (low)', 'answerLo', { type: 'number', step: 'any' }), f('Exact answer (high, if a range)', 'answerHi', { type: 'number', step: 'any' })) : null,
-        q.type === 'range' ? h('div', {}, f('Step width', 'step', { type: 'number', step: 'any' }), f('Points lost per step (2 on the 12-pt scale, 1 on the 6-pt scale)', 'stepPoints', { type: 'number' }),
-          q.bands ? h('p', {}, 'Using your typed steps: ', q.bands.map(b => `${b.points}: ${b.ranges.map(([a, z]) => a === z ? a : `${a}–${z ?? '+'}`).join(', ')}`).join(' | '), ' ',
-            h('button', { class: 'small secondary', onclick: () => { delete q.bands; render(); } }, 'Use step width instead')) : null) : null,
+        q.type === 'number' ? h('div', {},
+          h('label', {}, 'Scoring'), h('select', { onchange: e => { q.numberMode = e.target.value; render(); } },
+            h('option', { value: 'range', selected: q.numberMode !== 'closer' }, 'Range — points by how close (default)'),
+            h('option', { value: 'closer', selected: q.numberMode === 'closer' }, 'Closest takes all')),
+          f('Exact answer (low)', 'answerLo', { type: 'number', step: 'any' }), f('Exact answer (high, if a range)', 'answerHi', { type: 'number', step: 'any' })) : null,
         h('label', { class: 'row' }, h('input', { type: 'checkbox', style: 'width:auto', checked: q.judge === 'host', onchange: e => { q.judge = e.target.checked ? 'host' : null; } }), 'Host judges this one'),
         h('label', { class: 'row' }, h('input', { type: 'checkbox', style: 'width:auto', checked: !!q.needsReview, onchange: e => { q.needsReview = e.target.checked; } }), 'Needs review'),
-        q.reviewNotes ? h('p', { class: 'muted' }, q.reviewNotes.join(' · ')) : null)),
+        q.reviewNotes ? h('p', { class: 'muted' }, q.reviewNotes.join(' · ')) : null,
+        h('label', {}, 'Re-check by (for answers that go out of date)'),
+        h('div', { class: 'row' },
+          h('input', { type: 'date', value: q.recheckBy || '', style: 'max-width:11rem', onchange: e => { q.recheckBy = e.target.value || null; } }),
+          h('input', { class: 'grow', placeholder: 'What to check, e.g. "Bitcoin price"', value: q.recheckNote || '', onchange: e => { q.recheckNote = e.target.value; } })))),
+    q.type === 'number' && q.numberMode !== 'closer' ? scaleEditor(q) : null,
     h('div', { class: 'row', style: 'margin-top:.6rem' }, test, out),
     h('div', { class: 'row', style: 'margin-top:1rem' },
       h('button', { onclick: async () => {
         if (!q.text?.trim() || !String(q.answer ?? '').trim()) return toast('Question and answer are required', 'err');
-        if (q.type === 'range' && q.answerHi == null) q.answerHi = q.answerLo;
+        if (!q.categories.length) return toast('Pick at least one category', 'err');
+        if (q.type === 'number') {
+          if (q.answerLo == null) return toast('Enter the exact answer', 'err');
+          if (q.answerHi == null) q.answerHi = q.answerLo;
+          q.scale = (q.scale || []).filter(r => r.points > 0 && (r.below != null || r.above != null)).sort((a, b) => b.points - a.points);
+        } else { delete q.numberMode; delete q.scale; delete q.answerLo; delete q.answerHi; }
+        if (!q.recheckBy) { delete q.recheckBy; delete q.recheckNote; }
         if (q.type === 'list' && q.items?.length && !q.perItem) q.perItem = Math.round(q.value / q.items.length * 100) / 100;
         try { await saveQuestion(q); editing = null; toast('Saved'); await reload(); } catch (e) { toast('Could not save: ' + e.message, 'err'); }
       } }, 'Save'),

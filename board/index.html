@@ -8,6 +8,19 @@
 <script src="../vendor/topojson-client.min.js"></script>
 </head>
 <body class="board">
+<button id="fs" type="button" title="Full screen" aria-label="Full screen">⛶</button>
+<style>
+  #fs { position: fixed; right: 10px; top: 10px; z-index: 50; background: rgba(0,0,0,.4); color: #fff; border: 1px solid rgba(255,255,255,.4); border-radius: 8px; font-size: 22px; padding: 4px 10px; cursor: pointer; opacity: .5; }
+  #fs:hover { opacity: 1; }
+</style>
+<script>
+  document.getElementById('fs').onclick = () => {
+    const d = document.documentElement;
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (d.requestFullscreen) d.requestFullscreen();
+    else if (d.webkitRequestFullscreen) d.webkitRequestFullscreen();
+  };
+</script>
 <div id="app"><div class="wrap"><p>Loading…</p></div></div>
 <script type="module">
 import { $, h, fill, qs, fmt, notConfigured, showError } from '../js/ui.js';
@@ -49,8 +62,8 @@ async function start() {
   $('#room').textContent = `Room ${code}`;
   let lastRound = null, g = null, shown = null, queue = [], timer = null;
 
-  // Closings are revealed one at a time, 3 seconds apart, biggest blowouts first.
-  const STEP = 3000;
+  // Closings are revealed one at a time, 1.5 seconds apart, biggest blowouts first.
+  const STEP = 1500;
   function runQueue() {
     if (timer || !queue.length) return;
     const next = queue.shift();
@@ -104,7 +117,7 @@ async function start() {
     fill($('#status'),
       h('span', {}, `${STATUS_TEXT[g.status] || ''}`),
       h('span', {}, `Question ${Math.min((g.qIndex || 0) + (g.current && !g.scored?.[g.current.id] ? 1 : 0), g.total || 0)} of ${g.total || 0}`),
-      h('span', {}, `${Object.keys(closedShown).length} of 51 states closed`),
+      h('span', {}, `${Object.keys(closedShown).length} of 51 states called`),
       g.status !== 'over' ? h('span', {}, `Next spending after Q${v.nextCheckpoint}`) : null,
       locks ? h('span', {}, locks) : null);
 
@@ -118,7 +131,7 @@ async function start() {
     } else if (g.current) {
       const c = g.current;
       fill($('#q'), h('div', { class: 'question' },
-        h('div', { class: 'meta' }, `${c.category || ''} · ${c.type === 'range' ? 'closest number' : c.type === 'list' ? 'list' : c.type === 'closer' ? 'closest takes all' : c.type === 'tf' ? 'true / false' : 'answer'} · up to ${c.value} pts${g.answersOpen ? '' : ' · answers closed'}`),
+        h('div', { class: 'meta' }, `${c.category || ''} · ${c.type === 'number' ? (c.numberMode === 'closer' ? 'closest takes all' : 'closest number') : c.type === 'list' ? 'list' : c.type === 'tf' ? 'true / false' : 'answer'} · up to ${c.value} pts${g.answersOpen ? '' : ' · answers closed'}`),
         h('div', {}, c.text),
         g.reveal?.qid === c.id ? h('div', { class: 'meta', style: 'margin-top:.5rem;font-size:1.2rem;opacity:1' }, `Answer: ${g.reveal.answer} · ${v.teams.map(t => `${teamName(g, t)} +${g.reveal.points[t]}`).join(' · ')}`) : null));
     } else fill($('#q'));
@@ -141,7 +154,7 @@ async function start() {
       fresh.sort((a, b) => margin(g.spend?.[b], teams) - margin(g.spend?.[a], teams));
       queue.push(...fresh);
     }
-    // undo can un-close states: drop them from what's shown
+    // undo can un-call states: drop them from what's shown
     for (const c of [...shown]) if (!g.closed?.[c]) shown.delete(c);
     queue = queue.filter(c => g.closed?.[c]);
     lastRound = round;

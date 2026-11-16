@@ -34,11 +34,12 @@ export function leader(spend, teams) {
 
 // ---- closing schedule -----------------------------------------------------
 
-// G15 / G17: the sheet counts the NEXT question (questions scored + 1) over the game length.
-// Capped at 100% — uncapped, the sheet's target hits 52 at game end and G21 returns #NUM!.
+// G15 / G17: the sheet counted the NEXT question (scored + 1) because it closed states as each
+// score was typed in. States now close only at spending checkpoints, after the question is scored,
+// so progress is simply questions scored ÷ game length. 100% (every state called) = the last question.
 export function progress(questionsScored, totalQuestions) {
   if (!totalQuestions) return 0;
-  return Math.min(1, (questionsScored + 1) / totalQuestions);
+  return Math.min(1, questionsScored / totalQuestions);
 }
 
 // G19 = ROUNDDOWN(0.0051*((G18*100)^2), 0) — how many states should be closed at this progress.
@@ -121,11 +122,30 @@ export function validateDraft(alloc, balance, closed) {
   for (const [code, n] of Object.entries(alloc || {})) {
     const v = Number(n);
     if (!Number.isInteger(v) || v < 0) errors.push(`${code}: must be a whole number ≥ 0`);
-    if (v > 0 && closed[code]) errors.push(`${code} is closed`);
+    if (v > 0 && closed[code]) errors.push(`${code} has been called`);
     total += v > 0 ? v : 0;
   }
   if (total > balance) errors.push(`Spending ${total} but only ${balance} available`);
   return { ok: errors.length === 0, total, errors };
+}
+
+// Candidate mode: each player's own wallet. earned = playerTotals[uid], spent = playerSpent[uid].
+export function playerBalance(game, uid) {
+  return Number(game.playerTotals?.[uid] || 0) - Number(game.playerSpent?.[uid] || 0);
+}
+
+// Candidate mode: add up player drafts into one draft per party.
+// pdrafts = { uid: { team, alloc: {CA: 3} } }
+export function sumPlayerDrafts(pdrafts, teams) {
+  const out = Object.fromEntries(teams.map(t => [t, {}]));
+  for (const d of Object.values(pdrafts || {})) {
+    if (!out[d.team]) continue;
+    for (const [code, n] of Object.entries(d.alloc || {})) {
+      const v = Number(n) || 0;
+      if (v > 0) out[d.team][code] = (out[d.team][code] || 0) + v;
+    }
+  }
+  return out;
 }
 
 // Add revealed drafts to cumulative spend. drafts = { blue: {CA: 5}, red: {...} }

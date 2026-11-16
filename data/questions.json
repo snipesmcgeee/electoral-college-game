@@ -1,7 +1,7 @@
 [
  {
   "id": "kansas-002",
-  "text": "What 4 States touch Kansas",
+  "text": "What 4 States touch Kansas?",
   "answer": "NE, CO, OK, MO",
   "category": "Geography",
   "games": [
@@ -15,11 +15,18 @@
    "OK",
    "MO"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-003",
-  "text": "What 5 cities have a population over 100,000",
+  "text": "What 5 cities have a population over 100,000?",
   "answer": "Wichita, Overland Park, Kansas City, Olathe, Topeka",
   "category": "Geography",
   "games": [
@@ -34,11 +41,18 @@
    "Olathe",
    "Topeka"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-004",
-  "text": "What is the minimum number of states between Kansas and Minnesota",
+  "text": "What is the minimum number of states between Kansas and Minnesota?",
   "answer": "2",
   "category": "Geography",
   "games": [
@@ -48,7 +62,14 @@
   "type": "qa",
   "accepted": [
    "2"
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-005",
@@ -62,7 +83,14 @@
   "type": "qa",
   "accepted": [
    "Topeka"
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-006",
@@ -72,17 +100,50 @@
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 4038.0,
-  "answerHi": 4038.0,
-  "step": 800.0,
+  "answerLo": 4038,
+  "answerHi": 4038,
   "needsReview": true,
   "reviewNotes": [
    "6-pt and 4-pt steps overlap at 6437",
    "typed steps not usable; scoring with computed steps of width 800"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 10,
+    "below": 800,
+    "above": 800
+   },
+   {
+    "points": 8,
+    "below": 1600,
+    "above": 1600
+   },
+   {
+    "points": 6,
+    "below": 2400,
+    "above": 2400
+   },
+   {
+    "points": 4,
+    "below": 3200,
+    "above": 3200
+   },
+   {
+    "points": 2,
+    "below": 4000,
+    "above": 4000
+   }
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-007",
@@ -92,88 +153,45 @@
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 105.0,
-  "answerHi": 105.0,
-  "step": 20.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      105.0,
-      105.0
-     ]
-    ]
-   },
+  "answerLo": 105,
+  "answerHi": 105,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      85.0,
-      104.0
-     ],
-     [
-      106.0,
-      125.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      65.0,
-      84.0
-     ],
-     [
-      126.0,
-      145.0
-     ]
-    ]
+    "below": 40,
+    "above": 40
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      45.0,
-      64.0
-     ],
-     [
-      146.0,
-      165.0
-     ]
-    ]
+    "below": 60,
+    "above": 60
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      25.0,
-      44.0
-     ],
-     [
-      166.0,
-      185.0
-     ]
-    ]
+    "below": 80,
+    "above": 80
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      5.0,
-      24.0
-     ],
-     [
-      186.0,
-      205.0
-     ]
-    ]
+    "below": 100,
+    "above": 100
    }
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-008",
@@ -183,183 +201,97 @@
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 15.0,
-  "answerHi": 15.0,
-  "step": 3.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      15.0,
-      15.0
-     ]
-    ]
-   },
+  "answerLo": 15,
+  "answerHi": 15,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      12.0,
-      14.0
-     ],
-     [
-      16.0,
-      18.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      9.0,
-      11.0
-     ],
-     [
-      19.0,
-      21.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      6.0,
-      8.0
-     ],
-     [
-      22.0,
-      24.0
-     ]
-    ]
+    "below": 9,
+    "above": 9
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      3.0,
-      5.0
-     ],
-     [
-      25.0,
-      27.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      1.0,
-      2.0
-     ],
-     [
-      28.0,
-      30.0
-     ]
-    ]
+    "below": 14,
+    "above": 15
    }
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-009",
-  "text": "What is the Average High in Kansas",
+  "text": "What is the Average High in Kansas?",
   "answer": "66",
   "category": "Geography",
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 66.0,
-  "answerHi": 66.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      66.0,
-      66.0
-     ]
-    ]
-   },
+  "answerLo": 66,
+  "answerHi": 66,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      64.0,
-      65.0
-     ],
-     [
-      67.0,
-      68.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      62.0,
-      63.0
-     ],
-     [
-      69.0,
-      70.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      60.0,
-      61.0
-     ],
-     [
-      71.0,
-      72.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      58.0,
-      59.0
-     ],
-     [
-      73.0,
-      74.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      56.0,
-      57.0
-     ],
-     [
-      75.0,
-      76.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    }
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-010",
-  "text": "What 3 major professional sports teams play in Kansas City",
+  "text": "What 3 major professional sports teams play in Kansas City?",
   "answer": "Chiefs, Royals, Sporting KC",
   "category": "Sports",
   "games": [
@@ -372,11 +304,18 @@
    "Royals",
    "Sporting KC"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-011",
-  "text": "Kansas is the home of John Riggins, Barry Sanders, Gale Sayers, and Darren Sproles; what do they have in common",
+  "text": "Kansas is the home of John Riggins, Barry Sanders, Gale Sayers, and Darren Sproles; what do they have in common?",
   "answer": "NFL Running Backs",
   "category": "Sports",
   "games": [
@@ -386,11 +325,18 @@
   "type": "qa",
   "accepted": [
    "NFL Running Backs"
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-012",
-  "text": "Gale Sayers was a protagonist along with Brian Piccolo in this 1971 Film",
+  "text": "Gale Sayers was a protagonist along with Brian Piccolo in this 1971 Film?",
   "answer": "Brian's Song",
   "category": "Sports",
   "games": [
@@ -400,7 +346,14 @@
   "type": "qa",
   "accepted": [
    "Brian's Song"
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-013",
@@ -410,88 +363,45 @@
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 72.0,
-  "answerHi": 72.0,
-  "step": 6.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      72.0,
-      72.0
-     ]
-    ]
-   },
+  "answerLo": 72,
+  "answerHi": 72,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      66.0,
-      71.0
-     ],
-     [
-      73.0,
-      78.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      60.0,
-      65.0
-     ],
-     [
-      79.0,
-      84.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      54.0,
-      59.0
-     ],
-     [
-      85.0,
-      90.0
-     ]
-    ]
+    "below": 18,
+    "above": 18
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      48.0,
-      53.0
-     ],
-     [
-      91.0,
-      96.0
-     ]
-    ]
+    "below": 24,
+    "above": 24
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      42.0,
-      47.0
-     ],
-     [
-      97.0,
-      102.0
-     ]
-    ]
+    "below": 30,
+    "above": 30
    }
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-014",
@@ -501,68 +411,45 @@
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 1.0,
-  "answerHi": 1.0,
-  "step": 3.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      1.0,
-      1.0
-     ]
-    ]
-   },
+  "answerLo": 1,
+  "answerHi": 1,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      2.0,
-      4.0
-     ]
-    ]
+    "below": null,
+    "above": 3
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      5.0,
-      10.0
-     ]
-    ]
+    "below": null,
+    "above": 9
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      11.0,
-      20.0
-     ]
-    ]
+    "below": null,
+    "above": 19
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      21.0,
-      40.0
-     ]
-    ]
+    "below": null,
+    "above": 39
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      41.0,
-      null
-     ]
-    ]
+    "below": null,
+    "above": 999999999999
    }
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-015",
@@ -572,80 +459,51 @@
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 4.0,
-  "answerHi": 4.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      4.0,
-      4.0
-     ]
-    ]
-   },
+  "answerLo": 4,
+  "answerHi": 4,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      3.0,
-      3.0
-     ],
-     [
-      5.0,
-      5.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      2.0,
-      2.0
-     ],
-     [
-      6.0,
-      6.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      7.0,
-      7.0
-     ]
-    ]
+    "below": null,
+    "above": 3
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      8.0,
-      8.0
-     ]
-    ]
+    "below": null,
+    "above": 4
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      9.0,
-      9.0
-     ]
-    ]
+    "below": null,
+    "above": 5
    }
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "World Series appearances"
  },
  {
   "id": "kansas-016",
-  "text": "What is Former KU star and 4 time NBA MVP Wilt Chamberlain's Nickname",
+  "text": "What is Former KU star and 4 time NBA MVP Wilt Chamberlain's Nickname?",
   "answer": "The Stilt",
   "category": "Sports",
   "games": [
@@ -655,104 +513,70 @@
   "type": "qa",
   "accepted": [
    "The Stilt"
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-017",
-  "text": "KU has won March Madness 3 times, how  many times have they made the Final Four",
+  "text": "KU has won March Madness 3 times, how  many times have they made the Final Four?",
   "answer": "15",
   "category": "Sports",
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 15.0,
-  "answerHi": 15.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      15.0,
-      15.0
-     ]
-    ]
-   },
+  "answerLo": 15,
+  "answerHi": 15,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      13.0,
-      14.0
-     ],
-     [
-      16.0,
-      17.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      11.0,
-      12.0
-     ],
-     [
-      18.0,
-      19.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      9.0,
-      10.0
-     ],
-     [
-      20.0,
-      21.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      7.0,
-      8.0
-     ],
-     [
-      22.0,
-      23.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      5.0,
-      6.0
-     ],
-     [
-      24.0,
-      25.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    }
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Final Four count"
  },
  {
   "id": "kansas-018",
-  "text": "Famed Minnesotan Judy Garland may have led people to believe she was from KS in what movie",
+  "text": "Famed Minnesotan Judy Garland may have led people to believe she was from KS in what movie?",
   "answer": "The Wizard of Oz",
-  "category": "Entertainment",
+  "category": "TV & Movies",
   "games": [
    "Kansas"
   ],
@@ -760,13 +584,20 @@
   "type": "qa",
   "accepted": [
    "The Wizard of Oz"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-019",
-  "text": "Wisconsin native Laura Ingalls Wilder is the auther of what Kansas based book",
+  "text": "Wisconsin native Laura Ingalls Wilder is the auther of what Kansas based book?",
   "answer": "Little House on the Prairie",
-  "category": "Entertainment",
+  "category": "Literature & Art",
   "games": [
    "Kansas"
   ],
@@ -774,104 +605,69 @@
   "type": "qa",
   "accepted": [
    "Little House on the Prairie"
-  ]
+  ],
+  "categories": [
+   "Literature & Art"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-020",
-  "text": "Janelle Monae was born in KC, KS and started her career as a musician, however she broke out as an actress in what year after appearing in Moonlight and Hidden Figures",
+  "text": "Janelle Monae was born in KC, KS and started her career as a musician, however she broke out as an actress in what year after appearing in Moonlight and Hidden Figures?",
   "answer": "2016",
-  "category": "Entertainment",
+  "category": "Music",
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 2016.0,
-  "answerHi": 2016.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      2016.0,
-      2016.0
-     ]
-    ]
-   },
+  "answerLo": 2016,
+  "answerHi": 2016,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      2015.0,
-      2015.0
-     ],
-     [
-      2017.0,
-      2017.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      2014.0,
-      2014.0
-     ],
-     [
-      2018.0,
-      2018.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      2013.0,
-      2013.0
-     ],
-     [
-      2019.0,
-      2019.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      2012.0,
-      2012.0
-     ],
-     [
-      2020.0,
-      2020.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      2011.0,
-      2011.0
-     ],
-     [
-      2021.0,
-      2021.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    }
-  ]
+  ],
+  "categories": [
+   "Music",
+   "TV & Movies"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-021",
   "text": "Joe Walsh is a world renowned guitarist, singer, and songwriter, his band sold the most albums by a US group; what is that band's name?",
   "answer": "The Eagles",
-  "category": "Entertainment",
+  "category": "Music",
   "games": [
    "Kansas"
   ],
@@ -879,108 +675,72 @@
   "type": "qa",
   "accepted": [
    "The Eagles"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-022",
   "text": "Martina McBride has never won a Grammy, but how many has she been nominated for?",
   "answer": "14",
-  "category": "Entertainment",
+  "category": "Music",
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 12.0,
-  "answerHi": 12.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      12.0,
-      12.0
-     ]
-    ]
-   },
-   {
-    "points": 10,
-    "ranges": [
-     [
-      10.0,
-      11.0
-     ],
-     [
-      13.0,
-      14.0
-     ]
-    ]
-   },
-   {
-    "points": 8,
-    "ranges": [
-     [
-      8.0,
-      9.0
-     ],
-     [
-      15.0,
-      16.0
-     ]
-    ]
-   },
-   {
-    "points": 6,
-    "ranges": [
-     [
-      6.0,
-      7.0
-     ],
-     [
-      17.0,
-      18.0
-     ]
-    ]
-   },
-   {
-    "points": 4,
-    "ranges": [
-     [
-      4.0,
-      5.0
-     ],
-     [
-      19.0,
-      20.0
-     ]
-    ]
-   },
-   {
-    "points": 2,
-    "ranges": [
-     [
-      2.0,
-      3.0
-     ],
-     [
-      21.0,
-      22.0
-     ]
-    ]
-   }
-  ],
+  "answerLo": 12,
+  "answerHi": 12,
   "needsReview": true,
   "reviewNotes": [
    "answer cell says 14 but steps are in other units (exact = 12); tell players the unit"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 10,
+    "below": 2,
+    "above": 2
+   },
+   {
+    "points": 8,
+    "below": 4,
+    "above": 4
+   },
+   {
+    "points": 6,
+    "below": 6,
+    "above": 6
+   },
+   {
+    "points": 4,
+    "below": 8,
+    "above": 8
+   },
+   {
+    "points": 2,
+    "below": 10,
+    "above": 10
+   }
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-023",
   "text": "A show portraying the younger years of Superman took place in KS, what was it called?",
   "answer": "Smallville",
-  "category": "Entertainment",
+  "category": "TV & Movies",
   "games": [
    "Kansas"
   ],
@@ -988,13 +748,20 @@
   "type": "qa",
   "accepted": [
    "Smallville"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-024",
-  "text": "Famous brothers known for funneling money into politics",
+  "text": "Famous brothers known for funneling money into politics?",
   "answer": "Koch Brothers",
-  "category": "Business",
+  "category": "Politics",
   "games": [
    "Kansas"
   ],
@@ -1002,13 +769,22 @@
   "type": "qa",
   "accepted": [
    "Koch Brothers"
-  ]
+  ],
+  "categories": [
+   "Politics",
+   "Business & Tech"
+  ],
+  "tags": [
+   "kansas",
+   "business"
+  ],
+  "general": false
  },
  {
   "id": "kansas-025",
-  "text": "Russell Stover was a Chemist born in Alton KS, what is his company known for",
+  "text": "Russell Stover was a Chemist born in Alton KS, what is his company known for?",
   "answer": "Chocolate",
-  "category": "Business",
+  "category": "Food & Drink",
   "games": [
    "Kansas"
   ],
@@ -1016,104 +792,70 @@
   "type": "qa",
   "accepted": [
    "Chocolate"
-  ]
+  ],
+  "categories": [
+   "Food & Drink",
+   "Business & Tech"
+  ],
+  "tags": [
+   "kansas",
+   "business"
+  ],
+  "general": false
  },
  {
   "id": "kansas-026",
   "text": "What year did Kansas become a state?",
   "answer": "1861",
-  "category": "Kansas",
+  "category": "History",
   "games": [
    "Kansas"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 1861.0,
-  "answerHi": 1861.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      1861.0,
-      1861.0
-     ]
-    ]
-   },
+  "answerLo": 1861,
+  "answerHi": 1861,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      1859.0,
-      1860.0
-     ],
-     [
-      1862.0,
-      1863.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      1857.0,
-      1858.0
-     ],
-     [
-      1864.0,
-      1865.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      1855.0,
-      1856.0
-     ],
-     [
-      1866.0,
-      1867.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      1853.0,
-      1854.0
-     ],
-     [
-      1868.0,
-      1869.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      1851.0,
-      1852.0
-     ],
-     [
-      1870.0,
-      1871.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    }
-  ]
+  ],
+  "categories": [
+   "History"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-027",
-  "text": "Former Kansas Senator and Senate Majority Leader Bob Dole ran for President, who did he lose to",
+  "text": "Former Kansas Senator and Senate Majority Leader Bob Dole ran for President, who did he lose to?",
   "answer": "Bill Clinton",
-  "category": "Kansas",
+  "category": "Politics",
   "games": [
    "Kansas"
   ],
@@ -1121,13 +863,21 @@
   "type": "qa",
   "accepted": [
    "Bill Clinton"
-  ]
+  ],
+  "categories": [
+   "Politics",
+   "History"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-028",
-  "text": "Amelia Earhart is from Atchison KS, was the first woman to:",
+  "text": "Amelia Earhart is from Atchison KS, was the first woman to do what?",
   "answer": "Fly solo across the Atlantic",
-  "category": "Kansas",
+  "category": "History",
   "games": [
    "Kansas"
   ],
@@ -1135,13 +885,20 @@
   "type": "qa",
   "accepted": [
    "Fly solo across the Atlantic"
-  ]
+  ],
+  "categories": [
+   "History"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-029",
   "text": "Kansas' state song is Home on the Range, what is the next sentence?",
   "answer": "Where the deer and the antelope play",
-  "category": "Kansas",
+  "category": "Music",
   "games": [
    "Kansas"
   ],
@@ -1151,13 +908,20 @@
    "Where the deer",
    "the antelope play"
   ],
-  "perItem": 5.0
+  "perItem": 5,
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-030",
-  "text": "What does BTK Stand For",
+  "text": "What does BTK Stand For?",
   "answer": "Bind Torture Kill",
-  "category": "Kansas",
+  "category": "History",
   "games": [
    "Kansas"
   ],
@@ -1165,13 +929,20 @@
   "type": "qa",
   "accepted": [
    "Bind Torture Kill"
-  ]
+  ],
+  "categories": [
+   "History"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-031",
-  "text": "What was Dwight D Eisenhower's job before President",
+  "text": "What was Dwight D Eisenhower's job before President?",
   "answer": "Army General",
-  "category": "Kansas",
+  "category": "Politics",
   "games": [
    "Kansas"
   ],
@@ -1179,13 +950,21 @@
   "type": "qa",
   "accepted": [
    "Army General"
-  ]
+  ],
+  "categories": [
+   "Politics",
+   "History"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "kansas-032",
   "text": "What snack was named after Kansas preacher Sylvester Graham?",
   "answer": "Graham Cracker",
-  "category": "Kansas",
+  "category": "Food & Drink",
   "games": [
    "Kansas"
   ],
@@ -1193,13 +972,21 @@
   "type": "qa",
   "accepted": [
    "Graham Cracker"
-  ]
+  ],
+  "categories": [
+   "Food & Drink",
+   "History"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": true
  },
  {
   "id": "kansas-033",
   "text": "What does Kansas mean?",
   "answer": "People of the south wind",
-  "category": "Kansas",
+  "category": "Geography",
   "games": [
    "Kansas"
   ],
@@ -1207,13 +994,21 @@
   "type": "qa",
   "accepted": [
    "People of the south wind"
-  ]
+  ],
+  "categories": [
+   "Geography",
+   "History"
+  ],
+  "tags": [
+   "kansas"
+  ],
+  "general": false
  },
  {
   "id": "deca-016",
-  "text": "Name everyone's company they work for",
+  "text": "Name everyone's company they work for?",
   "answer": "Up",
-  "category": "Jobs",
+  "category": "Pop Culture",
   "games": [
    "DECA"
   ],
@@ -1223,13 +1018,20 @@
   "needsReview": true,
   "reviewNotes": [
    "answer must be judged by the host"
-  ]
+  ],
+  "categories": [
+   "Pop Culture"
+  ],
+  "tags": [
+   "group"
+  ],
+  "general": false
  },
  {
   "id": "deca-017",
-  "text": "Name all pets in this group",
+  "text": "Name all pets in this group?",
   "answer": "Up",
-  "category": "Pets",
+  "category": "Pop Culture",
   "games": [
    "DECA"
   ],
@@ -1239,13 +1041,20 @@
   "needsReview": true,
   "reviewNotes": [
    "answer must be judged by the host"
-  ]
+  ],
+  "categories": [
+   "Pop Culture"
+  ],
+  "tags": [
+   "group"
+  ],
+  "general": false
  },
  {
   "id": "deca-018",
-  "text": "What city did each person go to high school in",
+  "text": "What city did each person go to high school in?",
   "answer": "Up",
-  "category": "City",
+  "category": "Pop Culture",
   "games": [
    "DECA"
   ],
@@ -1255,7 +1064,14 @@
   "needsReview": true,
   "reviewNotes": [
    "answer must be judged by the host"
-  ]
+  ],
+  "categories": [
+   "Pop Culture"
+  ],
+  "tags": [
+   "group"
+  ],
+  "general": false
  },
  {
   "id": "deca-019",
@@ -1265,88 +1081,43 @@
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 32.0,
-  "answerHi": 32.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      32.0,
-      32.0
-     ]
-    ]
-   },
+  "answerLo": 32,
+  "answerHi": 32,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      31.0,
-      31.0
-     ],
-     [
-      33.0,
-      33.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      30.0,
-      30.0
-     ],
-     [
-      34.0,
-      34.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      29.0,
-      29.0
-     ],
-     [
-      35.0,
-      35.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      28.0,
-      28.0
-     ],
-     [
-      36.0,
-      36.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      27.0,
-      27.0
-     ],
-     [
-      37.0,
-      37.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    }
-  ]
+  ],
+  "categories": [
+   "Science"
+  ],
+  "tags": [],
+  "general": true
  },
  {
   "id": "deca-020",
@@ -1360,7 +1131,12 @@
   "type": "qa",
   "accepted": [
    "Number of protons in the nucleus"
-  ]
+  ],
+  "categories": [
+   "Science"
+  ],
+  "tags": [],
+  "general": true
  },
  {
   "id": "deca-021",
@@ -1374,13 +1150,18 @@
   "type": "qa",
   "accepted": [
    "Dynamite"
-  ]
+  ],
+  "categories": [
+   "Science"
+  ],
+  "tags": [],
+  "general": true
  },
  {
   "id": "deca-022",
   "text": "What is the primary function of a dog's tail?",
   "answer": "Communication",
-  "category": "Dogs",
+  "category": "Animals",
   "games": [
    "DECA"
   ],
@@ -1388,195 +1169,116 @@
   "type": "qa",
   "accepted": [
    "Communication"
-  ]
+  ],
+  "categories": [
+   "Animals"
+  ],
+  "tags": [
+   "dogs"
+  ],
+  "general": true
  },
  {
   "id": "deca-023",
   "text": "How many times better are dog's sense of smell than ours?",
   "answer": "40",
-  "category": "Dogs",
+  "category": "Animals",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 40.0,
-  "answerHi": 40.0,
-  "step": 8.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      40.0,
-      40.0
-     ]
-    ]
-   },
+  "answerLo": 40,
+  "answerHi": 40,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      32.0,
-      39.0
-     ],
-     [
-      41.0,
-      48.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      24.0,
-      31.0
-     ],
-     [
-      49.0,
-      56.0
-     ]
-    ]
+    "below": 16,
+    "above": 16
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      16.0,
-      23.0
-     ],
-     [
-      57.0,
-      64.0
-     ]
-    ]
+    "below": 24,
+    "above": 24
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      8.0,
-      15.0
-     ],
-     [
-      65.0,
-      72.0
-     ]
-    ]
+    "below": 32,
+    "above": 32
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      0.0,
-      7.0
-     ],
-     [
-      73.0,
-      80.0
-     ]
-    ]
+    "below": 40,
+    "above": 40
    }
-  ]
+  ],
+  "categories": [
+   "Animals"
+  ],
+  "tags": [
+   "dogs"
+  ],
+  "general": true
  },
  {
   "id": "deca-024",
   "text": "Humans have just 2 ear muscles, how many do dogs have?",
   "answer": "18",
-  "category": "Dogs",
+  "category": "Animals",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 18.0,
-  "answerHi": 18.0,
-  "step": 3.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      18.0,
-      18.0
-     ]
-    ]
-   },
+  "answerLo": 18,
+  "answerHi": 18,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      15.0,
-      17.0
-     ],
-     [
-      19.0,
-      21.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      12.0,
-      14.0
-     ],
-     [
-      22.0,
-      24.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      9.0,
-      11.0
-     ],
-     [
-      25.0,
-      27.0
-     ]
-    ]
+    "below": 9,
+    "above": 9
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      6.0,
-      8.0
-     ],
-     [
-      28.0,
-      30.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      3.0,
-      5.0
-     ],
-     [
-      31.0,
-      33.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    }
-  ]
+  ],
+  "categories": [
+   "Animals"
+  ],
+  "tags": [
+   "dogs"
+  ],
+  "general": true
  },
  {
   "id": "deca-025",
-  "text": "The Office has 4 characters who share the same name as their actors, list them.",
+  "text": "The Office has 4 characters who share the same name as their actors, list them?",
   "answer": "Angela, Phyllis, Oscar, Creed",
-  "category": "The Office",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -1588,13 +1290,20 @@
    "Oscar",
    "Creed"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "the office"
+  ],
+  "general": true
  },
  {
   "id": "deca-026",
   "text": "In The Office, what is Stanley often found doing instead of listening?",
   "answer": "Crossword Puzzles",
-  "category": "The Office",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -1602,13 +1311,20 @@
   "type": "qa",
   "accepted": [
    "Crossword Puzzles"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "the office"
+  ],
+  "general": true
  },
  {
   "id": "deca-027",
   "text": "What is the name of the movie Michael Scott wrote?",
   "answer": "Threat Level Midnight",
-  "category": "The Office",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -1616,104 +1332,68 @@
   "type": "qa",
   "accepted": [
    "Threat Level Midnight"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "the office"
+  ],
+  "general": true
  },
  {
   "id": "deca-028",
-  "text": "In 2020 where did WI rank in number of Breweries per Capita? MN #15",
+  "text": "In 2020 where did WI rank in number of Breweries per Capita? MN #15?",
   "answer": "14",
-  "category": "WI Beer",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 14.0,
-  "answerHi": 14.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      14.0,
-      14.0
-     ]
-    ]
-   },
+  "answerLo": 14,
+  "answerHi": 14,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      12.0,
-      13.0
-     ],
-     [
-      15.0,
-      16.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      10.0,
-      11.0
-     ],
-     [
-      17.0,
-      18.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      8.0,
-      9.0
-     ],
-     [
-      19.0,
-      20.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      6.0,
-      7.0
-     ],
-     [
-      21.0,
-      22.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      4.0,
-      5.0
-     ],
-     [
-      23.0,
-      24.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    }
-  ]
+  ],
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [
+   "wi beer"
+  ],
+  "general": false
  },
  {
   "id": "deca-029",
   "text": "According to New Glarus, why are they only sold in Wisconsin?",
   "answer": "Enough Demand in WI",
-  "category": "WI Beer",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -1721,104 +1401,70 @@
   "type": "qa",
   "accepted": [
    "Enough Demand in WI"
-  ]
+  ],
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [
+   "wi beer"
+  ],
+  "general": false
  },
  {
   "id": "deca-030",
   "text": "How many beers does Leinenkugel's show on their website?",
   "answer": "16, https://www.leinie.com/our-beers ",
-  "category": "WI Beer",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 16.0,
-  "answerHi": 16.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      16.0,
-      16.0
-     ]
-    ]
-   },
+  "answerLo": 16,
+  "answerHi": 16,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      14.0,
-      15.0
-     ],
-     [
-      17.0,
-      18.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      12.0,
-      13.0
-     ],
-     [
-      19.0,
-      20.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      10.0,
-      11.0
-     ],
-     [
-      21.0,
-      22.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      8.0,
-      9.0
-     ],
-     [
-      23.0,
-      24.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      6.0,
-      7.0
-     ],
-     [
-      25.0,
-      26.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    }
-  ]
+  ],
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [
+   "wi beer"
+  ],
+  "general": false,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Leinenkugel's lineup changes"
  },
  {
   "id": "deca-031",
-  "text": "Name 10 Quidditch players who do not have the last name Potter or Weasley",
+  "text": "Name 10 Quidditch players who do not have the last name Potter or Weasley?",
   "answer": "https://www.hp-lexicon.org/list/quidditch/quidditch-players/",
-  "category": "HP",
+  "category": "Literature & Art",
   "games": [
    "DECA"
   ],
@@ -1828,13 +1474,21 @@
   "needsReview": true,
   "reviewNotes": [
    "answer must be judged by the host"
-  ]
+  ],
+  "categories": [
+   "Literature & Art",
+   "TV & Movies"
+  ],
+  "tags": [
+   "harry potter"
+  ],
+  "general": true
  },
  {
   "id": "deca-032",
-  "text": "What pulls the Hogwarts carriages",
+  "text": "What pulls the Hogwarts carriages?",
   "answer": "Thestrals",
-  "category": "HP",
+  "category": "Literature & Art",
   "games": [
    "DECA"
   ],
@@ -1842,13 +1496,21 @@
   "type": "qa",
   "accepted": [
    "Thestrals"
-  ]
+  ],
+  "categories": [
+   "Literature & Art",
+   "TV & Movies"
+  ],
+  "tags": [
+   "harry potter"
+  ],
+  "general": true
  },
  {
   "id": "deca-033",
-  "text": "Who were the 7 professors to teach DADA, 2 bonus points available",
+  "text": "Who were the 7 professors to teach DADA, 2 bonus points available?",
   "answer": "Quirrel, Lockhart, Lupin, Moody (BCJ), Umbridge, Snape, Carrow",
-  "category": "HP",
+  "category": "Literature & Art",
   "games": [
    "DECA"
   ],
@@ -1867,13 +1529,21 @@
   "needsReview": true,
   "reviewNotes": [
    "16 pts over 7 items is not a whole number per item"
-  ]
+  ],
+  "categories": [
+   "Literature & Art",
+   "TV & Movies"
+  ],
+  "tags": [
+   "harry potter"
+  ],
+  "general": true
  },
  {
   "id": "deca-034",
   "text": "Lin-Manuel Miranda is famous for writing Hamilton, which Disney movie did he write the music for?",
   "answer": "Moana",
-  "category": "Disney Movies",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -1881,13 +1551,21 @@
   "type": "qa",
   "accepted": [
    "Moana"
-  ]
+  ],
+  "categories": [
+   "TV & Movies",
+   "Music"
+  ],
+  "tags": [
+   "disney movies"
+  ],
+  "general": true
  },
  {
   "id": "deca-035",
   "text": "In Disney's Treasure Planet, the main song \"I'm Still Here\" is performed by John Rzeznik. What band does he lead?",
   "answer": "Goo Goo Dolls",
-  "category": "Disney Movies",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -1895,13 +1573,21 @@
   "type": "qa",
   "accepted": [
    "Goo Goo Dolls"
-  ]
+  ],
+  "categories": [
+   "TV & Movies",
+   "Music"
+  ],
+  "tags": [
+   "disney movies"
+  ],
+  "general": false
  },
  {
   "id": "deca-036",
   "text": "According to Disney.com there are 12 princesses, who are they?",
   "answer": "Belle, Rapunzel, Ariel, Tiana, Moana, Cinderella, Aurora, Merida, Pocahontas, Jasmine, Mulan, Snow White",
-  "category": "Disney Movies",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -1921,13 +1607,22 @@
    "Mulan",
    "Snow White"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "disney movies"
+  ],
+  "general": true,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Official princess list"
  },
  {
   "id": "deca-037",
   "text": "George Washington was unaffiliated with any political party, what two parties were involved in the next election?",
   "answer": "Federalists, Democratic Republicans",
-  "category": "US Politics",
+  "category": "Politics",
   "games": [
    "DECA"
   ],
@@ -1937,13 +1632,21 @@
    "Federalists",
    "Democratic Republicans"
   ],
-  "perItem": 5.0
+  "perItem": 5,
+  "categories": [
+   "Politics",
+   "History"
+  ],
+  "tags": [
+   "us politics"
+  ],
+  "general": true
  },
  {
   "id": "deca-038",
   "text": "Ronald Reagan won all but two locations in the electoral college, which two?",
   "answer": "Minnesota, DC",
-  "category": "US Politics",
+  "category": "Politics",
   "games": [
    "DECA"
   ],
@@ -1951,13 +1654,21 @@
   "type": "qa",
   "accepted": [
    "Minnesota, DC"
-  ]
+  ],
+  "categories": [
+   "Politics",
+   "History"
+  ],
+  "tags": [
+   "us politics"
+  ],
+  "general": true
  },
  {
   "id": "deca-039",
-  "text": "Term length for Reps, Senators, Pres, Justices",
+  "text": "Term length for Reps, Senators, Pres, Justices?",
   "answer": "2, 6, 4, Life",
-  "category": "US Politics",
+  "category": "Politics",
   "games": [
    "DECA"
   ],
@@ -1965,13 +1676,21 @@
   "type": "qa",
   "accepted": [
    "2, 6, 4, Life"
-  ]
+  ],
+  "categories": [
+   "Politics",
+   "History"
+  ],
+  "tags": [
+   "us politics"
+  ],
+  "general": true
  },
  {
   "id": "deca-040",
   "text": "Of the top 20 paid MLB players 10 are position players 10 are pitchers, which position has more in the top 10?",
   "answer": "Pitchers, 7",
-  "category": "MLB",
+  "category": "Sports",
   "games": [
    "DECA"
   ],
@@ -1979,13 +1698,22 @@
   "type": "qa",
   "accepted": [
    "Pitchers, 7"
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "mlb"
+  ],
+  "general": false,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "MLB salaries change every season"
  },
  {
   "id": "deca-041",
-  "text": "What are the 6 Triple Crown Categories in Baseball",
+  "text": "What are the 6 Triple Crown Categories in Baseball?",
   "answer": "AVG, HR, RBI, W, K, ERA",
-  "category": "MLB",
+  "category": "Sports",
   "games": [
    "DECA"
   ],
@@ -1999,21 +1727,27 @@
    "K",
    "ERA"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "mlb"
+  ],
+  "general": true
  },
  {
   "id": "deca-042",
-  "text": "Joe Nuxhall was the youngest MLB Player of all time debuting in 1944, how old was he? (years+months)",
+  "text": "Joe Nuxhall was the youngest MLB Player of all time debuting in 1944, how old was he? (years+months)?",
   "answer": "15 + 10",
-  "category": "MLB",
+  "category": "Sports",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 15.0,
-  "answerHi": 15.0,
+  "answerLo": 15,
+  "answerHi": 15,
   "judge": "host",
   "needsReview": true,
   "reviewNotes": [
@@ -2023,96 +1757,72 @@
    "8-pt step \"13+10, 17+10\" could not be read",
    "10-pt step \"14+10, 16+10\" could not be read",
    "no usable steps; host judges until a step width is set"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "mlb"
+  ],
+  "general": false
  },
  {
   "id": "deca-043",
-  "text": "What is the population in millions of Australia",
+  "text": "What is the population in millions of Australia?",
   "answer": "25.5 million",
-  "category": "Australia",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 25.0,
-  "answerHi": 26.0,
-  "step": 10.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      25.0,
-      26.0
-     ]
-    ]
-   },
+  "answerLo": 25,
+  "answerHi": 26,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      15.0,
-      24.0
-     ],
-     [
-      27.0,
-      36.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      5.0,
-      14.0
-     ],
-     [
-      37.0,
-      46.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      0.0,
-      4.0
-     ],
-     [
-      47.0,
-      56.0
-     ]
-    ]
+    "below": 25,
+    "above": 30
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      57.0,
-      66.0
-     ]
-    ]
+    "below": null,
+    "above": 40
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      67.0,
-      76.0
-     ]
-    ]
+    "below": null,
+    "above": 50
    }
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "australia"
+  ],
+  "general": true,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Population changes"
  },
  {
   "id": "deca-044",
   "text": "Sydney is the largest city on Australia's eastern half, what is the largest in Western Australia?",
   "answer": "Perth",
-  "category": "Australia",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
@@ -2120,13 +1830,20 @@
   "type": "qa",
   "accepted": [
    "Perth"
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "australia"
+  ],
+  "general": true
  },
  {
   "id": "deca-045",
   "text": "Australia is home to the largest living organism, what is it?",
   "answer": "The Great Barrier Reef",
-  "category": "Australia",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
@@ -2134,13 +1851,21 @@
   "type": "qa",
   "accepted": [
    "The Great Barrier Reef"
-  ]
+  ],
+  "categories": [
+   "Geography",
+   "Science"
+  ],
+  "tags": [
+   "australia"
+  ],
+  "general": true
  },
  {
   "id": "deca-046",
   "text": "What does propagation mean?",
   "answer": "Taking a cutting of one plant and growing another from it",
-  "category": "Plants",
+  "category": "Science",
   "games": [
    "DECA"
   ],
@@ -2148,13 +1873,20 @@
   "type": "qa",
   "accepted": [
    "Taking a cutting of one plant and growing another from it"
-  ]
+  ],
+  "categories": [
+   "Science"
+  ],
+  "tags": [
+   "plants"
+  ],
+  "general": true
  },
  {
   "id": "deca-047",
   "text": "Why are plants green?",
   "answer": "Chlorophyll",
-  "category": "Plants",
+  "category": "Science",
   "games": [
    "DECA"
   ],
@@ -2162,13 +1894,20 @@
   "type": "qa",
   "accepted": [
    "Chlorophyll"
-  ]
+  ],
+  "categories": [
+   "Science"
+  ],
+  "tags": [
+   "plants"
+  ],
+  "general": true
  },
  {
   "id": "deca-048",
-  "text": "On a plant, what is the purpose of a flower? Both in general and the petals specifically.",
+  "text": "On a plant, what is the purpose of a flower? Both in general and the petals specifically?",
   "answer": "Reproductive parts, attract insects",
-  "category": "Plants",
+  "category": "Science",
   "games": [
    "DECA"
   ],
@@ -2176,13 +1915,20 @@
   "type": "qa",
   "accepted": [
    "Reproductive parts, attract insects"
-  ]
+  ],
+  "categories": [
+   "Science"
+  ],
+  "tags": [
+   "plants"
+  ],
+  "general": true
  },
  {
   "id": "deca-049",
   "text": "From which drink did Cardi B take her stage name?",
   "answer": "Bacardi",
-  "category": "Alcohol",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -2190,13 +1936,21 @@
   "type": "qa",
   "accepted": [
    "Bacardi"
-  ]
+  ],
+  "categories": [
+   "Food & Drink",
+   "Music"
+  ],
+  "tags": [
+   "alcohol"
+  ],
+  "general": true
  },
  {
   "id": "deca-050",
-  "text": "Vodka, Tquila, Light Rum, Triple Sec, Gin, Cola",
+  "text": "Vodka, Tquila, Light Rum, Triple Sec, Gin, Cola?",
   "answer": "Long Island Iced Tea",
-  "category": "Alcohol",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -2204,13 +1958,20 @@
   "type": "qa",
   "accepted": [
    "Long Island Iced Tea"
-  ]
+  ],
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [
+   "alcohol"
+  ],
+  "general": true
  },
  {
   "id": "deca-051",
   "text": "Why are beer bottles brown?",
   "answer": "Less UV rays to \"skunk\" the beer",
-  "category": "Alcohol",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -2218,13 +1979,21 @@
   "type": "qa",
   "accepted": [
    "Less UV rays to \"skunk\" the beer"
-  ]
+  ],
+  "categories": [
+   "Food & Drink",
+   "Science"
+  ],
+  "tags": [
+   "alcohol"
+  ],
+  "general": true
  },
  {
   "id": "deca-052",
-  "text": "List all 6 QBs that started for the Packers in at least one game since 2000 (MIN 20)",
+  "text": "List all 6 QBs that started for the Packers in at least one game since 2000 (MIN 20)?",
   "answer": "Favre, Rodgers, Flynn, Tolzien, Wallace, Hundley",
-  "category": "Packers",
+  "category": "Sports",
   "games": [
    "DECA"
   ],
@@ -2238,13 +2007,22 @@
    "Wallace",
    "Hundley"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "packers"
+  ],
+  "general": false,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Packers starters change"
  },
  {
   "id": "deca-053",
   "text": "Who did the Packers lose the Super Bowl to?",
   "answer": "Denver Broncos",
-  "category": "Packers",
+  "category": "Sports",
   "games": [
    "DECA"
   ],
@@ -2252,13 +2030,20 @@
   "type": "qa",
   "accepted": [
    "Denver Broncos"
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "packers"
+  ],
+  "general": true
  },
  {
   "id": "deca-054",
   "text": "Who caught Brett Favre's first NFL completion?",
   "answer": "Brett Favre",
-  "category": "Packers",
+  "category": "Sports",
   "games": [
    "DECA"
   ],
@@ -2266,195 +2051,117 @@
   "type": "qa",
   "accepted": [
    "Brett Favre"
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [
+   "packers"
+  ],
+  "general": false
  },
  {
   "id": "deca-055",
-  "text": "In 26 minutes what is the record for the most wings eaten? Hint: it is absurd",
+  "text": "In 26 minutes what is the record for the most wings eaten? Hint: it is absurd?",
   "answer": "444",
-  "category": "Chicken Wings",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 400.0,
-  "answerHi": 450.0,
-  "step": 50.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      400.0,
-      450.0
-     ]
-    ]
-   },
+  "answerLo": 400,
+  "answerHi": 450,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      350.0,
-      399.0
-     ],
-     [
-      451.0,
-      500.0
-     ]
-    ]
+    "below": 50,
+    "above": 50
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      300.0,
-      349.0
-     ],
-     [
-      501.0,
-      550.0
-     ]
-    ]
+    "below": 100,
+    "above": 100
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      250.0,
-      299.0
-     ],
-     [
-      551.0,
-      600.0
-     ]
-    ]
+    "below": 150,
+    "above": 150
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      200.0,
-      249.0
-     ],
-     [
-      601.0,
-      650.0
-     ]
-    ]
+    "below": 200,
+    "above": 200
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      150.0,
-      199.0
-     ],
-     [
-      651.0,
-      700.0
-     ]
-    ]
+    "below": 250,
+    "above": 250
    }
-  ]
+  ],
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [
+   "chicken wings"
+  ],
+  "general": true
  },
  {
   "id": "deca-056",
   "text": "What year was the buffalo wing created?",
   "answer": "1964",
-  "category": "Chicken Wings",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 1964.0,
-  "answerHi": 1964.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      1964.0,
-      1964.0
-     ]
-    ]
-   },
+  "answerLo": 1964,
+  "answerHi": 1964,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      1959.0,
-      1963.0
-     ],
-     [
-      1965.0,
-      1969.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      1954.0,
-      1958.0
-     ],
-     [
-      1970.0,
-      1974.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      1949.0,
-      1953.0
-     ],
-     [
-      1975.0,
-      1979.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      1944.0,
-      1948.0
-     ],
-     [
-      1980.0,
-      1984.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      1939.0,
-      1943.0
-     ],
-     [
-      1985.0,
-      1989.0
-     ]
-    ]
+    "below": 25,
+    "above": 25
    }
-  ]
+  ],
+  "categories": [
+   "Food & Drink",
+   "History"
+  ],
+  "tags": [
+   "chicken wings"
+  ],
+  "general": true
  },
  {
   "id": "deca-057",
   "text": "What state was the buffalo wing created in?",
   "answer": "NY",
-  "category": "Chicken Wings",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -2462,108 +2169,127 @@
   "type": "qa",
   "accepted": [
    "NY"
-  ]
+  ],
+  "categories": [
+   "Food & Drink",
+   "History"
+  ],
+  "tags": [
+   "chicken wings"
+  ],
+  "general": true
  },
  {
   "id": "deca-058",
   "text": "How much did Nike famously pay for their logo design in the 1960's?",
   "answer": "35",
-  "category": "Advertising",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 35.0,
-  "answerHi": 35.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      35.0,
-      35.0
-     ]
-    ]
-   },
+  "answerLo": 35,
+  "answerHi": 35,
+  "needsReview": true,
+  "reviewNotes": [
+   "value column says 10 but the exact answer sits in the 12-pt column; using 12",
+   "Excel steps only listed exact values; the table now gives points in between — check the rows"
+  ],
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      30.0,
-      30.0
-     ]
-    ]
+    "below": 5,
+    "above": null
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      25.0,
-      25.0
-     ]
-    ]
+    "below": 10,
+    "above": null
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      20.0,
-      20.0
-     ]
-    ]
+    "below": 15,
+    "above": null
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      15.0,
-      15.0
-     ]
-    ]
+    "below": 20,
+    "above": null
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      10.0,
-      10.0
-     ]
-    ]
+    "below": 25,
+    "above": null
    }
   ],
-  "needsReview": true,
-  "reviewNotes": [
-   "value column says 10 but the exact answer sits in the 12-pt column; using 12"
-  ]
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "advertising"
+  ],
+  "general": true
  },
  {
   "id": "deca-059",
   "text": "When was the first gay couple portrayed in a US commercial?",
   "answer": "1994",
-  "category": "Advertising",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 1994.0,
-  "answerHi": 1994.0,
-  "step": 3.0,
+  "answerLo": 1994,
+  "answerHi": 1994,
   "needsReview": true,
   "reviewNotes": [
    "2-pt and 4-pt steps overlap at 1982",
    "typed steps not usable; scoring with computed steps of width 3"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 10,
+    "below": 3,
+    "above": 3
+   },
+   {
+    "points": 8,
+    "below": 6,
+    "above": 6
+   },
+   {
+    "points": 6,
+    "below": 9,
+    "above": 9
+   },
+   {
+    "points": 4,
+    "below": 12,
+    "above": 12
+   },
+   {
+    "points": 2,
+    "below": 15,
+    "above": 15
+   }
+  ],
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "advertising"
+  ],
+  "general": true
  },
  {
   "id": "deca-060",
   "text": "False advertising is a serious charge, what slogan did Red Bull lose a class action over?",
   "answer": "Red Bull Gives You Wings",
-  "category": "Advertising",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
@@ -2571,13 +2297,20 @@
   "type": "qa",
   "accepted": [
    "Red Bull Gives You Wings"
-  ]
+  ],
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "advertising"
+  ],
+  "general": true
  },
  {
   "id": "deca-061",
-  "text": "List these countries from West to East: Finland, France, Netherlands, Poland, Portugal",
+  "text": "List these countries from West to East: Finland, France, Netherlands, Poland, Portugal?",
   "answer": "Portugal, France, Netherlands, Poland, Finland",
-  "category": "Euro Geog",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
@@ -2590,18 +2323,25 @@
    "Poland",
    "Finland"
   ],
-  "perItem": 2.0,
+  "perItem": 2,
   "judge": "host",
   "needsReview": true,
   "reviewNotes": [
    "order matters; host judges"
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "euro geog"
+  ],
+  "general": true
  },
  {
   "id": "deca-062",
-  "text": "Europe is home to the smallest country in the world, what is it.",
+  "text": "Europe is home to the smallest country in the world, what is it?",
   "answer": "Vatican City",
-  "category": "Euro Geog",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
@@ -2609,195 +2349,117 @@
   "type": "qa",
   "accepted": [
    "Vatican City"
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "euro geog"
+  ],
+  "general": true
  },
  {
   "id": "deca-063",
-  "text": "How many countries are there in Europe",
+  "text": "How many countries are there in Europe?",
   "answer": "44",
-  "category": "Euro Geog",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 44.0,
-  "answerHi": 44.0,
-  "step": 4.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      44.0,
-      44.0
-     ]
-    ]
-   },
+  "answerLo": 44,
+  "answerHi": 44,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      40.0,
-      43.0
-     ],
-     [
-      45.0,
-      48.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      36.0,
-      39.0
-     ],
-     [
-      49.0,
-      52.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      32.0,
-      35.0
-     ],
-     [
-      53.0,
-      56.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      28.0,
-      31.0
-     ],
-     [
-      57.0,
-      60.0
-     ]
-    ]
+    "below": 16,
+    "above": 16
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      24.0,
-      27.0
-     ],
-     [
-      61.0,
-      64.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    }
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "euro geog"
+  ],
+  "general": true
  },
  {
   "id": "deca-064",
   "text": "The Model T was made by Ford in 1908, Karl Benz is credited with the first modern car. When?",
   "answer": "1886",
-  "category": "Auto",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 1886.0,
-  "answerHi": 1886.0,
-  "step": 4.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      1886.0,
-      1886.0
-     ]
-    ]
-   },
+  "answerLo": 1886,
+  "answerHi": 1886,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      1882.0,
-      1885.0
-     ],
-     [
-      1887.0,
-      1890.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      1878.0,
-      1881.0
-     ],
-     [
-      1891.0,
-      1894.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      1874.0,
-      1877.0
-     ],
-     [
-      1895.0,
-      1898.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      1870.0,
-      1873.0
-     ],
-     [
-      1899.0,
-      1902.0
-     ]
-    ]
+    "below": 16,
+    "above": 16
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      1866.0,
-      1869.0
-     ],
-     [
-      1903.0,
-      1906.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    }
-  ]
+  ],
+  "categories": [
+   "Business & Tech",
+   "History"
+  ],
+  "tags": [
+   "auto"
+  ],
+  "general": true
  },
  {
   "id": "deca-065",
   "text": "In 2019 what was the most popular car color?",
   "answer": "White",
-  "category": "Auto",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
@@ -2805,13 +2467,20 @@
   "type": "qa",
   "accepted": [
    "White"
-  ]
+  ],
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "auto"
+  ],
+  "general": true
  },
  {
   "id": "deca-066",
   "text": "What four models does Tesla offer?",
   "answer": "S3XY",
-  "category": "Auto",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
@@ -2820,26 +2489,46 @@
   "items": [
    "S3XY"
   ],
-  "perItem": 8.0
+  "perItem": 8,
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "auto"
+  ],
+  "general": true,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Tesla lineup changes"
  },
  {
   "id": "deca-067",
   "text": "I graduated college in 2016 and started my career, how much would I have had to invest into bitcoin on that day (approx.) to be a millionaire now?",
   "answer": "10000",
-  "category": "Crypto",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
-  "type": "closer",
+  "type": "number",
   "value": 15,
-  "answerLo": 10000.0,
-  "answerHi": 10000.0
+  "answerLo": 10000,
+  "answerHi": 10000,
+  "numberMode": "closer",
+  "scale": [],
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "crypto"
+  ],
+  "general": false,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Bitcoin price moves daily"
  },
  {
   "id": "deca-068",
   "text": "What is the technology that allows for cryptocurrency?",
   "answer": "Block-chain",
-  "category": "Crypto",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
@@ -2847,13 +2536,20 @@
   "type": "qa",
   "accepted": [
    "Block-chain"
-  ]
+  ],
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "crypto"
+  ],
+  "general": true
  },
  {
   "id": "deca-069",
   "text": "Many people know that you can \"mine\" for Bitcoin, but what is the term for Dogecoin?",
   "answer": "Dig",
-  "category": "Crypto",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
@@ -2861,13 +2557,20 @@
   "type": "qa",
   "accepted": [
    "Dig"
-  ]
+  ],
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "crypto"
+  ],
+  "general": true
  },
  {
   "id": "deca-070",
-  "text": "Name all four Hogwarts founders AND those house's ghosts",
+  "text": "Name all four Hogwarts founders AND those house's ghosts?",
   "answer": "Salazar Slytherin, Godric Gryffindor, Rowena Ravenclaw, Helga Hufflepuff, Bloody Baron, Nearly Headless Nick, Gray Lady, Fat Friar",
-  "category": "Harry Potter",
+  "category": "Literature & Art",
   "games": [
    "DECA"
   ],
@@ -2883,13 +2586,21 @@
    "Gray Lady",
    "Fat Friar"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "Literature & Art",
+   "TV & Movies"
+  ],
+  "tags": [
+   "harry potter"
+  ],
+  "general": true
  },
  {
   "id": "deca-071",
-  "text": "List all of the horcruxes",
+  "text": "List all of the horcruxes?",
   "answer": "Diary, Ring, Locket, Cup, Diadem, Nagini, Harry",
-  "category": "Harry Potter",
+  "category": "Literature & Art",
   "games": [
    "DECA"
   ],
@@ -2904,13 +2615,21 @@
    "Nagini",
    "Harry"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "Literature & Art",
+   "TV & Movies"
+  ],
+  "tags": [
+   "harry potter"
+  ],
+  "general": true
  },
  {
   "id": "deca-072",
   "text": "What are the middle names of Harry, Ron, and Hermione?",
   "answer": "James, Bilius, Jean",
-  "category": "Harry Potter",
+  "category": "Literature & Art",
   "games": [
    "DECA"
   ],
@@ -2918,13 +2637,21 @@
   "type": "qa",
   "accepted": [
    "James, Bilius, Jean"
-  ]
+  ],
+  "categories": [
+   "Literature & Art",
+   "TV & Movies"
+  ],
+  "tags": [
+   "harry potter"
+  ],
+  "general": true
  },
  {
   "id": "deca-073",
   "text": "On what planet did Kenobi kill Darth Maul?",
   "answer": "Tatooine",
-  "category": "Star Wars",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -2932,13 +2659,20 @@
   "type": "qa",
   "accepted": [
    "Tatooine"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "star wars"
+  ],
+  "general": true
  },
  {
   "id": "deca-074",
-  "text": "What race is Jar Jar Binks",
+  "text": "What race is Jar Jar Binks?",
   "answer": "Gungans",
-  "category": "Star Wars",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -2946,13 +2680,20 @@
   "type": "qa",
   "accepted": [
    "Gungans"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "star wars"
+  ],
+  "general": true
  },
  {
   "id": "deca-075",
-  "text": "List all nine Skywalker Saga Movies in chronological order",
+  "text": "List all nine Skywalker Saga Movies in chronological order?",
   "answer": "Phantom Menace, Attack of the Clones, Revenge of the Sith, A New Hope, Empire Strikes Back, Return of the Jedi, Force Awakens, Last Jedi, Rise of Skywalker",
-  "category": "Star Wars",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -2969,18 +2710,25 @@
    "Last Jedi",
    "Rise of Skywalker"
   ],
-  "perItem": 2.0,
+  "perItem": 2,
   "judge": "host",
   "needsReview": true,
   "reviewNotes": [
    "order matters; host judges"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "star wars"
+  ],
+  "general": true
  },
  {
   "id": "deca-076",
   "text": "No actively produced video game system (console or handheld) has cracked the top 10 best selling list yet, but, what are the top 10?",
   "answer": "PS2, DS, Game Boy, PS4, PS1, Wii, PS3, Xbox360, GBA, PSP",
-  "category": "Tech",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
@@ -2998,104 +2746,72 @@
    "GBA",
    "PSP"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "Business & Tech",
+   "Pop Culture"
+  ],
+  "tags": [
+   "tech"
+  ],
+  "general": true,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Console sales change"
  },
  {
   "id": "deca-077",
   "text": "The average person blinks 20 times per minute, what is the average when using a computer?",
   "answer": "7",
-  "category": "Tech",
+  "category": "Science",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 7.0,
-  "answerHi": 7.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      7.0,
-      7.0
-     ]
-    ]
-   },
+  "answerLo": 7,
+  "answerHi": 7,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      6.0,
-      6.0
-     ],
-     [
-      8.0,
-      8.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      5.0,
-      5.0
-     ],
-     [
-      9.0,
-      9.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      4.0,
-      4.0
-     ],
-     [
-      10.0,
-      10.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      3.0,
-      3.0
-     ],
-     [
-      11.0,
-      11.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      2.0,
-      2.0
-     ],
-     [
-      12.0,
-      12.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    }
-  ]
+  ],
+  "categories": [
+   "Science",
+   "Business & Tech"
+  ],
+  "tags": [
+   "tech"
+  ],
+  "general": true
  },
  {
   "id": "deca-078",
   "text": "Megabyte, Gigabyte, Terabyte, ______?",
   "answer": "Petabyte",
-  "category": "Tech",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
@@ -3103,7 +2819,14 @@
   "type": "qa",
   "accepted": [
    "Petabyte"
-  ]
+  ],
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "tech"
+  ],
+  "general": true
  },
  {
   "id": "deca-079",
@@ -3113,58 +2836,35 @@
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 8,
-  "stepPoints": 2,
-  "answerLo": 5.0,
-  "answerHi": 5.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 8,
-    "ranges": [
-     [
-      5.0,
-      5.0
-     ]
-    ]
-   },
+  "answerLo": 5,
+  "answerHi": 5,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 6,
-    "ranges": [
-     [
-      4.0,
-      4.0
-     ],
-     [
-      6.0,
-      6.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      3.0,
-      3.0
-     ],
-     [
-      7.0,
-      7.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      2.0,
-      2.0
-     ]
-    ]
+    "below": 3,
+    "above": null
    }
-  ]
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [],
+  "general": true,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Super Bowl counts"
  },
  {
   "id": "deca-080",
@@ -3174,87 +2874,46 @@
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 1936.0,
-  "answerHi": 1936.0,
-  "step": 4.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      1936.0,
-      1936.0
-     ]
-    ]
-   },
+  "answerLo": 1936,
+  "answerHi": 1936,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      1932.0,
-      1932.0
-     ],
-     [
-      1940.0,
-      1940.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      1928.0,
-      1928.0
-     ],
-     [
-      1944.0,
-      1944.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      1924.0,
-      1924.0
-     ],
-     [
-      1948.0,
-      1948.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      1920.0,
-      1920.0
-     ],
-     [
-      1952.0,
-      1952.0
-     ]
-    ]
+    "below": 16,
+    "above": 16
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      1916.0,
-      1916.0
-     ],
-     [
-      1956.0,
-      1956.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    }
+  ],
+  "categories": [
+   "Sports"
+  ],
+  "tags": [],
+  "general": true,
+  "needsReview": true,
+  "reviewNotes": [
+   "Excel steps only listed exact values; the table now gives points in between — check the rows"
   ]
  },
  {
@@ -3269,104 +2928,67 @@
   "type": "qa",
   "accepted": [
    "Baseball"
-  ]
+  ],
+  "categories": [
+   "Sports",
+   "History"
+  ],
+  "tags": [],
+  "general": true
  },
  {
   "id": "deca-082",
   "text": "Widely considered the most used gadget of all time, the iPhone was released in what year?",
   "answer": "2007",
-  "category": "Gadgets",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 2007.0,
-  "answerHi": 2007.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      2007.0,
-      2007.0
-     ]
-    ]
-   },
+  "answerLo": 2007,
+  "answerHi": 2007,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      2006.0,
-      2006.0
-     ],
-     [
-      2008.0,
-      2008.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      2005.0,
-      2005.0
-     ],
-     [
-      2009.0,
-      2009.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      2004.0,
-      2004.0
-     ],
-     [
-      2010.0,
-      2010.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      2003.0,
-      2003.0
-     ],
-     [
-      2011.0,
-      2011.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      2002.0,
-      2002.0
-     ],
-     [
-      2012.0,
-      2012.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    }
-  ]
+  ],
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "gadgets"
+  ],
+  "general": true
  },
  {
   "id": "deca-083",
-  "text": "What series is credited for inventing many gadgets that exist today? (such as the Telepresence, universal translators, and tablets)",
+  "text": "What series is credited for inventing many gadgets that exist today? (such as the Telepresence, universal translators, and tablets)?",
   "answer": "Star Trek",
-  "category": "Gadgets",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
@@ -3374,13 +2996,21 @@
   "type": "qa",
   "accepted": [
    "Star Trek"
-  ]
+  ],
+  "categories": [
+   "Business & Tech",
+   "TV & Movies"
+  ],
+  "tags": [
+   "gadgets"
+  ],
+  "general": true
  },
  {
   "id": "deca-084",
-  "text": "This computational gadget started out as an educational charity and is about the size of a credit card. It does not come with a mouse, keyboard, or monitor, and only costs $35.",
+  "text": "This computational gadget started out as an educational charity and is about the size of a credit card. It does not come with a mouse, keyboard, or monitor, and only costs $35?",
   "answer": "Raspberry Pi",
-  "category": "Gadgets",
+  "category": "Business & Tech",
   "games": [
    "DECA"
   ],
@@ -3388,13 +3018,20 @@
   "type": "qa",
   "accepted": [
    "Raspberry Pi"
-  ]
+  ],
+  "categories": [
+   "Business & Tech"
+  ],
+  "tags": [
+   "gadgets"
+  ],
+  "general": true
  },
  {
   "id": "deca-085",
   "text": "What is the Capital of Maine?",
   "answer": "Augusta",
-  "category": "State Capitols",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
@@ -3402,13 +3039,20 @@
   "type": "qa",
   "accepted": [
    "Augusta"
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "state capitols"
+  ],
+  "general": true
  },
  {
   "id": "deca-086",
   "text": "What is the Capital of South Dakota?",
   "answer": "Pierre",
-  "category": "State Capitols",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
@@ -3416,215 +3060,169 @@
   "type": "qa",
   "accepted": [
    "Pierre"
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "state capitols"
+  ],
+  "general": true
  },
  {
   "id": "deca-087",
   "text": "Nebraska has the second tallest State Capitol building at 400 feet, Louisiana's is taller, but how tall is it?",
   "answer": "450",
-  "category": "State Capitols",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 450.0,
-  "answerHi": 450.0,
-  "step": 8.0,
+  "answerLo": 450,
+  "answerHi": 450,
   "needsReview": true,
   "reviewNotes": [
    "4-pt and 6-pt steps overlap at 426",
    "typed steps not usable; scoring with computed steps of width 8"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 10,
+    "below": 8,
+    "above": 8
+   },
+   {
+    "points": 8,
+    "below": 16,
+    "above": 16
+   },
+   {
+    "points": 6,
+    "below": 24,
+    "above": 24
+   },
+   {
+    "points": 4,
+    "below": 32,
+    "above": 32
+   },
+   {
+    "points": 2,
+    "below": 40,
+    "above": 40
+   }
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "state capitols"
+  ],
+  "general": false
  },
  {
   "id": "deca-088",
   "text": "What percentage of dalmations are deaf in one ear?",
   "answer": "30",
-  "category": "Dogs",
+  "category": "Animals",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 30.0,
-  "answerHi": 30.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      30.0,
-      30.0
-     ]
-    ]
-   },
+  "answerLo": 30,
+  "answerHi": 30,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      25.0,
-      29.0
-     ],
-     [
-      31.0,
-      35.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      20.0,
-      24.0
-     ],
-     [
-      36.0,
-      40.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      15.0,
-      19.0
-     ],
-     [
-      41.0,
-      45.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      10.0,
-      14.0
-     ],
-     [
-      46.0,
-      50.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      5.0,
-      9.0
-     ],
-     [
-      51.0,
-      55.0
-     ]
-    ]
+    "below": 25,
+    "above": 25
    }
-  ]
+  ],
+  "categories": [
+   "Animals"
+  ],
+  "tags": [
+   "dogs"
+  ],
+  "general": true
  },
  {
   "id": "deca-089",
   "text": "Greyhounds are the fastest dogs on earth, how fast can they run?",
   "answer": "45",
-  "category": "Dogs",
+  "category": "Animals",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 45.0,
-  "answerHi": 45.0,
-  "step": 4.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      45.0,
-      45.0
-     ]
-    ]
-   },
+  "answerLo": 45,
+  "answerHi": 45,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      41.0,
-      44.0
-     ],
-     [
-      46.0,
-      49.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      37.0,
-      40.0
-     ],
-     [
-      50.0,
-      53.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      33.0,
-      36.0
-     ],
-     [
-      54.0,
-      57.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      29.0,
-      32.0
-     ],
-     [
-      58.0,
-      61.0
-     ]
-    ]
+    "below": 16,
+    "above": 16
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      25.0,
-      28.0
-     ],
-     [
-      62.0,
-      65.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    }
-  ]
+  ],
+  "categories": [
+   "Animals"
+  ],
+  "tags": [
+   "dogs"
+  ],
+  "general": true
  },
  {
   "id": "deca-090",
-  "text": "What is the most popular breed of dog in the US, Canada, and the UK",
+  "text": "What is the most popular breed of dog in the US, Canada, and the UK?",
   "answer": "Golden Retreiver",
-  "category": "Dogs",
+  "category": "Animals",
   "games": [
    "DECA"
   ],
@@ -3632,104 +3230,69 @@
   "type": "qa",
   "accepted": [
    "Golden Retreiver"
-  ]
+  ],
+  "categories": [
+   "Animals"
+  ],
+  "tags": [
+   "dogs"
+  ],
+  "general": true,
+  "recheckBy": "2027-01-01",
+  "recheckNote": "Breed rankings change yearly"
  },
  {
   "id": "deca-091",
   "text": "Somehow, cucumbers have a higher water content than skim milk, what is that percentage?",
   "answer": "95",
-  "category": "Food",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 95.0,
-  "answerHi": 95.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      95.0,
-      95.0
-     ]
-    ]
-   },
+  "answerLo": 95,
+  "answerHi": 95,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      93.0,
-      94.0
-     ],
-     [
-      96.0,
-      96.0
-     ]
-    ]
+    "below": 2,
+    "above": 1
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      91.0,
-      92.0
-     ],
-     [
-      97.0,
-      97.0
-     ]
-    ]
+    "below": 4,
+    "above": 2
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      89.0,
-      90.0
-     ],
-     [
-      98.0,
-      98.0
-     ]
-    ]
+    "below": 6,
+    "above": 3
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      87.0,
-      88.0
-     ],
-     [
-      99.0,
-      99.0
-     ]
-    ]
+    "below": 8,
+    "above": 4
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      85.0,
-      86.0
-     ],
-     [
-      100.0,
-      100.0
-     ]
-    ]
+    "below": 10,
+    "above": 5
    }
-  ]
+  ],
+  "categories": [
+   "Food & Drink",
+   "Science"
+  ],
+  "tags": [],
+  "general": true
  },
  {
   "id": "deca-092",
-  "text": "What are the 5 original flavors of Skittles (currently)",
+  "text": "What are the 5 original flavors of Skittles (currently)?",
   "answer": "Grape, Strawb, Lemon, Orange, GrAp",
-  "category": "Food",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -3742,13 +3305,18 @@
    "Orange",
    "GrAp"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [],
+  "general": true
  },
  {
   "id": "deca-093",
   "text": "What is the main ingredient in SPAM?",
   "answer": "Pork",
-  "category": "Food",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -3756,13 +3324,18 @@
   "type": "qa",
   "accepted": [
    "Pork"
-  ]
+  ],
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [],
+  "general": true
  },
  {
   "id": "deca-094",
   "text": "What is an Abbey?",
   "answer": "A building occupied by a community of Monks or Nuns",
-  "category": "Downton Abbey",
+  "category": "History",
   "games": [
    "DECA"
   ],
@@ -3770,13 +3343,20 @@
   "type": "qa",
   "accepted": [
    "A building occupied by a community of Monks or Nuns"
-  ]
+  ],
+  "categories": [
+   "History"
+  ],
+  "tags": [
+   "downton abbey"
+  ],
+  "general": true
  },
  {
   "id": "deca-095",
-  "text": "Born in 1934 this actress may be better known for her role in Harry Potter",
+  "text": "Born in 1934 this actress may be better known for her role in Harry Potter?",
   "answer": "Maggie Smith",
-  "category": "Downton Abbey",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -3784,13 +3364,20 @@
   "type": "qa",
   "accepted": [
    "Maggie Smith"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "downton abbey"
+  ],
+  "general": true
  },
  {
   "id": "deca-096",
   "text": "Downton Abbey is really Highclere Castle. However what was the residence converted to act as in both Season 2 of the show and in real life?",
   "answer": "Hospital/Short Term Care",
-  "category": "Downton Abbey",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -3799,104 +3386,69 @@
   "accepted": [
    "Hospital",
    "Short Term Care"
-  ]
+  ],
+  "categories": [
+   "TV & Movies",
+   "History"
+  ],
+  "tags": [
+   "downton abbey"
+  ],
+  "general": false
  },
  {
   "id": "deca-097",
   "text": "California established the first US dog park in what year?",
   "answer": "1979",
-  "category": "Dog Parks",
+  "category": "Animals",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 1979.0,
-  "answerHi": 1979.0,
-  "step": 3.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      1979.0,
-      1979.0
-     ]
-    ]
-   },
+  "answerLo": 1979,
+  "answerHi": 1979,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      1976.0,
-      1978.0
-     ],
-     [
-      1980.0,
-      1982.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      1973.0,
-      1975.0
-     ],
-     [
-      1983.0,
-      1985.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      1970.0,
-      1972.0
-     ],
-     [
-      1986.0,
-      1988.0
-     ]
-    ]
+    "below": 9,
+    "above": 9
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      1967.0,
-      1969.0
-     ],
-     [
-      1989.0,
-      1991.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      1964.0,
-      1966.0
-     ],
-     [
-      1992.0,
-      1994.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    }
-  ]
+  ],
+  "categories": [
+   "Animals"
+  ],
+  "tags": [
+   "dog parks"
+  ],
+  "general": false
  },
  {
   "id": "deca-098",
-  "text": "According to research what part of the day is peak time for a dog park? (Early/Mid/Late-Morning/Afternoon/Evening)",
+  "text": "According to research what part of the day is peak time for a dog park? (Early/Mid/Late-Morning/Afternoon/Evening)?",
   "answer": "Late Afternoon/Early Evening",
-  "category": "Dog Parks",
+  "category": "Animals",
   "games": [
    "DECA"
   ],
@@ -3905,104 +3457,68 @@
   "accepted": [
    "Late Afternoon",
    "Early Evening"
-  ]
+  ],
+  "categories": [
+   "Animals"
+  ],
+  "tags": [
+   "dog parks"
+  ],
+  "general": false
  },
  {
   "id": "deca-099",
   "text": "How many acres is the largest dog park in the US?",
   "answer": "50",
-  "category": "Dog Parks",
+  "category": "Animals",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 50.0,
-  "answerHi": 50.0,
-  "step": 7.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      50.0,
-      50.0
-     ]
-    ]
-   },
+  "answerLo": 50,
+  "answerHi": 50,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      44.0,
-      49.0
-     ],
-     [
-      51.0,
-      57.0
-     ]
-    ]
+    "below": 6,
+    "above": 7
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      38.0,
-      43.0
-     ],
-     [
-      58.0,
-      64.0
-     ]
-    ]
+    "below": 12,
+    "above": 14
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      32.0,
-      37.0
-     ],
-     [
-      65.0,
-      71.0
-     ]
-    ]
+    "below": 18,
+    "above": 21
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      26.0,
-      31.0
-     ],
-     [
-      72.0,
-      78.0
-     ]
-    ]
+    "below": 24,
+    "above": 28
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      20.0,
-      25.0
-     ],
-     [
-      79.0,
-      85.0
-     ]
-    ]
+    "below": 30,
+    "above": 35
    }
-  ]
+  ],
+  "categories": [
+   "Animals"
+  ],
+  "tags": [
+   "dog parks"
+  ],
+  "general": false
  },
  {
   "id": "deca-100",
   "text": "What are the first and last US States to gain statehood?",
   "answer": "Delaware, Hawaii",
-  "category": "US States",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
@@ -4012,13 +3528,21 @@
    "Delaware",
    "Hawaii"
   ],
-  "perItem": 5.0
+  "perItem": 5,
+  "categories": [
+   "Geography",
+   "History"
+  ],
+  "tags": [
+   "us states"
+  ],
+  "general": true
  },
  {
   "id": "deca-101",
   "text": "Which state has the most coastline?",
   "answer": "Alaska",
-  "category": "US States",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
@@ -4026,13 +3550,20 @@
   "type": "qa",
   "accepted": [
    "Alaska"
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "us states"
+  ],
+  "general": true
  },
  {
   "id": "deca-102",
   "text": "New York has 4 of the top 5 tallest buildings, which state holds the other?",
   "answer": "Illinois",
-  "category": "US States",
+  "category": "Geography",
   "games": [
    "DECA"
   ],
@@ -4040,13 +3571,20 @@
   "type": "qa",
   "accepted": [
    "Illinois"
-  ]
+  ],
+  "categories": [
+   "Geography"
+  ],
+  "tags": [
+   "us states"
+  ],
+  "general": true
  },
  {
   "id": "deca-103",
   "text": "How many times does Ross get divorced in FRIENDS?",
   "answer": "3",
-  "category": "Friends",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -4054,13 +3592,20 @@
   "type": "qa",
   "accepted": [
    "3"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "friends"
+  ],
+  "general": true
  },
  {
   "id": "deca-104",
-  "text": "What is the name of the monkey in FRIENDS",
+  "text": "What is the name of the monkey in FRIENDS?",
   "answer": "Marcel",
-  "category": "Friends",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -4068,13 +3613,20 @@
   "type": "qa",
   "accepted": [
    "Marcel"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "friends"
+  ],
+  "general": true
  },
  {
   "id": "deca-105",
   "text": "What are the FRIENDS last names?",
   "answer": "Buffay, Tribiani, Geller, Green, Bing",
-  "category": "Friends",
+  "category": "TV & Movies",
   "games": [
    "DECA"
   ],
@@ -4091,13 +3643,20 @@
   "needsReview": true,
   "reviewNotes": [
    "12 pts over 5 items is not a whole number per item"
-  ]
+  ],
+  "categories": [
+   "TV & Movies"
+  ],
+  "tags": [
+   "friends"
+  ],
+  "general": true
  },
  {
   "id": "deca-106",
   "text": "Why did many ancient cultures drink beer instead of water?",
   "answer": "Cleaner + More Vitamins",
-  "category": "Beer",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -4105,108 +3664,74 @@
   "type": "qa",
   "accepted": [
    "Cleaner + More Vitamins"
-  ]
+  ],
+  "categories": [
+   "Food & Drink",
+   "History"
+  ],
+  "tags": [
+   "beer"
+  ],
+  "general": true
  },
  {
   "id": "deca-107",
   "text": "What percentage of American's drink beer at sporting events?",
   "answer": "0.48",
-  "category": "Beer",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 48.0,
-  "answerHi": 48.0,
-  "step": 6.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      48.0,
-      48.0
-     ]
-    ]
-   },
-   {
-    "points": 10,
-    "ranges": [
-     [
-      42.0,
-      47.0
-     ],
-     [
-      49.0,
-      54.0
-     ]
-    ]
-   },
-   {
-    "points": 8,
-    "ranges": [
-     [
-      36.0,
-      41.0
-     ],
-     [
-      55.0,
-      60.0
-     ]
-    ]
-   },
-   {
-    "points": 6,
-    "ranges": [
-     [
-      30.0,
-      35.0
-     ],
-     [
-      61.0,
-      66.0
-     ]
-    ]
-   },
-   {
-    "points": 4,
-    "ranges": [
-     [
-      24.0,
-      29.0
-     ],
-     [
-      67.0,
-      72.0
-     ]
-    ]
-   },
-   {
-    "points": 2,
-    "ranges": [
-     [
-      18.0,
-      23.0
-     ],
-     [
-      73.0,
-      78.0
-     ]
-    ]
-   }
-  ],
+  "answerLo": 48,
+  "answerHi": 48,
   "needsReview": true,
   "reviewNotes": [
    "answer cell says 0.48 but steps are in other units (exact = 48); tell players the unit"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 10,
+    "below": 6,
+    "above": 6
+   },
+   {
+    "points": 8,
+    "below": 12,
+    "above": 12
+   },
+   {
+    "points": 6,
+    "below": 18,
+    "above": 18
+   },
+   {
+    "points": 4,
+    "below": 24,
+    "above": 24
+   },
+   {
+    "points": 2,
+    "below": 30,
+    "above": 30
+   }
+  ],
+  "categories": [
+   "Food & Drink",
+   "Sports"
+  ],
+  "tags": [
+   "beer"
+  ],
+  "general": false
  },
  {
   "id": "deca-108",
   "text": "As a way to settle pub disputes, which brewery started keeping a list of achievements?",
   "answer": "Guinness",
-  "category": "Beer",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -4214,13 +3739,21 @@
   "type": "qa",
   "accepted": [
    "Guinness"
-  ]
+  ],
+  "categories": [
+   "Food & Drink",
+   "Pop Culture"
+  ],
+  "tags": [
+   "beer"
+  ],
+  "general": true
  },
  {
   "id": "deca-109",
   "text": "The main reason most bakes call for eggs is because it?",
   "answer": "Glue",
-  "category": "Baking",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -4228,13 +3761,20 @@
   "type": "qa",
   "accepted": [
    "Glue"
-  ]
+  ],
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [
+   "baking"
+  ],
+  "general": true
  },
  {
   "id": "deca-110",
   "text": "If there is anything we have learned from the Great British Bake Off, it is that bread needs time to rise. What is this called?",
   "answer": "Proofing",
-  "category": "Baking",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -4242,13 +3782,20 @@
   "type": "qa",
   "accepted": [
    "Proofing"
-  ]
+  ],
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [
+   "baking"
+  ],
+  "general": true
  },
  {
   "id": "deca-111",
   "text": "Why is it smart to sift your flour before using it in bake?",
   "answer": "Makes the cake airy",
-  "category": "Baking",
+  "category": "Food & Drink",
   "games": [
    "DECA"
   ],
@@ -4256,13 +3803,20 @@
   "type": "qa",
   "accepted": [
    "Makes the cake airy"
-  ]
+  ],
+  "categories": [
+   "Food & Drink"
+  ],
+  "tags": [
+   "baking"
+  ],
+  "general": true
  },
  {
   "id": "deca-112",
   "text": "Regardless of material, what makes a crystal a crystal (atomically)?",
   "answer": "Highly Structured",
-  "category": "Crystals",
+  "category": "Science",
   "games": [
    "DECA"
   ],
@@ -4270,13 +3824,20 @@
   "type": "qa",
   "accepted": [
    "Highly Structured"
-  ]
+  ],
+  "categories": [
+   "Science"
+  ],
+  "tags": [
+   "crystals"
+  ],
+  "general": true
  },
  {
   "id": "deca-113",
-  "text": "This ancient civilization from Mesopotamia near the Tigris and Euphrates, (current day Iraq) were the first to use crystals as a therapy",
+  "text": "This ancient civilization from Mesopotamia near the Tigris and Euphrates, (current day Iraq) were the first to use crystals as a therapy?",
   "answer": "Sumerians",
-  "category": "Crystals",
+  "category": "History",
   "games": [
    "DECA"
   ],
@@ -4284,13 +3845,20 @@
   "type": "qa",
   "accepted": [
    "Sumerians"
-  ]
+  ],
+  "categories": [
+   "History"
+  ],
+  "tags": [
+   "crystals"
+  ],
+  "general": true
  },
  {
   "id": "deca-114",
   "text": "Which crystal is known as the most powerful?",
   "answer": "Quartz",
-  "category": "Crystals",
+  "category": "Science",
   "games": [
    "DECA"
   ],
@@ -4298,13 +3866,20 @@
   "type": "qa",
   "accepted": [
    "Quartz"
-  ]
+  ],
+  "categories": [
+   "Science"
+  ],
+  "tags": [
+   "crystals"
+  ],
+  "general": false
  },
  {
   "id": "deca-115",
   "text": "Which US President's bird caused a scene by swearing too much at his funeral?",
   "answer": "Andrew Jackson",
-  "category": "American Presidents",
+  "category": "History",
   "games": [
    "DECA"
   ],
@@ -4312,13 +3887,21 @@
   "type": "qa",
   "accepted": [
    "Andrew Jackson"
-  ]
+  ],
+  "categories": [
+   "History",
+   "Politics"
+  ],
+  "tags": [
+   "american presidents"
+  ],
+  "general": true
  },
  {
   "id": "deca-116",
-  "text": "List the last 10 US Presidents",
+  "text": "List the last 10 US Presidents?",
   "answer": "Biden, Trump, Obama, W, Clinton, HW, Reagan, Carter, Ford, Nixon",
-  "category": "American Presidents",
+  "category": "History",
   "games": [
    "DECA"
   ],
@@ -4336,13 +3919,21 @@
    "Ford",
    "Nixon"
   ],
-  "perItem": 2.0
+  "perItem": 2,
+  "categories": [
+   "History",
+   "Politics"
+  ],
+  "tags": [
+   "american presidents"
+  ],
+  "general": true
  },
  {
   "id": "deca-117",
   "text": "What does the S in Ulysses S Grant stand for?",
   "answer": "Nothing",
-  "category": "American Presidents",
+  "category": "History",
   "games": [
    "DECA"
   ],
@@ -4350,13 +3941,21 @@
   "type": "qa",
   "accepted": [
    "Nothing"
-  ]
+  ],
+  "categories": [
+   "History",
+   "Politics"
+  ],
+  "tags": [
+   "american presidents"
+  ],
+  "general": true
  },
  {
   "id": "trump-002",
-  "text": "T/F Trump's Cabinet was the richest ever",
+  "text": "T/F Trump's Cabinet was the richest ever?",
   "answer": "True",
-  "category": "True/False",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -4364,13 +3963,20 @@
   "type": "tf",
   "accepted": [
    "true"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-003",
-  "text": "T/F Trump's EPA head made a career suing the EPA for big oil",
+  "text": "T/F Trump's EPA head made a career suing the EPA for big oil?",
   "answer": "True",
-  "category": "True/False",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -4378,13 +3984,20 @@
   "type": "tf",
   "accepted": [
    "true"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-004",
-  "text": "T/F Trump's Secretary of Edu commonly expressed contempt for public ed",
+  "text": "T/F Trump's Secretary of Edu commonly expressed contempt for public ed?",
   "answer": "True",
-  "category": "True/False",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -4392,13 +4005,20 @@
   "type": "tf",
   "accepted": [
    "true"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-005",
-  "text": "T/F Trump blamed the FBI for a school shooting because they were spending too much time looking into him",
+  "text": "T/F Trump blamed the FBI for a school shooting because they were spending too much time looking into him?",
   "answer": "True",
-  "category": "True/False",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -4406,13 +4026,20 @@
   "type": "tf",
   "accepted": [
    "true"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-006",
-  "text": "T/F Trump used a private email server while President",
+  "text": "T/F Trump used a private email server while President?",
   "answer": "True",
-  "category": "True/False",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -4420,11 +4047,18 @@
   "type": "tf",
   "accepted": [
    "true"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-007",
-  "text": "How many SCOTUS Justices were nominated by Trump",
+  "text": "How many SCOTUS Justices were nominated by Trump?",
   "answer": "3",
   "category": "Politics",
   "games": [
@@ -4434,574 +4068,341 @@
   "type": "qa",
   "accepted": [
    "3"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-008",
-  "text": "What % faster did those go through than her previous 24",
+  "text": "What % faster did those go through than her previous 24?",
   "answer": "0.4",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 40.0,
-  "answerHi": 40.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      40.0,
-      40.0
-     ]
-    ]
-   },
-   {
-    "points": 4,
-    "ranges": [
-     [
-      35.0,
-      39.0
-     ],
-     [
-      41.0,
-      45.0
-     ]
-    ]
-   },
-   {
-    "points": 3,
-    "ranges": [
-     [
-      30.0,
-      34.0
-     ],
-     [
-      46.0,
-      50.0
-     ]
-    ]
-   },
-   {
-    "points": 2,
-    "ranges": [
-     [
-      25.0,
-      29.0
-     ],
-     [
-      51.0,
-      55.0
-     ]
-    ]
-   },
-   {
-    "points": 1,
-    "ranges": [
-     [
-      20.0,
-      24.0
-     ],
-     [
-      56.0,
-      60.0
-     ]
-    ]
-   }
-  ],
+  "answerLo": 40,
+  "answerHi": 40,
   "needsReview": true,
   "reviewNotes": [
    "answer cell says 0.4 but steps are in other units (exact = 40); tell players the unit"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 4,
+    "below": 5,
+    "above": 5
+   },
+   {
+    "points": 3,
+    "below": 10,
+    "above": 10
+   },
+   {
+    "points": 2,
+    "below": 15,
+    "above": 15
+   },
+   {
+    "points": 1,
+    "below": 20,
+    "above": 20
+   }
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-009",
-  "text": "How many siblings does Trump have",
+  "text": "How many siblings does Trump have?",
   "answer": "4",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 3,
-  "stepPoints": 1,
-  "answerLo": 4.0,
-  "answerHi": 4.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 3,
-    "ranges": [
-     [
-      4.0,
-      4.0
-     ]
-    ]
-   },
+  "answerLo": 4,
+  "answerHi": 4,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 2,
-    "ranges": [
-     [
-      3.0,
-      3.0
-     ],
-     [
-      5.0,
-      5.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      2.0,
-      2.0
-     ],
-     [
-      6.0,
-      6.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-010",
-  "text": "How many times have Trump businesses filed for bankruptcy",
+  "text": "How many times have Trump businesses filed for bankruptcy?",
   "answer": "6",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 6.0,
-  "answerHi": 6.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      6.0,
-      6.0
-     ]
-    ]
-   },
+  "answerLo": 6,
+  "answerHi": 6,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      5.0,
-      5.0
-     ],
-     [
-      7.0,
-      7.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      4.0,
-      4.0
-     ],
-     [
-      8.0,
-      8.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      3.0,
-      3.0
-     ],
-     [
-      9.0,
-      9.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-011",
-  "text": "How many of Trump's cabinet Resigned Under Pressure",
+  "text": "How many of Trump's cabinet Resigned Under Pressure?",
   "answer": "8",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 8.0,
-  "answerHi": 8.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      8.0,
-      8.0
-     ]
-    ]
-   },
+  "answerLo": 8,
+  "answerHi": 8,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 4,
-    "ranges": [
-     [
-      7.0,
-      7.0
-     ],
-     [
-      9.0,
-      9.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 3,
-    "ranges": [
-     [
-      6.0,
-      6.0
-     ],
-     [
-      10.0,
-      10.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      5.0,
-      5.0
-     ],
-     [
-      11.0,
-      11.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      4.0,
-      4.0
-     ],
-     [
-      12.0,
-      12.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-012",
-  "text": "How many books has Trump authored",
+  "text": "How many books has Trump authored?",
   "answer": "15",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 15.0,
-  "answerHi": 15.0,
-  "step": 4.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      15.0,
-      15.0
-     ]
-    ]
-   },
+  "answerLo": 15,
+  "answerHi": 15,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      11.0,
-      14.0
-     ],
-     [
-      16.0,
-      19.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      7.0,
-      10.0
-     ],
-     [
-      20.0,
-      23.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      3.0,
-      6.0
-     ],
-     [
-      24.0,
-      27.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-013",
-  "text": "How many TMs did Ivanka apply for the day before her appointment",
+  "text": "How many TMs did Ivanka apply for the day before her appointment?",
   "answer": "17",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 17.0,
-  "answerHi": 17.0,
-  "step": 4.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      17.0,
-      17.0
-     ]
-    ]
-   },
+  "answerLo": 17,
+  "answerHi": 17,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      13.0,
-      16.0
-     ],
-     [
-      18.0,
-      21.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      9.0,
-      12.0
-     ],
-     [
-      22.0,
-      25.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      5.0,
-      8.0
-     ],
-     [
-      26.0,
-      29.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-014",
-  "text": "How many women have accused Trump of sexual assault",
+  "text": "How many women have accused Trump of sexual assault?",
   "answer": "26",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 26.0,
-  "answerHi": 26.0,
-  "step": 4.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      26.0,
-      26.0
-     ]
-    ]
-   },
+  "answerLo": 26,
+  "answerHi": 26,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 4,
-    "ranges": [
-     [
-      22.0,
-      25.0
-     ],
-     [
-      27.0,
-      30.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 3,
-    "ranges": [
-     [
-      18.0,
-      21.0
-     ],
-     [
-      31.0,
-      34.0
-     ]
-    ]
+    "below": 8,
+    "above": 8
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      14.0,
-      17.0
-     ],
-     [
-      35.0,
-      38.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      10.0,
-      13.0
-     ],
-     [
-      39.0,
-      42.0
-     ]
-    ]
+    "below": 16,
+    "above": 16
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-015",
-  "text": "How many state primaries did Trump win in 2016",
+  "text": "How many state primaries did Trump win in 2016?",
   "answer": "41",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 41.0,
-  "answerHi": 41.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      41.0,
-      41.0
-     ]
-    ]
-   },
+  "answerLo": 41,
+  "answerHi": 41,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 4,
-    "ranges": [
-     [
-      36.0,
-      40.0
-     ],
-     [
-      42.0,
-      46.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 3,
-    "ranges": [
-     [
-      31.0,
-      35.0
-     ],
-     [
-      47.0,
-      51.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      26.0,
-      30.0
-     ],
-     [
-      52.0,
-      56.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      21.0,
-      25.0
-     ],
-     [
-      57.0,
-      61.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-016",
-  "text": "What number president is Joe Biden",
+  "text": "What number president is Joe Biden?",
   "answer": "46",
   "category": "Politics",
   "games": [
@@ -5011,446 +4412,316 @@
   "type": "qa",
   "accepted": [
    "46"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-017",
-  "text": "How many state primaries did Biden win in 2020",
+  "text": "How many state primaries did Biden win in 2020?",
   "answer": "46",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 46.0,
-  "answerHi": 46.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      46.0,
-      46.0
-     ]
-    ]
-   },
+  "answerLo": 46,
+  "answerHi": 46,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 4,
-    "ranges": [
-     [
-      41.0,
-      45.0
-     ],
-     [
-      47.0,
-      51.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 3,
-    "ranges": [
-     [
-      36.0,
-      40.0
-     ],
-     [
-      52.0,
-      56.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      31.0,
-      35.0
-     ],
-     [
-      57.0,
-      61.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      26.0,
-      30.0
-     ],
-     [
-      62.0,
-      66.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-018",
-  "text": "What number VP is Kamala Harris",
+  "text": "What number VP is Kamala Harris?",
   "answer": "49",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 49.0,
-  "answerHi": 49.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      49.0,
-      49.0
-     ]
-    ]
-   },
+  "answerLo": 49,
+  "answerHi": 49,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      47.0,
-      48.0
-     ],
-     [
-      50.0,
-      51.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      45.0,
-      46.0
-     ],
-     [
-      52.0,
-      53.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      43.0,
-      44.0
-     ],
-     [
-      54.0,
-      55.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-019",
-  "text": "How many primaries are there",
+  "text": "How many primaries are there?",
   "answer": "56",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 56.0,
-  "answerHi": 56.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      56.0,
-      56.0
-     ]
-    ]
-   },
+  "answerLo": 56,
+  "answerHi": 56,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      54.0,
-      55.0
-     ],
-     [
-      57.0,
-      58.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      52.0,
-      53.0
-     ],
-     [
-      59.0,
-      60.0
-     ]
-    ]
+    "below": 4,
+    "above": 4
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      50.0,
-      51.0
-     ],
-     [
-      61.0,
-      62.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-020",
-  "text": "What percentage of Trump's \"A-Team\" positions had turnover",
+  "text": "What percentage of Trump's \"A-Team\" positions had turnover?",
   "answer": "92",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 92.0,
-  "answerHi": 92.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      92.0,
-      92.0
-     ]
-    ]
-   },
-   {
-    "points": 4,
-    "ranges": [
-     [
-      87.0,
-      91.0
-     ],
-     [
-      93.0,
-      97.0
-     ]
-    ]
-   },
-   {
-    "points": 3,
-    "ranges": [
-     [
-      82.0,
-      86.0
-     ],
-     [
-      98.0,
-      102.0
-     ]
-    ]
-   },
-   {
-    "points": 2,
-    "ranges": [
-     [
-      77.0,
-      81.0
-     ]
-    ]
-   },
-   {
-    "points": 1,
-    "ranges": [
-     [
-      72.0,
-      76.0
-     ]
-    ]
-   }
-  ],
+  "answerLo": 92,
+  "answerHi": 92,
   "needsReview": true,
   "reviewNotes": [
    "value column says 4 but the exact answer sits in the 5-pt column; using 5"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 4,
+    "below": 5,
+    "above": 5
+   },
+   {
+    "points": 3,
+    "below": 10,
+    "above": 10
+   },
+   {
+    "points": 2,
+    "below": 15,
+    "above": null
+   },
+   {
+    "points": 1,
+    "below": 20,
+    "above": null
+   }
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-021",
-  "text": "How many pardons did Trump give in January 2021",
+  "text": "How many pardons did Trump give in January 2021?",
   "answer": "116",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 116.0,
-  "answerHi": 116.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      116.0,
-      116.0
-     ]
-    ]
-   },
+  "answerLo": 116,
+  "answerHi": 116,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      111.0,
-      115.0
-     ],
-     [
-      117.0,
-      121.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      106.0,
-      110.0
-     ],
-     [
-      122.0,
-      126.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      101.0,
-      105.0
-     ],
-     [
-      127.0,
-      131.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-022",
-  "text": "Through 2020 how many times did Trump golf",
+  "text": "Through 2020 how many times did Trump golf?",
   "answer": "308",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 6,
-  "stepPoints": 1,
-  "answerLo": 308.0,
-  "answerHi": 308.0,
-  "step": 5.0,
+  "answerLo": 308,
+  "answerHi": 308,
   "needsReview": true,
   "reviewNotes": [
    "2-pt and 3-pt steps overlap at 293",
    "3-pt and 4-pt steps overlap at 298",
    "typed steps not usable; scoring with computed steps of width 5"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 5,
+    "below": 5,
+    "above": 5
+   },
+   {
+    "points": 4,
+    "below": 10,
+    "above": 10
+   },
+   {
+    "points": 3,
+    "below": 15,
+    "above": 15
+   },
+   {
+    "points": 2,
+    "below": 20,
+    "above": 20
+   },
+   {
+    "points": 1,
+    "below": 25,
+    "above": 25
+   }
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-023",
-  "text": "How much were secret service agents charged per night at Mar a Lago",
+  "text": "How much were secret service agents charged per night at Mar a Lago?",
   "answer": "650",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 650.0,
-  "answerHi": 650.0,
-  "step": 50.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      650.0,
-      650.0
-     ]
-    ]
-   },
+  "answerLo": 650,
+  "answerHi": 650,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      600.0,
-      649.0
-     ],
-     [
-      651.0,
-      700.0
-     ]
-    ]
+    "below": 50,
+    "above": 50
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      550.0,
-      599.0
-     ],
-     [
-      701.0,
-      750.0
-     ]
-    ]
+    "below": 100,
+    "above": 100
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      500.0,
-      549.0
-     ],
-     [
-      751.0,
-      800.0
-     ]
-    ]
+    "below": 150,
+    "above": 150
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-024",
-  "text": "How much did Trump pay in Income Taxes",
+  "text": "How much did Trump pay in Income Taxes?",
   "answer": "750",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -5458,755 +4729,481 @@
   "type": "qa",
   "accepted": [
    "750"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-025",
-  "text": "What year was Biden born",
+  "text": "What year was Biden born?",
   "answer": "1942",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 1942.0,
-  "answerHi": 1942.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      1942.0,
-      1942.0
-     ]
-    ]
-   },
+  "answerLo": 1942,
+  "answerHi": 1942,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      1937.0,
-      1941.0
-     ],
-     [
-      1943.0,
-      1947.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      1932.0,
-      1936.0
-     ],
-     [
-      1948.0,
-      1952.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      1927.0,
-      1931.0
-     ],
-     [
-      1953.0,
-      1957.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-026",
-  "text": "What year was Trump born",
+  "text": "What year was Trump born?",
   "answer": "1946",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 1946.0,
-  "answerHi": 1946.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      1946.0,
-      1946.0
-     ]
-    ]
-   },
+  "answerLo": 1946,
+  "answerHi": 1946,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      1941.0,
-      1945.0
-     ],
-     [
-      1947.0,
-      1951.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      1936.0,
-      1940.0
-     ],
-     [
-      1952.0,
-      1956.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      1931.0,
-      1935.0
-     ],
-     [
-      1957.0,
-      1961.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-027",
-  "text": "How many votes did Trump want to be found in GA",
+  "text": "How many votes did Trump want to be found in GA?",
   "answer": "11780",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 11780.0,
-  "answerHi": 11780.0,
-  "step": 500.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      11780.0,
-      11780.0
-     ]
-    ]
-   },
+  "answerLo": 11780,
+  "answerHi": 11780,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 4,
-    "ranges": [
-     [
-      11280.0,
-      11779.0
-     ],
-     [
-      11781.0,
-      12280.0
-     ]
-    ]
+    "below": 500,
+    "above": 500
    },
    {
     "points": 3,
-    "ranges": [
-     [
-      10780.0,
-      11279.0
-     ],
-     [
-      12281.0,
-      12780.0
-     ]
-    ]
+    "below": 1000,
+    "above": 1000
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      10280.0,
-      10779.0
-     ],
-     [
-      12781.0,
-      13280.0
-     ]
-    ]
+    "below": 1500,
+    "above": 1500
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      9780.0,
-      10279.0
-     ],
-     [
-      13281.0,
-      13780.0
-     ]
-    ]
+    "below": 2000,
+    "above": 2000
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-028",
-  "text": "How many votes did Joe Biden get in 2020",
+  "text": "How many votes did Joe Biden get in 2020?",
   "answer": "81283485",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 81.0,
-  "answerHi": 81.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      81.0,
-      81.0
-     ]
-    ]
-   },
-   {
-    "points": 3,
-    "ranges": [
-     [
-      79.0,
-      80.0
-     ],
-     [
-      82.0,
-      83.0
-     ]
-    ]
-   },
-   {
-    "points": 2,
-    "ranges": [
-     [
-      77.0,
-      78.0
-     ],
-     [
-      84.0,
-      85.0
-     ]
-    ]
-   },
-   {
-    "points": 1,
-    "ranges": [
-     [
-      75.0,
-      76.0
-     ],
-     [
-      86.0,
-      87.0
-     ]
-    ]
-   }
-  ],
+  "answerLo": 81,
+  "answerHi": 81,
   "needsReview": true,
   "reviewNotes": [
    "answer cell says 81283485 but steps are in other units (exact = 81); tell players the unit"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 3,
+    "below": 2,
+    "above": 2
+   },
+   {
+    "points": 2,
+    "below": 4,
+    "above": 4
+   },
+   {
+    "points": 1,
+    "below": 6,
+    "above": 6
+   }
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-029",
-  "text": "Across two elections how many votes did Trump get",
+  "text": "Across two elections how many votes did Trump get?",
   "answer": "137208850",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 137.0,
-  "answerHi": 137.0,
-  "step": 10.0,
+  "answerLo": 137,
+  "answerHi": 137,
   "needsReview": true,
   "reviewNotes": [
    "answer cell says 137208850 but steps are in other units (exact = 137); tell players the unit",
    "1-pt and 2-pt steps overlap at 107",
    "typed steps not usable; scoring with computed steps of width 10"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 4,
+    "below": 10,
+    "above": 10
+   },
+   {
+    "points": 3,
+    "below": 20,
+    "above": 20
+   },
+   {
+    "points": 2,
+    "below": 30,
+    "above": 30
+   },
+   {
+    "points": 1,
+    "below": 40,
+    "above": 40
+   }
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-030",
-  "text": "In just one term Trump has the highest vacation cost, what is it",
+  "text": "In just one term Trump has the highest vacation cost, what is it?",
   "answer": "$141mil",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 6,
-  "stepPoints": 1,
-  "answerLo": 141.0,
-  "answerHi": 141.0,
-  "step": 10.0,
-  "bands": [
-   {
-    "points": 6,
-    "ranges": [
-     [
-      141.0,
-      141.0
-     ]
-    ]
-   },
+  "answerLo": 141,
+  "answerHi": 141,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 5,
-    "ranges": [
-     [
-      131.0,
-      140.0
-     ],
-     [
-      142.0,
-      151.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      121.0,
-      130.0
-     ],
-     [
-      152.0,
-      161.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    },
    {
     "points": 3,
-    "ranges": [
-     [
-      111.0,
-      120.0
-     ],
-     [
-      162.0,
-      171.0
-     ]
-    ]
+    "below": 30,
+    "above": 30
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      101.0,
-      110.0
-     ],
-     [
-      172.0,
-      181.0
-     ]
-    ]
+    "below": 40,
+    "above": 40
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      91.0,
-      100.0
-     ],
-     [
-      182.0,
-      191.0
-     ]
-    ]
+    "below": 50,
+    "above": 50
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-031",
-  "text": "Obama Vacation cost",
+  "text": "Obama Vacation cost?",
   "answer": "$105mil",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 105.0,
-  "answerHi": 105.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      105.0,
-      105.0
-     ]
-    ]
-   },
+  "answerLo": 105,
+  "answerHi": 105,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 4,
-    "ranges": [
-     [
-      100.0,
-      104.0
-     ],
-     [
-      106.0,
-      110.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 3,
-    "ranges": [
-     [
-      95.0,
-      99.0
-     ],
-     [
-      111.0,
-      115.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      90.0,
-      94.0
-     ],
-     [
-      116.0,
-      120.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      85.0,
-      89.0
-     ],
-     [
-      121.0,
-      125.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-032",
-  "text": "George Bush Vacation cost",
+  "text": "George Bush Vacation cost?",
   "answer": "$140mil",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 4,
-  "stepPoints": 1,
-  "answerLo": 140.0,
-  "answerHi": 140.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 4,
-    "ranges": [
-     [
-      140.0,
-      140.0
-     ]
-    ]
-   },
+  "answerLo": 140,
+  "answerHi": 140,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 3,
-    "ranges": [
-     [
-      135.0,
-      139.0
-     ],
-     [
-      141.0,
-      145.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      130.0,
-      134.0
-     ],
-     [
-      146.0,
-      150.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      125.0,
-      129.0
-     ],
-     [
-      151.0,
-      155.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-033",
-  "text": "How many First Ladies have been foreign born",
+  "text": "How many First Ladies have been foreign born?",
   "answer": "2 Louisa Catherine Johnson Adams (John Quincy Adams)",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 3,
-  "stepPoints": 1,
-  "answerLo": 2.0,
-  "answerHi": 2.0,
-  "step": 1.0,
-  "bands": [
-   {
-    "points": 3,
-    "ranges": [
-     [
-      2.0,
-      2.0
-     ]
-    ]
-   },
+  "answerLo": 2,
+  "answerHi": 2,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 2,
-    "ranges": [
-     [
-      1.0,
-      1.0
-     ],
-     [
-      3.0,
-      3.0
-     ]
-    ]
+    "below": 1,
+    "above": 1
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      4.0,
-      4.0
-     ]
-    ]
+    "below": 2,
+    "above": 2
    }
-  ]
+  ],
+  "categories": [
+   "Politics",
+   "History"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-034",
-  "text": "As of July 2020 how many false or misleading claims had Trump made",
+  "text": "As of July 2020 how many false or misleading claims had Trump made?",
   "answer": "20,000+",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 20.0,
-  "answerHi": 20.0,
-  "step": 3.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      20.0,
-      20.0
-     ]
-    ]
-   },
-   {
-    "points": 4,
-    "ranges": [
-     [
-      17.0,
-      19.0
-     ],
-     [
-      21.0,
-      23.0
-     ]
-    ]
-   },
-   {
-    "points": 3,
-    "ranges": [
-     [
-      14.0,
-      16.0
-     ],
-     [
-      24.0,
-      26.0
-     ]
-    ]
-   },
-   {
-    "points": 2,
-    "ranges": [
-     [
-      11.0,
-      13.0
-     ],
-     [
-      27.0,
-      29.0
-     ]
-    ]
-   },
-   {
-    "points": 1,
-    "ranges": [
-     [
-      8.0,
-      10.0
-     ],
-     [
-      30.0,
-      32.0
-     ]
-    ]
-   }
-  ],
+  "answerLo": 20,
+  "answerHi": 20,
   "needsReview": true,
   "reviewNotes": [
    "answer cell says 20,000+ but steps are in other units (exact = 20); tell players the unit"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 4,
+    "below": 3,
+    "above": 3
+   },
+   {
+    "points": 3,
+    "below": 6,
+    "above": 6
+   },
+   {
+    "points": 2,
+    "below": 9,
+    "above": 9
+   },
+   {
+    "points": 1,
+    "below": 12,
+    "above": 12
+   }
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-035",
-  "text": "What was the \"score\" of both the 2016 and 2020 election",
+  "text": "What was the \"score\" of both the 2016 and 2020 election?",
   "answer": "306 to 232",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 306.0,
-  "answerHi": 306.0,
-  "step": 5.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      306.0,
-      306.0
-     ]
-    ]
-   },
+  "answerLo": 306,
+  "answerHi": 306,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 4,
-    "ranges": [
-     [
-      301.0,
-      305.0
-     ],
-     [
-      307.0,
-      311.0
-     ]
-    ]
+    "below": 5,
+    "above": 5
    },
    {
     "points": 3,
-    "ranges": [
-     [
-      296.0,
-      300.0
-     ],
-     [
-      312.0,
-      316.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      291.0,
-      295.0
-     ],
-     [
-      317.0,
-      321.0
-     ]
-    ]
+    "below": 15,
+    "above": 15
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      286.0,
-      290.0
-     ],
-     [
-      322.0,
-      326.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-036",
-  "text": "Name one of the charges Trump was impeached for",
+  "text": "Name one of the charges Trump was impeached for?",
   "answer": "Abuse of power, obstruction of congress, incitement of insurrection",
   "category": "Politics",
   "games": [
@@ -6218,13 +5215,20 @@
    "Abuse of power",
    "obstruction of congress",
    "incitement of insurrection"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-037",
-  "text": "Where did Trump say \"when you are a star, you can do anything\"",
+  "text": "Where did Trump say \"when you are a star, you can do anything\"?",
   "answer": "Access Hollywood Truck",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6232,13 +5236,20 @@
   "type": "qa",
   "accepted": [
    "Access Hollywood Truck"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-038",
-  "text": "What city did Trump invest heavily in for his casino's",
+  "text": "What city did Trump invest heavily in for his casino's?",
   "answer": "Atlantic City",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6246,11 +5257,18 @@
   "type": "qa",
   "accepted": [
    "Atlantic City"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-039",
-  "text": "Who took second in the last two Democratic primaries",
+  "text": "Who took second in the last two Democratic primaries?",
   "answer": "Bernie Sanders",
   "category": "Politics",
   "games": [
@@ -6260,13 +5278,20 @@
   "type": "qa",
   "accepted": [
    "Bernie Sanders"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-040",
-  "text": "How did Trump draft dodge",
+  "text": "How did Trump draft dodge?",
   "answer": "Bone Spurs",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6274,13 +5299,20 @@
   "type": "qa",
   "accepted": [
    "Bone Spurs"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-041",
-  "text": "What disease did Trump say Windmill Noise causes",
+  "text": "What disease did Trump say Windmill Noise causes?",
   "answer": "Cancer",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6288,13 +5320,20 @@
   "type": "qa",
   "accepted": [
    "Cancer"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-042",
-  "text": "What is Trump's nickname for Barack Obama",
+  "text": "What is Trump's nickname for Barack Obama?",
   "answer": "Cheatin' Obama",
-  "category": "Nicknames",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6302,13 +5341,21 @@
   "type": "qa",
   "accepted": [
    "Cheatin' Obama"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump",
+   "nicknames"
+  ],
+  "general": false
  },
  {
   "id": "trump-043",
-  "text": "What did Melania say \"who gives a fuck about it, but I have to do it\" about",
+  "text": "What did Melania say \"who gives a fuck about it, but I have to do it\" about?",
   "answer": "Christmas decorations",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6316,13 +5363,20 @@
   "type": "qa",
   "accepted": [
    "Christmas decorations"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-044",
-  "text": "What is Trump's nickname for Hillary Clinton",
+  "text": "What is Trump's nickname for Hillary Clinton?",
   "answer": "Crooked Hillary",
-  "category": "Nicknames",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6330,11 +5384,19 @@
   "type": "qa",
   "accepted": [
    "Crooked Hillary"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump",
+   "nicknames"
+  ],
+  "general": true
  },
  {
   "id": "trump-045",
-  "text": "Name a college Biden attended",
+  "text": "Name a college Biden attended?",
   "answer": "Delaware",
   "category": "Politics",
   "games": [
@@ -6344,13 +5406,20 @@
   "type": "qa",
   "accepted": [
    "Delaware"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-046",
-  "text": "T/F Kushner and Ivanka's positions were among the highest paid in the WH",
+  "text": "T/F Kushner and Ivanka's positions were among the highest paid in the WH?",
   "answer": "FALSE (unpaid)",
-  "category": "True/False",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6358,11 +5427,18 @@
   "type": "tf",
   "accepted": [
    "false"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-047",
-  "text": "Name a college Trump attended",
+  "text": "Name a college Trump attended?",
   "answer": "Fordham, Penn (Wharton)",
   "category": "Politics",
   "games": [
@@ -6373,13 +5449,20 @@
   "accepted": [
    "Fordham",
    "Penn (Wharton)"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-048",
-  "text": "What is Trump's nickname for Ilhan Omar",
+  "text": "What is Trump's nickname for Ilhan Omar?",
   "answer": "Foul mouthed Omar",
-  "category": "Nicknames",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6387,11 +5470,19 @@
   "type": "qa",
   "accepted": [
    "Foul mouthed Omar"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump",
+   "nicknames"
+  ],
+  "general": false
  },
  {
   "id": "trump-049",
-  "text": "Name each state that flipped from 2016 to 2020",
+  "text": "Name each state that flipped from 2016 to 2020?",
   "answer": "GA, AZ, WI, MI, PA",
   "category": "Politics",
   "games": [
@@ -6406,13 +5497,20 @@
    "MI",
    "PA"
   ],
-  "perItem": 1.0
+  "perItem": 1,
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-050",
-  "text": "What country did Trump want to buy",
+  "text": "What country did Trump want to buy?",
   "answer": "Greenland",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6420,13 +5518,20 @@
   "type": "qa",
   "accepted": [
    "Greenland"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-051",
-  "text": "What teenage activist did Trump tell to work on her anger problems and to chill",
+  "text": "What teenage activist did Trump tell to work on her anger problems and to chill?",
   "answer": "Greta Thunberg",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6434,13 +5539,20 @@
   "type": "qa",
   "accepted": [
    "Greta Thunberg"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-052",
-  "text": "What is Sharpiegate",
+  "text": "What is Sharpiegate?",
   "answer": "Hurricane Trajectory (Alabama)",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6448,13 +5560,20 @@
   "type": "qa",
   "accepted": [
    "Hurricane Trajectory (Alabama)"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-053",
-  "text": "In 2016 Trump paid $2mil in damages and admitted guilt for",
+  "text": "In 2016 Trump paid $2mil in damages and admitted guilt for?",
   "answer": "illegally using Trump Foundation assets",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6462,13 +5581,20 @@
   "type": "qa",
   "accepted": [
    "illegally using Trump Foundation assets"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-054",
-  "text": "What country has an active arrest warrant for Trump",
+  "text": "What country has an active arrest warrant for Trump?",
   "answer": "Iraq",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6476,11 +5602,18 @@
   "type": "qa",
   "accepted": [
    "Iraq"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-055",
-  "text": "Name Trump's Wives",
+  "text": "Name Trump's Wives?",
   "answer": "Ivana, Marla, Melania",
   "category": "Politics",
   "games": [
@@ -6493,13 +5626,20 @@
    "Marla",
    "Melania"
   ],
-  "perItem": 1.0
+  "perItem": 1,
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-056",
-  "text": "What deceased criminal has Trump definitely never met",
+  "text": "What deceased criminal has Trump definitely never met?",
   "answer": "Jeffrey Epstein",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6507,11 +5647,18 @@
   "type": "qa",
   "accepted": [
    "Jeffrey Epstein"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-057",
-  "text": "What is Donald Trump's middle name",
+  "text": "What is Donald Trump's middle name?",
   "answer": "John",
   "category": "Politics",
   "games": [
@@ -6521,13 +5668,20 @@
   "type": "qa",
   "accepted": [
    "John"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-058",
-  "text": "Whose funeral did Trump not get a Thank you for",
+  "text": "Whose funeral did Trump not get a Thank you for?",
   "answer": "John McCain",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6535,13 +5689,20 @@
   "type": "qa",
   "accepted": [
    "John McCain"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-059",
-  "text": "Who said \"if we nominate Trump, we will get destroyed and we will deserve it\"",
+  "text": "Who said \"if we nominate Trump, we will get destroyed and we will deserve it\"?",
   "answer": "Lindsey Graham",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6549,13 +5710,20 @@
   "type": "qa",
   "accepted": [
    "Lindsey Graham"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-060",
-  "text": "What is Trump's nickname for Jeb Bush",
+  "text": "What is Trump's nickname for Jeb Bush?",
   "answer": "Low Energy Jeb",
-  "category": "Nicknames",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6563,11 +5731,19 @@
   "type": "qa",
   "accepted": [
    "Low Energy Jeb"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump",
+   "nicknames"
+  ],
+  "general": false
  },
  {
   "id": "trump-061",
-  "text": "Name of Trump's Florida Private Club",
+  "text": "Name of Trump's Florida Private Club?",
   "answer": "Mar a Lago",
   "category": "Politics",
   "games": [
@@ -6577,13 +5753,20 @@
   "type": "qa",
   "accepted": [
    "Mar a Lago"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-062",
-  "text": "What state did Trump say we was named Man of the Year in",
+  "text": "What state did Trump say we was named Man of the Year in?",
   "answer": "Michigan",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6591,13 +5774,20 @@
   "type": "qa",
   "accepted": [
    "Michigan"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-063",
-  "text": "What is Trump's nickname for Mike Bloomberg",
+  "text": "What is Trump's nickname for Mike Bloomberg?",
   "answer": "Mini Mike/Little Michael",
-  "category": "Nicknames",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6606,11 +5796,19 @@
   "accepted": [
    "Mini Mike",
    "Little Michael"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump",
+   "nicknames"
+  ],
+  "general": false
  },
  {
   "id": "trump-064",
-  "text": "What pageants did Trump purchase",
+  "text": "What pageants did Trump purchase?",
   "answer": "Miss Universe, Miss USA, Miss Teen USA",
   "category": "Politics",
   "games": [
@@ -6623,13 +5821,21 @@
    "Miss USA",
    "Miss Teen USA"
   ],
-  "perItem": 1.0
+  "perItem": 1,
+  "categories": [
+   "Politics",
+   "Pop Culture"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-065",
-  "text": "What is Trump credited for getting Obama to prove",
+  "text": "What is Trump credited for getting Obama to prove?",
   "answer": "Natural born US citizen",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6637,11 +5843,18 @@
   "type": "qa",
   "accepted": [
    "Natural born US citizen"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-066",
-  "text": "Name Biden's Wives",
+  "text": "Name Biden's Wives?",
   "answer": "Neilia, Jill",
   "category": "Politics",
   "games": [
@@ -6657,11 +5870,18 @@
   "needsReview": true,
   "reviewNotes": [
    "3 pts over 2 items is not a whole number per item"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-067",
-  "text": "There were very fine people on both sides, what were the sides",
+  "text": "There were very fine people on both sides, what were the sides?",
   "answer": "Neo-Nazis, ANTIFA",
   "category": "Politics",
   "games": [
@@ -6673,11 +5893,18 @@
    "Neo-Nazis",
    "ANTIFA"
   ],
-  "perItem": 1.0
+  "perItem": 1,
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-068",
-  "text": "What professional sports league denied Trump ownership of a team",
+  "text": "What professional sports league denied Trump ownership of a team?",
   "answer": "NFL",
   "category": "Politics",
   "games": [
@@ -6687,11 +5914,18 @@
   "type": "qa",
   "accepted": [
    "NFL"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-069",
-  "text": "What day was the 2020 election",
+  "text": "What day was the 2020 election?",
   "answer": "November 3rd",
   "category": "Politics",
   "games": [
@@ -6701,91 +5935,63 @@
   "type": "qa",
   "accepted": [
    "November 3rd"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-070",
-  "text": "How many times did Trump Tweet as President",
+  "text": "How many times did Trump Tweet as President?",
   "answer": "over 34k",
   "category": "Politics",
   "games": [
    "Trump 2020"
   ],
-  "type": "range",
+  "type": "number",
   "value": 5,
-  "stepPoints": 1,
-  "answerLo": 34.0,
-  "answerHi": 34.0,
-  "step": 3.0,
-  "bands": [
-   {
-    "points": 5,
-    "ranges": [
-     [
-      34.0,
-      34.0
-     ]
-    ]
-   },
+  "answerLo": 34,
+  "answerHi": 34,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 4,
-    "ranges": [
-     [
-      31.0,
-      33.0
-     ],
-     [
-      35.0,
-      37.0
-     ]
-    ]
+    "below": 3,
+    "above": 3
    },
    {
     "points": 3,
-    "ranges": [
-     [
-      28.0,
-      30.0
-     ],
-     [
-      38.0,
-      40.0
-     ]
-    ]
+    "below": 6,
+    "above": 6
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      25.0,
-      27.0
-     ],
-     [
-      41.0,
-      43.0
-     ]
-    ]
+    "below": 9,
+    "above": 9
    },
    {
     "points": 1,
-    "ranges": [
-     [
-      22.0,
-      24.0
-     ],
-     [
-      44.0,
-      46.0
-     ]
-    ]
+    "below": 12,
+    "above": 12
    }
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-071",
-  "text": "What is Trump's nickname for Elizabeth Warren",
+  "text": "What is Trump's nickname for Elizabeth Warren?",
   "answer": "Pocahontas, Goofy, the Indian",
-  "category": "Nicknames",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6793,11 +5999,19 @@
   "type": "qa",
   "accepted": [
    "Pocahontas, Goofy, the Indian"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump",
+   "nicknames"
+  ],
+  "general": false
  },
  {
   "id": "trump-072",
-  "text": "Who led the investigation against Trump in 2017",
+  "text": "Who led the investigation against Trump in 2017?",
   "answer": "Robert Mueller",
   "category": "Politics",
   "games": [
@@ -6807,11 +6021,18 @@
   "type": "qa",
   "accepted": [
    "Robert Mueller"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-073",
-  "text": "What is Joe Biden's middle name",
+  "text": "What is Joe Biden's middle name?",
   "answer": "Robinette",
   "category": "Politics",
   "games": [
@@ -6821,13 +6042,20 @@
   "type": "qa",
   "accepted": [
    "Robinette"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-074",
-  "text": "What is Trump's nickname for Kim Jong-un",
+  "text": "What is Trump's nickname for Kim Jong-un?",
   "answer": "Rocket Man",
-  "category": "Nicknames",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6835,11 +6063,19 @@
   "type": "qa",
   "accepted": [
    "Rocket Man"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump",
+   "nicknames"
+  ],
+  "general": false
  },
  {
   "id": "trump-075",
-  "text": "What position did Kamala Harris hold before VP",
+  "text": "What position did Kamala Harris hold before VP?",
   "answer": "Senator CA",
   "category": "Politics",
   "games": [
@@ -6850,13 +6086,20 @@
   "items": [
    "Senator CA"
   ],
-  "perItem": 3.0
+  "perItem": 3,
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-076",
-  "text": "What is Trump's (most recent favorite) nickname for Joe Biden",
+  "text": "What is Trump's (most recent favorite) nickname for Joe Biden?",
   "answer": "Sleepy Joe",
-  "category": "Nicknames",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6864,11 +6107,19 @@
   "type": "qa",
   "accepted": [
    "Sleepy Joe"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump",
+   "nicknames"
+  ],
+  "general": false
  },
  {
   "id": "trump-077",
-  "text": "Name Trump associates arrested or convicted of crimes",
+  "text": "Name Trump associates arrested or convicted of crimes?",
   "answer": "Steve Bannon, Roger Stone, Paul Manafort, Michael Cohen, Michael Flynn, Rick Gates, George Nader, George Papadopoulos",
   "category": "Politics",
   "games": [
@@ -6886,13 +6137,20 @@
    "George Nader",
    "George Papadopoulos"
   ],
-  "perItem": 1.0
+  "perItem": 1,
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-078",
-  "text": "What porn star did Trump deny paying off",
+  "text": "What porn star did Trump deny paying off?",
   "answer": "Stormy Daniels",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6900,13 +6158,20 @@
   "type": "qa",
   "accepted": [
    "Stormy Daniels"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-079",
-  "text": "What was Trump on his way to do as protestors were tear gassed",
+  "text": "What was Trump on his way to do as protestors were tear gassed?",
   "answer": "Take a picture with a Bible in front of a Church",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6914,11 +6179,18 @@
   "type": "qa",
   "accepted": [
    "Take a picture with a Bible in front of a Church"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-080",
-  "text": "Who took second in the 2016 Republican primaries",
+  "text": "Who took second in the 2016 Republican primaries?",
   "answer": "Ted Cruz",
   "category": "Politics",
   "games": [
@@ -6928,11 +6200,18 @@
   "type": "qa",
   "accepted": [
    "Ted Cruz"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-081",
-  "text": "Name of Trump's TV Show",
+  "text": "Name of Trump's TV Show?",
   "answer": "The Apprentice",
   "category": "Politics",
   "games": [
@@ -6942,13 +6221,21 @@
   "type": "qa",
   "accepted": [
    "The Apprentice"
-  ]
+  ],
+  "categories": [
+   "Politics",
+   "TV & Movies"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": true
  },
  {
   "id": "trump-082",
-  "text": "What war did Trump dodge",
+  "text": "What war did Trump dodge?",
   "answer": "Vietnam",
-  "category": "Trump",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6956,13 +6243,20 @@
   "type": "qa",
   "accepted": [
    "Vietnam"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "trump-083",
-  "text": "What is Trump's nickname for Omarosa",
+  "text": "What is Trump's nickname for Omarosa?",
   "answer": "Wacky Omarosa",
-  "category": "Nicknames",
+  "category": "Politics",
   "games": [
    "Trump 2020"
   ],
@@ -6970,11 +6264,19 @@
   "type": "qa",
   "accepted": [
    "Wacky Omarosa"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump",
+   "nicknames"
+  ],
+  "general": false
  },
  {
   "id": "trump-084",
-  "text": "What did Trump accuse the Obama administration of",
+  "text": "What did Trump accuse the Obama administration of?",
   "answer": "Wire Tapping",
   "category": "Politics",
   "games": [
@@ -6984,13 +6286,20 @@
   "type": "qa",
   "accepted": [
    "Wire Tapping"
-  ]
+  ],
+  "categories": [
+   "Politics"
+  ],
+  "tags": [
+   "trump"
+  ],
+  "general": false
  },
  {
   "id": "music-first-tiny-dancer",
   "text": "What is the first word of \"Tiny Dancer\" (Elton John)?",
   "answer": "Blue",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -6999,13 +6308,21 @@
   "value": 10,
   "accepted": [
    "Blue"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-africa",
   "text": "What is the first word of \"Africa\" (Toto)?",
   "answer": "I",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7014,13 +6331,21 @@
   "value": 10,
   "accepted": [
    "I"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-the-middle",
   "text": "What is the first word of \"The Middle\" (Zedd, Maren Morris & Grey)?",
   "answer": "Take",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7029,13 +6354,21 @@
   "value": 10,
   "accepted": [
    "Take"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-uptown-funk",
   "text": "What is the first word of \"Uptown Funk\" (Mark Ronson ft Bruno Mars)?",
   "answer": "This",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7044,13 +6377,21 @@
   "value": 10,
   "accepted": [
    "This"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-alexander-hamilton",
   "text": "What is the first word of \"Alexander Hamilton\" (Hamilton)?",
   "answer": "How",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7059,13 +6400,21 @@
   "value": 10,
   "accepted": [
    "How"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-you-ll-be-in-my-heart",
   "text": "What is the first word of \"You'll Be In My Heart\" (Tarzan, Phil Collins)?",
   "answer": "Come",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7074,13 +6423,21 @@
   "value": 10,
   "accepted": [
    "Come"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-eye-of-the-tiger",
   "text": "What is the first word of \"Eye of the Tiger\" (Survivor)?",
   "answer": "Rising",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7089,13 +6446,21 @@
   "value": 10,
   "accepted": [
    "Rising"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-replay",
   "text": "What is the first word of \"Replay\" (Iyaz)?",
   "answer": "Shawty",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7104,13 +6469,21 @@
   "value": 10,
   "accepted": [
    "Shawty"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-rolling-in-the-deep",
   "text": "What is the first word of \"Rolling in the Deep\" (Adele)?",
   "answer": "There's",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7119,13 +6492,21 @@
   "value": 10,
   "accepted": [
    "There's"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-rockstar",
   "text": "What is the first word of \"Rockstar\" (Nickelback)?",
   "answer": "I'm",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7134,13 +6515,21 @@
   "value": 10,
   "accepted": [
    "I'm"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-tik-tok",
   "text": "What is the first word of \"Tik Tok\" (Ke$ha)?",
   "answer": "Wake",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7149,13 +6538,21 @@
   "value": 10,
   "accepted": [
    "Wake"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-gold-digger",
   "text": "What is the first word of \"Gold Digger\" (Kanye West ft Jamie Foxx)?",
   "answer": "She",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7164,13 +6561,21 @@
   "value": 10,
   "accepted": [
    "She"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-royals",
   "text": "What is the first word of \"Royals\" (Lorde)?",
   "answer": "I've",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7179,13 +6584,21 @@
   "value": 10,
   "accepted": [
    "I've"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-moves-like-jagger",
   "text": "What is the first word of \"Moves Like Jagger\" (Maroon 5)?",
   "answer": "Just",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7194,13 +6607,21 @@
   "value": 10,
   "accepted": [
    "Just"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-happy",
   "text": "What is the first word of \"Happy\" (Pharrell Williams, Meghan Trainor)?",
   "answer": "It",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7209,13 +6630,21 @@
   "value": 10,
   "accepted": [
    "It"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-just-the-way-you-are",
   "text": "What is the first word of \"Just the Way you Are\" (Bruno Mars)?",
   "answer": "Oh/Her",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7225,13 +6654,21 @@
   "accepted": [
    "Oh",
    "Her"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-first-billie-jean",
   "text": "What is the first word of \"Billie Jean\" (Michael Jackson)?",
   "answer": "She",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
@@ -7240,268 +6677,262 @@
   "value": 10,
   "accepted": [
    "She"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "first word",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-count-shots",
   "text": "How many times is \"Shot\" said in \"Shots\"?",
   "answer": "77",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 77.0,
-  "answerHi": 77.0,
-  "step": null,
+  "answerLo": 77,
+  "answerHi": 77,
   "judge": "host",
   "needsReview": true,
   "reviewNotes": [
    "no steps recorded; set a step width"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "word count",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-count-low",
   "text": "How many times is \"Low\" said in \"Low\"?",
   "answer": "65",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 65.0,
-  "answerHi": 65.0,
-  "step": null,
+  "answerLo": 65,
+  "answerHi": 65,
   "judge": "host",
   "needsReview": true,
   "reviewNotes": [
    "no steps recorded; set a step width"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "word count",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-count-tequila",
   "text": "How many times is \"Tequila\" said in \"Tequila\"?",
   "answer": "3",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 3.0,
-  "answerHi": 3.0,
-  "step": 2.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      3.0,
-      3.0
-     ]
-    ]
-   },
+  "answerLo": 3,
+  "answerHi": 3,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      2.0,
-      2.0
-     ],
-     [
-      4.0,
-      5.0
-     ]
-    ]
+    "below": 1,
+    "above": 2
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      1.0,
-      1.0
-     ],
-     [
-      6.0,
-      7.0
-     ]
-    ]
+    "below": 2,
+    "above": 4
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      8.0,
-      9.0
-     ]
-    ]
+    "below": null,
+    "above": 6
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      10.0,
-      15.0
-     ]
-    ]
+    "below": null,
+    "above": 12
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      16.0,
-      25.0
-     ]
-    ]
+    "below": null,
+    "above": 22
    }
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "word count",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-count-boom-boom-pow",
   "text": "How many times is \"Boom\" said in \"Boom Boom Pow\"?",
   "answer": "109",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 109.0,
-  "answerHi": 109.0,
-  "step": 9.0,
+  "answerLo": 109,
+  "answerHi": 109,
   "needsReview": true,
   "reviewNotes": [
    "10-pt and 8-pt steps overlap at 111",
    "6-pt and 4-pt steps overlap at 130",
    "typed steps not usable; scoring with computed steps of width 9"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [
+   {
+    "points": 10,
+    "below": 9,
+    "above": 9
+   },
+   {
+    "points": 8,
+    "below": 18,
+    "above": 18
+   },
+   {
+    "points": 6,
+    "below": 27,
+    "above": 27
+   },
+   {
+    "points": 4,
+    "below": 36,
+    "above": 36
+   },
+   {
+    "points": 2,
+    "below": 45,
+    "above": 45
+   }
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "word count",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-count-yeah",
   "text": "How many times is \"Yeah\" said in \"Yeah!\"?",
   "answer": "80",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 80.0,
-  "answerHi": 80.0,
-  "step": 10.0,
-  "bands": [
-   {
-    "points": 12,
-    "ranges": [
-     [
-      80.0,
-      80.0
-     ]
-    ]
-   },
+  "answerLo": 80,
+  "answerHi": 80,
+  "numberMode": "range",
+  "scale": [
    {
     "points": 10,
-    "ranges": [
-     [
-      70.0,
-      79.0
-     ],
-     [
-      81.0,
-      90.0
-     ]
-    ]
+    "below": 10,
+    "above": 10
    },
    {
     "points": 8,
-    "ranges": [
-     [
-      60.0,
-      69.0
-     ],
-     [
-      91.0,
-      100.0
-     ]
-    ]
+    "below": 20,
+    "above": 20
    },
    {
     "points": 6,
-    "ranges": [
-     [
-      50.0,
-      59.0
-     ],
-     [
-      101.0,
-      110.0
-     ]
-    ]
+    "below": 30,
+    "above": 30
    },
    {
     "points": 4,
-    "ranges": [
-     [
-      40.0,
-      49.0
-     ],
-     [
-      111.0,
-      120.0
-     ]
-    ]
+    "below": 40,
+    "above": 40
    },
    {
     "points": 2,
-    "ranges": [
-     [
-      20.0,
-      39.0
-     ],
-     [
-      121.0,
-      140.0
-     ]
-    ]
+    "below": 60,
+    "above": 60
    }
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "word count",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-count-happy",
   "text": "How many times is \"Happy\" said in \"Happy\"?",
   "answer": "24",
-  "category": "Song Lyrics",
+  "category": "Music",
   "games": [
    "Cousins",
    "Cabin"
   ],
-  "type": "range",
+  "type": "number",
   "value": 12,
-  "stepPoints": 2,
-  "answerLo": 24.0,
-  "answerHi": 24.0,
-  "step": null,
+  "answerLo": 24,
+  "answerHi": 24,
   "judge": "host",
   "needsReview": true,
   "reviewNotes": [
    "no steps recorded; set a step width"
-  ]
+  ],
+  "numberMode": "range",
+  "scale": [],
+  "categories": [
+   "Music"
+  ],
+  "tags": [
+   "word count",
+   "song lyrics"
+  ],
+  "general": true
  },
  {
   "id": "music-duplicate-titles",
-  "text": "List song titles that have been used by more than one artist",
+  "text": "List song titles that have been used by more than one artist?",
   "answer": "Double = 1, Triple = 2, Quadruple+ = 3",
   "category": "Music",
   "games": [
@@ -7514,6 +6945,11 @@
   "needsReview": true,
   "reviewNotes": [
    "timed 2 minutes; 1 pt per double, 2 per triple, 3 per quadruple+; host totals"
-  ]
+  ],
+  "categories": [
+   "Music"
+  ],
+  "tags": [],
+  "general": true
  }
 ]

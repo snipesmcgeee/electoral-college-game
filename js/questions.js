@@ -4,6 +4,7 @@
 //   { deleted: true }         → gone everywhere (repo questions); added questions are erased outright
 // Usage ("which games has this question been played in") lives in usage/{questionId}.
 import { db, fs } from './firebase.js';
+import { normalizeQuestion, withQuestionMark } from './qformat.js';
 
 let REPO = null;
 export async function loadRepo(base = '..') {
@@ -23,13 +24,14 @@ export async function loadQuestions(base = '..') {
       out[d.id] = { ...(out[d.id] || {}), ...e, id: d.id };
     }
   } catch (e) { console.warn('question edits not loaded', e); }
+  for (const id of Object.keys(out)) out[id] = normalizeQuestion(out[id]); // older edits → current format
   return out;
 }
 
 export const isCustom = id => !(REPO && REPO[id]);
 
 export function saveQuestion(q) {
-  const clean = JSON.parse(JSON.stringify(q));
+  const clean = JSON.parse(JSON.stringify(normalizeQuestion({ ...q, text: withQuestionMark(q.text) })));
   if (!clean.needsReview) delete clean.reviewNotes;
   return fs.setDoc(fs.doc(db, 'questionEdits', q.id), clean);
 }

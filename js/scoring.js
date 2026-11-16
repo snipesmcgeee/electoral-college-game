@@ -1,4 +1,5 @@
 // Auto-checking typed answers. Every result is a suggestion: the host can override any score.
+import { normalizeQuestion, numberPoints } from './qformat.js';
 
 export function normalize(s) {
   return String(s ?? '')
@@ -40,7 +41,7 @@ export function parseNumber(s) {
   return m ? Number(m[0]) : null;
 }
 
-// Range: Jack's typed steps when the question has them, else computed steps from the step width.
+// Old range format (bands or a step width). Kept so the conversion to scoring tables can be checked.
 export function rangePoints(q, guess) {
   const g = parseNumber(guess);
   if (g === null) return 0;
@@ -74,16 +75,16 @@ export function listMatches(q, guess) {
 }
 
 // Returns { points, confidence: 'auto'|'check'|'host', note }
-export function autoScore(q, guess) {
+export function autoScore(q0, guess) {
+  const q = normalizeQuestion(q0);
   if (guess === undefined || guess === null || String(guess).trim() === '') return { points: 0, confidence: 'auto', note: 'no answer' };
   if (q.judge === 'host') return { points: 0, confidence: 'host', note: 'host judges' };
   switch (q.type) {
-    case 'range': {
-      const pts = rangePoints(q, guess);
+    case 'number': {
+      if (q.numberMode === 'closer') return { points: 0, confidence: 'host', note: 'closest takes all — decided across teams' };
+      const pts = numberPoints(q, parseNumber(guess));
       return { points: pts, confidence: 'auto', note: `guess ${parseNumber(guess)}` };
     }
-    case 'closer':
-      return { points: 0, confidence: 'host', note: 'closest takes all — decided across teams' };
     case 'tf': {
       const g = normalize(guess)[0], t = normalize(q.accepted?.[0] ?? q.answer)[0];
       return { points: g && g === t ? q.value : 0, confidence: 'auto' };
@@ -118,6 +119,6 @@ export function closerPoints(q, guesses) {
 
 // What players/board may see (no answer fields).
 export function publicQuestion(q) {
-  return { id: q.id, text: q.text, type: q.type, value: q.value, category: q.category || '', timer: q.timer || null,
+  return { id: q.id, text: q.text, type: q.type, numberMode: q.numberMode || null, value: q.value, category: q.category || '', timer: q.timer || null,
     items: q.type === 'list' ? q.items?.length ?? null : null };
 }

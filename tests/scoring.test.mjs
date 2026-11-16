@@ -1,6 +1,7 @@
 // Run with:  node tests/scoring.test.mjs
 import { readFileSync } from 'node:fs';
 import { autoScore, closerPoints } from '../js/scoring.js';
+import { normalizeQuestion, withQuestionMark, recheckDue } from '../js/qformat.js';
 const Q = Object.fromEntries(JSON.parse(readFileSync(new URL('../data/questions.json', import.meta.url))).map(q => [q.id, q]));
 let pass = 0, fail = 0;
 const eq = (name, got, want) => { got === want ? pass++ : (fail++, console.log('FAIL', name, 'got', got, 'want', want)); };
@@ -26,7 +27,23 @@ const tf = find('richest ever');
 eq('T/F true', autoScore(tf, 'T').points, 2);
 const biden = find('votes did Joe Biden');
 eq('Biden votes in millions', autoScore(biden, '80').points, 3);
-const closer = Object.values(Q).find(q => q.type === 'closer');
+const closer = Object.values(Q).find(q => q.numberMode === 'closer');
 eq('closer', JSON.stringify(closerPoints(closer, { blue: '9000', red: '15000' })), JSON.stringify({ blue: 15, red: 0 }));
+// uneven and lopsided tables
+const lop = { type: 'number', value: 12, answerLo: 100, answerHi: 100, scale: [{ points: 10, below: 5, above: 20 }, { points: 6, below: 30, above: null }] };
+eq('lopsided under 5', autoScore(lop, '95').points, 10);
+eq('lopsided over 20', autoScore(lop, '120').points, 10);
+eq('lopsided under 30', autoScore(lop, '75').points, 6);
+eq('lopsided over 21 (no lower row above)', autoScore(lop, '121').points, 0);
+// old saved edits still score
+const old = { type: 'range', value: 12, stepPoints: 2, step: 10, answerLo: 50, answerHi: 50 };
+eq('old format converts', normalizeQuestion(old).type, 'number');
+eq('old format 65 → 8', autoScore(old, '65').points, 8);
+eq('question mark added', withQuestionMark('What is it.'), 'What is it?');
+eq('question mark kept', withQuestionMark('Why?'), 'Why?');
+eq('every bank question ends with ?', Object.values(Q).every(q => q.text.trim().endsWith('?')), true);
+eq('every bank question tagged', Object.values(Q).every(q => q.categories?.length >= 1 && q.categories.length <= 2), true);
+eq('no old types left', Object.values(Q).some(q => q.type === 'range' || q.type === 'closer'), false);
+eq('recheck due', recheckDue({ recheckBy: '2026-01-01' }, '2026-11-15'), 'due');
 console.log(`${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

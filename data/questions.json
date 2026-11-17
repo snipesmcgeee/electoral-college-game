@@ -404,54 +404,6 @@
   "general": false
  },
  {
-  "id": "kansas-014",
-  "text": "The Kansas City Chiefs are in back to back Super Bowls, which Super Bowl was their first?",
-  "answer": "Super Bowl 1",
-  "category": "Sports",
-  "games": [
-   "Kansas"
-  ],
-  "type": "number",
-  "value": 12,
-  "answerLo": 1,
-  "answerHi": 1,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 10,
-    "below": null,
-    "above": 3
-   },
-   {
-    "points": 8,
-    "below": null,
-    "above": 9
-   },
-   {
-    "points": 6,
-    "below": null,
-    "above": 19
-   },
-   {
-    "points": 4,
-    "below": null,
-    "above": 39
-   },
-   {
-    "points": 2,
-    "below": null,
-    "above": 999999999999
-   }
-  ],
-  "categories": [
-   "Sports"
-  ],
-  "tags": [
-   "kansas"
-  ],
-  "general": true
- },
- {
   "id": "kansas-015",
   "text": "The KC Royals have won two World Series, how many have they played in?",
   "answer": "4",
@@ -502,77 +454,6 @@
   "recheckNote": "World Series appearances"
  },
  {
-  "id": "kansas-016",
-  "text": "What is Former KU star and 4 time NBA MVP Wilt Chamberlain's Nickname?",
-  "answer": "The Stilt",
-  "category": "Sports",
-  "games": [
-   "Kansas"
-  ],
-  "value": 10,
-  "type": "qa",
-  "accepted": [
-   "The Stilt"
-  ],
-  "categories": [
-   "Sports"
-  ],
-  "tags": [
-   "kansas"
-  ],
-  "general": true
- },
- {
-  "id": "kansas-017",
-  "text": "KU has won March Madness 3 times, how  many times have they made the Final Four?",
-  "answer": "15",
-  "category": "Sports",
-  "games": [
-   "Kansas"
-  ],
-  "type": "number",
-  "value": 12,
-  "answerLo": 15,
-  "answerHi": 15,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 10,
-    "below": 2,
-    "above": 2
-   },
-   {
-    "points": 8,
-    "below": 4,
-    "above": 4
-   },
-   {
-    "points": 6,
-    "below": 6,
-    "above": 6
-   },
-   {
-    "points": 4,
-    "below": 8,
-    "above": 8
-   },
-   {
-    "points": 2,
-    "below": 10,
-    "above": 10
-   }
-  ],
-  "categories": [
-   "Sports"
-  ],
-  "tags": [
-   "kansas"
-  ],
-  "general": false,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "Final Four count"
- },
- {
   "id": "kansas-018",
   "text": "Famed Minnesotan Judy Garland may have led people to believe she was from KS in what movie?",
   "answer": "The Wizard of Oz",
@@ -595,7 +476,7 @@
  },
  {
   "id": "kansas-019",
-  "text": "Wisconsin native Laura Ingalls Wilder is the auther of what Kansas based book?",
+  "text": "Wisconsin native Laura Ingalls Wilder is the author of what Kansas based book?",
   "answer": "Little House on the Prairie",
   "category": "Literature & Art",
   "games": [
@@ -694,12 +575,8 @@
   ],
   "type": "number",
   "value": 12,
-  "answerLo": 12,
-  "answerHi": 12,
-  "needsReview": true,
-  "reviewNotes": [
-   "answer cell says 14 but steps are in other units (exact = 12); tell players the unit"
-  ],
+  "answerLo": 14,
+  "answerHi": 14,
   "numberMode": "range",
   "scale": [
    {
@@ -939,28 +816,6 @@
   "general": false
  },
  {
-  "id": "kansas-031",
-  "text": "What was Dwight D Eisenhower's job before President?",
-  "answer": "Army General",
-  "category": "Politics",
-  "games": [
-   "Kansas"
-  ],
-  "value": 10,
-  "type": "qa",
-  "accepted": [
-   "Army General"
-  ],
-  "categories": [
-   "Politics",
-   "History"
-  ],
-  "tags": [
-   "kansas"
-  ],
-  "general": false
- },
- {
   "id": "kansas-032",
   "text": "What snack was named after Kansas preacher Sylvester Graham?",
   "answer": "Graham Cracker",
@@ -1179,54 +1034,6 @@
   "general": true
  },
  {
-  "id": "deca-023",
-  "text": "How many times better are dog's sense of smell than ours?",
-  "answer": "40",
-  "category": "Animals",
-  "games": [
-   "DECA"
-  ],
-  "type": "number",
-  "value": 12,
-  "answerLo": 40,
-  "answerHi": 40,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 10,
-    "below": 8,
-    "above": 8
-   },
-   {
-    "points": 8,
-    "below": 16,
-    "above": 16
-   },
-   {
-    "points": 6,
-    "below": 24,
-    "above": 24
-   },
-   {
-    "points": 4,
-    "below": 32,
-    "above": 32
-   },
-   {
-    "points": 2,
-    "below": 40,
-    "above": 40
-   }
-  ],
-  "categories": [
-   "Animals"
-  ],
-  "tags": [
-   "dogs"
-  ],
-  "general": true
- },
- {
   "id": "deca-024",
   "text": "Humans have just 2 ear muscles, how many do dogs have?",
   "answer": "18",
@@ -1342,54 +1149,6 @@
   "general": true
  },
  {
-  "id": "deca-028",
-  "text": "In 2020 where did WI rank in number of Breweries per Capita? MN #15?",
-  "answer": "14",
-  "category": "Food & Drink",
-  "games": [
-   "DECA"
-  ],
-  "type": "number",
-  "value": 12,
-  "answerLo": 14,
-  "answerHi": 14,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 10,
-    "below": 2,
-    "above": 2
-   },
-   {
-    "points": 8,
-    "below": 4,
-    "above": 4
-   },
-   {
-    "points": 6,
-    "below": 6,
-    "above": 6
-   },
-   {
-    "points": 4,
-    "below": 8,
-    "above": 8
-   },
-   {
-    "points": 2,
-    "below": 10,
-    "above": 10
-   }
-  ],
-  "categories": [
-   "Food & Drink"
-  ],
-  "tags": [
-   "wi beer"
-  ],
-  "general": false
- },
- {
   "id": "deca-029",
   "text": "According to New Glarus, why are they only sold in Wisconsin?",
   "answer": "Enough Demand in WI",
@@ -1409,56 +1168,6 @@
    "wi beer"
   ],
   "general": false
- },
- {
-  "id": "deca-030",
-  "text": "How many beers does Leinenkugel's show on their website?",
-  "answer": "16, https://www.leinie.com/our-beers ",
-  "category": "Food & Drink",
-  "games": [
-   "DECA"
-  ],
-  "type": "number",
-  "value": 12,
-  "answerLo": 16,
-  "answerHi": 16,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 10,
-    "below": 2,
-    "above": 2
-   },
-   {
-    "points": 8,
-    "below": 4,
-    "above": 4
-   },
-   {
-    "points": 6,
-    "below": 6,
-    "above": 6
-   },
-   {
-    "points": 4,
-    "below": 8,
-    "above": 8
-   },
-   {
-    "points": 2,
-    "below": 10,
-    "above": 10
-   }
-  ],
-  "categories": [
-   "Food & Drink"
-  ],
-  "tags": [
-   "wi beer"
-  ],
-  "general": false,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "Leinenkugel's lineup changes"
  },
  {
   "id": "deca-031",
@@ -1509,7 +1218,7 @@
  {
   "id": "deca-033",
   "text": "Who were the 7 professors to teach DADA, 2 bonus points available?",
-  "answer": "Quirrel, Lockhart, Lupin, Moody (BCJ), Umbridge, Snape, Carrow",
+  "answer": "Quirrell, Lockhart, Lupin, Moody (BCJ), Umbridge, Snape, Carrow",
   "category": "Literature & Art",
   "games": [
    "DECA"
@@ -1517,7 +1226,7 @@
   "value": 16,
   "type": "list",
   "items": [
-   "Quirrel",
+   "Quirrell",
    "Lockhart",
    "Lupin",
    "Moody (BCJ)",
@@ -1536,28 +1245,6 @@
   ],
   "tags": [
    "harry potter"
-  ],
-  "general": true
- },
- {
-  "id": "deca-034",
-  "text": "Lin-Manuel Miranda is famous for writing Hamilton, which Disney movie did he write the music for?",
-  "answer": "Moana",
-  "category": "TV & Movies",
-  "games": [
-   "DECA"
-  ],
-  "value": 10,
-  "type": "qa",
-  "accepted": [
-   "Moana"
-  ],
-  "categories": [
-   "TV & Movies",
-   "Music"
-  ],
-  "tags": [
-   "disney movies"
   ],
   "general": true
  },
@@ -1582,41 +1269,6 @@
    "disney movies"
   ],
   "general": false
- },
- {
-  "id": "deca-036",
-  "text": "According to Disney.com there are 12 princesses, who are they?",
-  "answer": "Belle, Rapunzel, Ariel, Tiana, Moana, Cinderella, Aurora, Merida, Pocahontas, Jasmine, Mulan, Snow White",
-  "category": "TV & Movies",
-  "games": [
-   "DECA"
-  ],
-  "value": 24,
-  "type": "list",
-  "items": [
-   "Belle",
-   "Rapunzel",
-   "Ariel",
-   "Tiana",
-   "Moana",
-   "Cinderella",
-   "Aurora",
-   "Merida",
-   "Pocahontas",
-   "Jasmine",
-   "Mulan",
-   "Snow White"
-  ],
-  "perItem": 2,
-  "categories": [
-   "TV & Movies"
-  ],
-  "tags": [
-   "disney movies"
-  ],
-  "general": true,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "Official princess list"
  },
  {
   "id": "deca-037",
@@ -1687,29 +1339,6 @@
   "general": true
  },
  {
-  "id": "deca-040",
-  "text": "Of the top 20 paid MLB players 10 are position players 10 are pitchers, which position has more in the top 10?",
-  "answer": "Pitchers, 7",
-  "category": "Sports",
-  "games": [
-   "DECA"
-  ],
-  "value": 10,
-  "type": "qa",
-  "accepted": [
-   "Pitchers, 7"
-  ],
-  "categories": [
-   "Sports"
-  ],
-  "tags": [
-   "mlb"
-  ],
-  "general": false,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "MLB salaries change every season"
- },
- {
   "id": "deca-041",
   "text": "What are the 6 Triple Crown Categories in Baseball?",
   "answer": "AVG, HR, RBI, W, K, ERA",
@@ -1767,56 +1396,6 @@
    "mlb"
   ],
   "general": false
- },
- {
-  "id": "deca-043",
-  "text": "What is the population in millions of Australia?",
-  "answer": "25.5 million",
-  "category": "Geography",
-  "games": [
-   "DECA"
-  ],
-  "type": "number",
-  "value": 12,
-  "answerLo": 25,
-  "answerHi": 26,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 10,
-    "below": 10,
-    "above": 10
-   },
-   {
-    "points": 8,
-    "below": 20,
-    "above": 20
-   },
-   {
-    "points": 6,
-    "below": 25,
-    "above": 30
-   },
-   {
-    "points": 4,
-    "below": null,
-    "above": 40
-   },
-   {
-    "points": 2,
-    "below": null,
-    "above": 50
-   }
-  ],
-  "categories": [
-   "Geography"
-  ],
-  "tags": [
-   "australia"
-  ],
-  "general": true,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "Population changes"
  },
  {
   "id": "deca-044",
@@ -1948,7 +1527,7 @@
  },
  {
   "id": "deca-050",
-  "text": "Vodka, Tquila, Light Rum, Triple Sec, Gin, Cola?",
+  "text": "Vodka, Tequila, Light Rum, Triple Sec, Gin, Cola?",
   "answer": "Long Island Iced Tea",
   "category": "Food & Drink",
   "games": [
@@ -1988,35 +1567,6 @@
    "alcohol"
   ],
   "general": true
- },
- {
-  "id": "deca-052",
-  "text": "List all 6 QBs that started for the Packers in at least one game since 2000 (MIN 20)?",
-  "answer": "Favre, Rodgers, Flynn, Tolzien, Wallace, Hundley",
-  "category": "Sports",
-  "games": [
-   "DECA"
-  ],
-  "value": 12,
-  "type": "list",
-  "items": [
-   "Favre",
-   "Rodgers",
-   "Flynn",
-   "Tolzien",
-   "Wallace",
-   "Hundley"
-  ],
-  "perItem": 2,
-  "categories": [
-   "Sports"
-  ],
-  "tags": [
-   "packers"
-  ],
-  "general": false,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "Packers starters change"
  },
  {
   "id": "deca-053",
@@ -2181,7 +1731,7 @@
  },
  {
   "id": "deca-058",
-  "text": "How much did Nike famously pay for their logo design in the 1960's?",
+  "text": "How much did Nike famously pay for their logo design in 1971?",
   "answer": "35",
   "category": "Business & Tech",
   "games": [
@@ -2477,54 +2027,6 @@
   "general": true
  },
  {
-  "id": "deca-066",
-  "text": "What four models does Tesla offer?",
-  "answer": "S3XY",
-  "category": "Business & Tech",
-  "games": [
-   "DECA"
-  ],
-  "value": 8,
-  "type": "list",
-  "items": [
-   "S3XY"
-  ],
-  "perItem": 8,
-  "categories": [
-   "Business & Tech"
-  ],
-  "tags": [
-   "auto"
-  ],
-  "general": true,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "Tesla lineup changes"
- },
- {
-  "id": "deca-067",
-  "text": "I graduated college in 2016 and started my career, how much would I have had to invest into bitcoin on that day (approx.) to be a millionaire now?",
-  "answer": "10000",
-  "category": "Business & Tech",
-  "games": [
-   "DECA"
-  ],
-  "type": "number",
-  "value": 15,
-  "answerLo": 10000,
-  "answerHi": 10000,
-  "numberMode": "closer",
-  "scale": [],
-  "categories": [
-   "Business & Tech"
-  ],
-  "tags": [
-   "crypto"
-  ],
-  "general": false,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "Bitcoin price moves daily"
- },
- {
   "id": "deca-068",
   "text": "What is the technology that allows for cryptocurrency?",
   "answer": "Block-chain",
@@ -2536,27 +2038,6 @@
   "type": "qa",
   "accepted": [
    "Block-chain"
-  ],
-  "categories": [
-   "Business & Tech"
-  ],
-  "tags": [
-   "crypto"
-  ],
-  "general": true
- },
- {
-  "id": "deca-069",
-  "text": "Many people know that you can \"mine\" for Bitcoin, but what is the term for Dogecoin?",
-  "answer": "Dig",
-  "category": "Business & Tech",
-  "games": [
-   "DECA"
-  ],
-  "value": 10,
-  "type": "qa",
-  "accepted": [
-   "Dig"
   ],
   "categories": [
    "Business & Tech"
@@ -2723,40 +2204,6 @@
    "star wars"
   ],
   "general": true
- },
- {
-  "id": "deca-076",
-  "text": "No actively produced video game system (console or handheld) has cracked the top 10 best selling list yet, but, what are the top 10?",
-  "answer": "PS2, DS, Game Boy, PS4, PS1, Wii, PS3, Xbox360, GBA, PSP",
-  "category": "Business & Tech",
-  "games": [
-   "DECA"
-  ],
-  "value": 20,
-  "type": "list",
-  "items": [
-   "PS2",
-   "DS",
-   "Game Boy",
-   "PS4",
-   "PS1",
-   "Wii",
-   "PS3",
-   "Xbox360",
-   "GBA",
-   "PSP"
-  ],
-  "perItem": 2,
-  "categories": [
-   "Business & Tech",
-   "Pop Culture"
-  ],
-  "tags": [
-   "tech"
-  ],
-  "general": true,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "Console sales change"
  },
  {
   "id": "deca-077",
@@ -3124,7 +2571,7 @@
  },
  {
   "id": "deca-088",
-  "text": "What percentage of dalmations are deaf in one ear?",
+  "text": "What percentage of Dalmatians are deaf in at least one ear?",
   "answer": "30",
   "category": "Animals",
   "games": [
@@ -3219,29 +2666,6 @@
   "general": true
  },
  {
-  "id": "deca-090",
-  "text": "What is the most popular breed of dog in the US, Canada, and the UK?",
-  "answer": "Golden Retreiver",
-  "category": "Animals",
-  "games": [
-   "DECA"
-  ],
-  "value": 10,
-  "type": "qa",
-  "accepted": [
-   "Golden Retreiver"
-  ],
-  "categories": [
-   "Animals"
-  ],
-  "tags": [
-   "dogs"
-  ],
-  "general": true,
-  "recheckBy": "2027-01-01",
-  "recheckNote": "Breed rankings change yearly"
- },
- {
   "id": "deca-091",
   "text": "Somehow, cucumbers have a higher water content than skim milk, what is that percentage?",
   "answer": "95",
@@ -3284,30 +2708,6 @@
   "categories": [
    "Food & Drink",
    "Science"
-  ],
-  "tags": [],
-  "general": true
- },
- {
-  "id": "deca-092",
-  "text": "What are the 5 original flavors of Skittles (currently)?",
-  "answer": "Grape, Strawb, Lemon, Orange, GrAp",
-  "category": "Food & Drink",
-  "games": [
-   "DECA"
-  ],
-  "value": 10,
-  "type": "list",
-  "items": [
-   "Grape",
-   "Strawb",
-   "Lemon",
-   "Orange",
-   "GrAp"
-  ],
-  "perItem": 2,
-  "categories": [
-   "Food & Drink"
   ],
   "tags": [],
   "general": true
@@ -3467,54 +2867,6 @@
   "general": false
  },
  {
-  "id": "deca-099",
-  "text": "How many acres is the largest dog park in the US?",
-  "answer": "50",
-  "category": "Animals",
-  "games": [
-   "DECA"
-  ],
-  "type": "number",
-  "value": 12,
-  "answerLo": 50,
-  "answerHi": 50,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 10,
-    "below": 6,
-    "above": 7
-   },
-   {
-    "points": 8,
-    "below": 12,
-    "above": 14
-   },
-   {
-    "points": 6,
-    "below": 18,
-    "above": 21
-   },
-   {
-    "points": 4,
-    "below": 24,
-    "above": 28
-   },
-   {
-    "points": 2,
-    "below": 30,
-    "above": 35
-   }
-  ],
-  "categories": [
-   "Animals"
-  ],
-  "tags": [
-   "dog parks"
-  ],
-  "general": false
- },
- {
   "id": "deca-100",
   "text": "What are the first and last US States to gain statehood?",
   "answer": "Delaware, Hawaii",
@@ -3625,7 +2977,7 @@
  {
   "id": "deca-105",
   "text": "What are the FRIENDS last names?",
-  "answer": "Buffay, Tribiani, Geller, Green, Bing",
+  "answer": "Buffay, Tribbiani, Geller, Green, Bing",
   "category": "TV & Movies",
   "games": [
    "DECA"
@@ -3634,7 +2986,7 @@
   "type": "list",
   "items": [
    "Buffay",
-   "Tribiani",
+   "Tribbiani",
    "Geller",
    "Green",
    "Bing"
@@ -3673,59 +3025,6 @@
    "beer"
   ],
   "general": true
- },
- {
-  "id": "deca-107",
-  "text": "What percentage of American's drink beer at sporting events?",
-  "answer": "0.48",
-  "category": "Food & Drink",
-  "games": [
-   "DECA"
-  ],
-  "type": "number",
-  "value": 12,
-  "answerLo": 48,
-  "answerHi": 48,
-  "needsReview": true,
-  "reviewNotes": [
-   "answer cell says 0.48 but steps are in other units (exact = 48); tell players the unit"
-  ],
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 10,
-    "below": 6,
-    "above": 6
-   },
-   {
-    "points": 8,
-    "below": 12,
-    "above": 12
-   },
-   {
-    "points": 6,
-    "below": 18,
-    "above": 18
-   },
-   {
-    "points": 4,
-    "below": 24,
-    "above": 24
-   },
-   {
-    "points": 2,
-    "below": 30,
-    "above": 30
-   }
-  ],
-  "categories": [
-   "Food & Drink",
-   "Sports"
-  ],
-  "tags": [
-   "beer"
-  ],
-  "general": false
  },
  {
   "id": "deca-108",
@@ -3855,27 +3154,6 @@
   "general": true
  },
  {
-  "id": "deca-114",
-  "text": "Which crystal is known as the most powerful?",
-  "answer": "Quartz",
-  "category": "Science",
-  "games": [
-   "DECA"
-  ],
-  "value": 10,
-  "type": "qa",
-  "accepted": [
-   "Quartz"
-  ],
-  "categories": [
-   "Science"
-  ],
-  "tags": [
-   "crystals"
-  ],
-  "general": false
- },
- {
   "id": "deca-115",
   "text": "Which US President's bird caused a scene by swearing too much at his funeral?",
   "answer": "Andrew Jackson",
@@ -3888,38 +3166,6 @@
   "accepted": [
    "Andrew Jackson"
   ],
-  "categories": [
-   "History",
-   "Politics"
-  ],
-  "tags": [
-   "american presidents"
-  ],
-  "general": true
- },
- {
-  "id": "deca-116",
-  "text": "List the last 10 US Presidents?",
-  "answer": "Biden, Trump, Obama, W, Clinton, HW, Reagan, Carter, Ford, Nixon",
-  "category": "History",
-  "games": [
-   "DECA"
-  ],
-  "value": 20,
-  "type": "list",
-  "items": [
-   "Biden",
-   "Trump",
-   "Obama",
-   "W",
-   "Clinton",
-   "HW",
-   "Reagan",
-   "Carter",
-   "Ford",
-   "Nixon"
-  ],
-  "perItem": 2,
   "categories": [
    "History",
    "Politics"
@@ -4036,27 +3282,6 @@
   "general": false
  },
  {
-  "id": "trump-006",
-  "text": "T/F Trump used a private email server while President?",
-  "answer": "True",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "value": 2,
-  "type": "tf",
-  "accepted": [
-   "true"
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
   "id": "trump-007",
   "text": "How many SCOTUS Justices were nominated by Trump?",
   "answer": "3",
@@ -4076,53 +3301,6 @@
    "trump"
   ],
   "general": true
- },
- {
-  "id": "trump-008",
-  "text": "What % faster did those go through than her previous 24?",
-  "answer": "0.4",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 5,
-  "answerLo": 40,
-  "answerHi": 40,
-  "needsReview": true,
-  "reviewNotes": [
-   "answer cell says 0.4 but steps are in other units (exact = 40); tell players the unit"
-  ],
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 4,
-    "below": 5,
-    "above": 5
-   },
-   {
-    "points": 3,
-    "below": 10,
-    "above": 10
-   },
-   {
-    "points": 2,
-    "below": 15,
-    "above": 15
-   },
-   {
-    "points": 1,
-    "below": 20,
-    "above": 20
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
  },
  {
   "id": "trump-009",
@@ -4185,125 +3363,6 @@
     "points": 1,
     "below": 3,
     "above": 3
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
-  "id": "trump-011",
-  "text": "How many of Trump's cabinet Resigned Under Pressure?",
-  "answer": "8",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 5,
-  "answerLo": 8,
-  "answerHi": 8,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 4,
-    "below": 1,
-    "above": 1
-   },
-   {
-    "points": 3,
-    "below": 2,
-    "above": 2
-   },
-   {
-    "points": 2,
-    "below": 3,
-    "above": 3
-   },
-   {
-    "points": 1,
-    "below": 4,
-    "above": 4
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
-  "id": "trump-012",
-  "text": "How many books has Trump authored?",
-  "answer": "15",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 4,
-  "answerLo": 15,
-  "answerHi": 15,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 3,
-    "below": 4,
-    "above": 4
-   },
-   {
-    "points": 2,
-    "below": 8,
-    "above": 8
-   },
-   {
-    "points": 1,
-    "below": 12,
-    "above": 12
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
-  "id": "trump-013",
-  "text": "How many TMs did Ivanka apply for the day before her appointment?",
-  "answer": "17",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 4,
-  "answerLo": 17,
-  "answerHi": 17,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 3,
-    "below": 4,
-    "above": 4
-   },
-   {
-    "points": 2,
-    "below": 8,
-    "above": 8
-   },
-   {
-    "points": 1,
-    "below": 12,
-    "above": 12
    }
   ],
   "categories": [
@@ -4588,98 +3647,6 @@
   "general": false
  },
  {
-  "id": "trump-021",
-  "text": "How many pardons did Trump give in January 2021?",
-  "answer": "116",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 4,
-  "answerLo": 116,
-  "answerHi": 116,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 3,
-    "below": 5,
-    "above": 5
-   },
-   {
-    "points": 2,
-    "below": 10,
-    "above": 10
-   },
-   {
-    "points": 1,
-    "below": 15,
-    "above": 15
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
-  "id": "trump-022",
-  "text": "Through 2020 how many times did Trump golf?",
-  "answer": "308",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 6,
-  "answerLo": 308,
-  "answerHi": 308,
-  "needsReview": true,
-  "reviewNotes": [
-   "2-pt and 3-pt steps overlap at 293",
-   "3-pt and 4-pt steps overlap at 298",
-   "typed steps not usable; scoring with computed steps of width 5"
-  ],
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 5,
-    "below": 5,
-    "above": 5
-   },
-   {
-    "points": 4,
-    "below": 10,
-    "above": 10
-   },
-   {
-    "points": 3,
-    "below": 15,
-    "above": 15
-   },
-   {
-    "points": 2,
-    "below": 20,
-    "above": 20
-   },
-   {
-    "points": 1,
-    "below": 25,
-    "above": 25
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
   "id": "trump-023",
   "text": "How much were secret service agents charged per night at Mar a Lago?",
   "answer": "650",
@@ -4949,135 +3916,6 @@
   "general": false
  },
  {
-  "id": "trump-030",
-  "text": "In just one term Trump has the highest vacation cost, what is it?",
-  "answer": "$141mil",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 6,
-  "answerLo": 141,
-  "answerHi": 141,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 5,
-    "below": 10,
-    "above": 10
-   },
-   {
-    "points": 4,
-    "below": 20,
-    "above": 20
-   },
-   {
-    "points": 3,
-    "below": 30,
-    "above": 30
-   },
-   {
-    "points": 2,
-    "below": 40,
-    "above": 40
-   },
-   {
-    "points": 1,
-    "below": 50,
-    "above": 50
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
-  "id": "trump-031",
-  "text": "Obama Vacation cost?",
-  "answer": "$105mil",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 5,
-  "answerLo": 105,
-  "answerHi": 105,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 4,
-    "below": 5,
-    "above": 5
-   },
-   {
-    "points": 3,
-    "below": 10,
-    "above": 10
-   },
-   {
-    "points": 2,
-    "below": 15,
-    "above": 15
-   },
-   {
-    "points": 1,
-    "below": 20,
-    "above": 20
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
-  "id": "trump-032",
-  "text": "George Bush Vacation cost?",
-  "answer": "$140mil",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 4,
-  "answerLo": 140,
-  "answerHi": 140,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 3,
-    "below": 5,
-    "above": 5
-   },
-   {
-    "points": 2,
-    "below": 10,
-    "above": 10
-   },
-   {
-    "points": 1,
-    "below": 15,
-    "above": 15
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
   "id": "trump-033",
   "text": "How many First Ladies have been foreign born?",
   "answer": "2 Louisa Catherine Johnson Adams (John Quincy Adams)",
@@ -5227,7 +4065,7 @@
  {
   "id": "trump-037",
   "text": "Where did Trump say \"when you are a star, you can do anything\"?",
-  "answer": "Access Hollywood Truck",
+  "answer": "Access Hollywood bus",
   "category": "Politics",
   "games": [
    "Trump 2020"
@@ -5235,7 +4073,8 @@
   "value": 4,
   "type": "qa",
   "accepted": [
-   "Access Hollywood Truck"
+   "Access Hollywood bus",
+   "Access Hollywood"
   ],
   "categories": [
    "Politics"
@@ -5268,7 +4107,7 @@
  },
  {
   "id": "trump-039",
-  "text": "Who took second in the last two Democratic primaries?",
+  "text": "Who took second in the 2016 and 2020 Democratic primaries?",
   "answer": "Bernie Sanders",
   "category": "Politics",
   "games": [
@@ -5330,28 +4169,6 @@
   "general": false
  },
  {
-  "id": "trump-042",
-  "text": "What is Trump's nickname for Barack Obama?",
-  "answer": "Cheatin' Obama",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "value": 3,
-  "type": "qa",
-  "accepted": [
-   "Cheatin' Obama"
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump",
-   "nicknames"
-  ],
-  "general": false
- },
- {
   "id": "trump-043",
   "text": "What did Melania say \"who gives a fuck about it, but I have to do it\" about?",
   "answer": "Christmas decorations",
@@ -5397,7 +4214,7 @@
  {
   "id": "trump-045",
   "text": "Name a college Biden attended?",
-  "answer": "Delaware",
+  "answer": "Delaware or Syracuse (law school)",
   "category": "Politics",
   "games": [
    "Trump 2020"
@@ -5405,7 +4222,8 @@
   "value": 4,
   "type": "qa",
   "accepted": [
-   "Delaware"
+   "Delaware",
+   "Syracuse"
   ],
   "categories": [
    "Politics"
@@ -5459,31 +4277,9 @@
   "general": false
  },
  {
-  "id": "trump-048",
-  "text": "What is Trump's nickname for Ilhan Omar?",
-  "answer": "Foul mouthed Omar",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "value": 3,
-  "type": "qa",
-  "accepted": [
-   "Foul mouthed Omar"
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump",
-   "nicknames"
-  ],
-  "general": false
- },
- {
   "id": "trump-049",
   "text": "Name each state that flipped from 2016 to 2020?",
-  "answer": "GA, AZ, WI, MI, PA",
+  "answer": "GA, AZ, WI, MI, PA (Nebraska's 2nd district also flipped)",
   "category": "Politics",
   "games": [
    "Trump 2020"
@@ -5560,27 +4356,6 @@
   "type": "qa",
   "accepted": [
    "Hurricane Trajectory (Alabama)"
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
-  "id": "trump-053",
-  "text": "In 2016 Trump paid $2mil in damages and admitted guilt for?",
-  "answer": "illegally using Trump Foundation assets",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "value": 5,
-  "type": "qa",
-  "accepted": [
-   "illegally using Trump Foundation assets"
   ],
   "categories": [
    "Politics"
@@ -5903,27 +4678,6 @@
   "general": false
  },
  {
-  "id": "trump-068",
-  "text": "What professional sports league denied Trump ownership of a team?",
-  "answer": "NFL",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "value": 3,
-  "type": "qa",
-  "accepted": [
-   "NFL"
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
- },
- {
   "id": "trump-069",
   "text": "What day was the 2020 election?",
   "answer": "November 3rd",
@@ -5943,49 +4697,6 @@
    "trump"
   ],
   "general": true
- },
- {
-  "id": "trump-070",
-  "text": "How many times did Trump Tweet as President?",
-  "answer": "over 34k",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "type": "number",
-  "value": 5,
-  "answerLo": 34,
-  "answerHi": 34,
-  "numberMode": "range",
-  "scale": [
-   {
-    "points": 4,
-    "below": 3,
-    "above": 3
-   },
-   {
-    "points": 3,
-    "below": 6,
-    "above": 6
-   },
-   {
-    "points": 2,
-    "below": 9,
-    "above": 9
-   },
-   {
-    "points": 1,
-    "below": 12,
-    "above": 12
-   }
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump"
-  ],
-  "general": false
  },
  {
   "id": "trump-071",
@@ -6094,28 +4805,6 @@
    "trump"
   ],
   "general": true
- },
- {
-  "id": "trump-076",
-  "text": "What is Trump's (most recent favorite) nickname for Joe Biden?",
-  "answer": "Sleepy Joe",
-  "category": "Politics",
-  "games": [
-   "Trump 2020"
-  ],
-  "value": 3,
-  "type": "qa",
-  "accepted": [
-   "Sleepy Joe"
-  ],
-  "categories": [
-   "Politics"
-  ],
-  "tags": [
-   "trump",
-   "nicknames"
-  ],
-  "general": false
  },
  {
   "id": "trump-077",
@@ -6619,7 +5308,7 @@
  },
  {
   "id": "music-first-happy",
-  "text": "What is the first word of \"Happy\" (Pharrell Williams, Meghan Trainor)?",
+  "text": "What is the first word of \"Happy\" (Pharrell Williams)?",
   "answer": "It",
   "category": "Music",
   "games": [
